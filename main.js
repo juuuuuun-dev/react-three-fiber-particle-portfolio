@@ -1,11 +1,13 @@
 
-var imgSrc = "cover.png"
+var imgSrc = "images/a.png"
 var image, objLoader, bunnyGeo, particle, clock;
 var camera, scene, renderer;
 var texture;
 var datas = [];
 var targetArr = [];
 var MAX = 50000;
+
+imgIni();
 
 function range(min, max){
     return min + (max - min) * Math.random();
@@ -115,9 +117,11 @@ function onLoadimage(){
             var num = 4 * (image.width * yy + xx ) + 3;
             var alpha = imageData[num];
             if(alpha !== 0){
-                var colorRate = xx/image.width * .9
+                var rRate = xx/image.width * .9
+                var gRate = yy/image.height * .2;
                 var color = new THREE.Color();
-                color.setRGB(colorRate, 0.1 * Math.random(), 1)
+                color.setRGB(rRate, gRate, 1);
+                // color.setRGB(colorRate, 0.1 * Math.random(), 1)
                 // color.setHSL(colorRate, 0.3 + 0.6 * Math.random(), 0.3 + 0.3 * Math.random())
                 var data = {x: (xx - image.width / 2 + 9 * Math.random()) / scale, y: (yy - image.height / 2) / scale, alpha: alpha / 255, color: color }
                 datas.push(data);
@@ -173,7 +177,7 @@ window.addEventListener('keydown', function(ev){
     console.log(ev)
     switch(ev.which){
         case 83:
-            imgIni();
+            // imgIni();
             break;
     }
 });
