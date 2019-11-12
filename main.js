@@ -34,6 +34,7 @@ class CustomParticle extends THREE.BufferGeometry {
         var timeArray = new Float32Array(this.count);
         var colorArray = new Float32Array(this.count * 3);
         const datas = imagePositions[imageIndex];
+        // @todo これを別のfunctionにと画像配列分
         for(var ii = 0; ii < this.count; ii++){
             var data = datas[parseInt(datas.length * Math.random())];
             
@@ -251,10 +252,11 @@ window.addEventListener("resize", function(ev){
 });
 
 window.addEventListener('keydown', function(ev){
-    console.log(ev)
     switch(ev.which){
         case 83:
-            // imgIni();
+            console.log(particle.geometry.attributes)
+            var  positions = new Float32Array( MAX * 3 ); // 3 vertices per point
+            particle.geometry.setAttribute('position', new THREE.BufferAttribute( positions, 3 ) );
             break;
     }
 });
