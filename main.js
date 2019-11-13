@@ -21,6 +21,7 @@ let attributes = {
   endPositions: [],
   alphas: [],
   colors: [],
+  times: [],
 };
 
 imagesInit();
@@ -46,7 +47,8 @@ function createAttributes(imagePositions) {
       attr.positions[i] = new Float32Array(MAX * count);
       attr.endPositions[i] =  new Float32Array(MAX * count);
       attr.alphas[i] = new Float32Array(MAX);
-      attr.colors[i] = new Float32Array(MAX);
+      attr.colors[i] = new Float32Array(MAX * count);
+      attr.times[i] = new Float32Array(MAX);
       const datas = imagePositions[i];
       const datasLen = datas.length;
       for (var n = 0; n < MAX; n++) {
@@ -58,6 +60,12 @@ function createAttributes(imagePositions) {
         attr.endPositions[i][n * count] = range(0, 30);
         attr.endPositions[i][n * count + 1] = range(0, 30);
         attr.endPositions[i][n * count + 2] = range(0, 0);
+
+        attr.times[i][n] = count * Math.random();
+        attr.alphas[i][n] = Math.random();
+        attr.colors[i][n * count] = data.color.r;
+        attr.colors[i][n * count + 1] = data.color.g;
+        attr.colors[i][n * count + 2] = data.color.b;
       }
     }
     resolve(attr);
@@ -115,11 +123,11 @@ class CustomParticle extends THREE.BufferGeometry {
       colorArray[ii * 3 + 2] = data.color.b;
     }
 
-    this.addAttribute("position", new THREE.BufferAttribute(positionArray, 3));
-    this.addAttribute("aTarget", new THREE.BufferAttribute(endPositionArray, 3));
-    this.addAttribute("aTime", new THREE.BufferAttribute(timeArray, 1));
-    this.addAttribute("aAlpha", new THREE.BufferAttribute(alphaArray, 1));
-    this.addAttribute("aColor", new THREE.BufferAttribute(colorArray, 3));
+    this.addAttribute("position", new THREE.BufferAttribute(attributes.positions[imageIndex], 3));
+    this.addAttribute("aTarget", new THREE.BufferAttribute(attributes.endPositions[imageIndex], 3));
+    this.addAttribute("aTime", new THREE.BufferAttribute(attributes.times[imageIndex], 1));
+    this.addAttribute("aAlpha", new THREE.BufferAttribute(attributes.alphas[imageIndex], 1));
+    this.addAttribute("aColor", new THREE.BufferAttribute(attributes.colors[imageIndex], 3));
   }
 }
 
@@ -241,7 +249,10 @@ window.addEventListener("resize", function(ev){
 });
 
 window.addEventListener('click', function(e){
-  console.log(particle.geometry.attributes)
-  var  positions = new Float32Array( MAX * 3 ); // 3 vertices per point
-  particle.geometry.setAttribute('position', new THREE.BufferAttribute( attributes.positions[1], 3 ) );
+  particle.geometry.setAttribute('position', new THREE.BufferAttribute( attributes.positions[1], 3));
+  particle.geometry.setAttribute('aTarget', new THREE.BufferAttribute( attributes.endPositions[1], 3));
+  particle.geometry.setAttribute('aTime', new THREE.BufferAttribute( attributes.times[1], 1));
+  particle.geometry.setAttribute('aAlpha', new THREE.BufferAttribute( attributes.alphas[1], 1));
+  particle.geometry.setAttribute('aColor', new THREE.BufferAttribute( attributes.colors[1], 3));
+
 });
