@@ -35,21 +35,22 @@
         highp float dt= dot(co.xy ,vec2(a,b));
         highp float sn= mod(dt,3.14);
         return fract(sin(sn) * c);
-     }
+    }
     
     void main(){
     
         float curTime = mod(uTime + aTime, .5);
+        // float rate = curTime/3.; 
+        // todo この数字をattributeに
         float rate = curTime/3.; 
-    
         vec3 pos;
     
-         if(rate < 1.0){
+        if(rate < 1.0){
             pos = mix(position, aTarget, rate);
-         }else{
+        }else{
             float fract = rate - 1.0;
-            pos = mix(position, aTarget, 11.0 + fract * fract);
-         }
+            pos = mix(position, aTarget, 1.0 + fract * fract);
+        }
     
         vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
