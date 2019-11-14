@@ -6,6 +6,9 @@ var imgSrcArr = [
     src: 'images/a.png',
   },
   {
+    src: 'images/b.png',
+  },
+  {
     src: 'images/cover.png',
   },
 ]
@@ -68,6 +71,7 @@ function createAttributes(imagePositions) {
         attr.colors[i][n * count + 2] = data.color.b;
       }
     }
+    console.log(attr)
     resolve(attr);
   });
 }
@@ -84,7 +88,7 @@ function  init(){
   scene.add(particle);
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x333333);
+  renderer.setClearColor(0xffffff);
   clock = new THREE.Clock();
   document.body.appendChild(renderer.domElement);
   document.addEventListener('mousemove', onDocumentMouseMove, false);
@@ -95,33 +99,7 @@ function  init(){
 class CustomParticle extends THREE.BufferGeometry {
   constructor(){
     super()
-    this.count = MAX;
-    var positionArray = new Float32Array(this.count * 3);
-    var endPositionArray = new Float32Array(this.count * 3);
-    var alphaArray = new Float32Array(this.count);
-    var timeArray = new Float32Array(this.count);
-    var colorArray = new Float32Array(this.count * 3);
-    const datas = imagePositions[imageIndex];
-    // @todo これを別のfunctionにと画像配列分
-    for(var ii = 0; ii < this.count; ii++){
-      var data = datas[parseInt(datas.length * Math.random())];
-      
-      positionArray[ii * 3 + 0] = data.x;
-      positionArray[ii * 3 + 1] = 0;
-      positionArray[ii * 3 + 2] = data.y;
-
-      endPositionArray[ii * 3 + 0] = range(0, 30);
-      endPositionArray[ii * 3 + 1] = range(0, 30);
-      endPositionArray[ii * 3 + 2] = range(0, 0);
-
-      timeArray[ii] = 3 * Math.random();
-
-      alphaArray[ii] = Math.random();
-
-      colorArray[ii * 3 + 0] = data.color.r;
-      colorArray[ii * 3 + 1] = data.color.g;
-      colorArray[ii * 3 + 2] = data.color.b;
-    }
+    // this.count = MAX;
 
     this.addAttribute("position", new THREE.BufferAttribute(attributes.positions[imageIndex], 3));
     this.addAttribute("aTarget", new THREE.BufferAttribute(attributes.endPositions[imageIndex], 3));
@@ -144,7 +122,7 @@ class CustomMat extends THREE.ShaderMaterial {
 
     this.transparent = true;
     this.depthWrite = false;
-    this.blending = THREE.AdditiveBlending;
+    // this.blending = THREE.AdditiveBlending;
   }
 }
 
@@ -249,10 +227,14 @@ window.addEventListener("resize", function(ev){
 });
 
 window.addEventListener('click', function(e){
-  particle.geometry.setAttribute('position', new THREE.BufferAttribute( attributes.positions[1], 3));
-  particle.geometry.setAttribute('aTarget', new THREE.BufferAttribute( attributes.endPositions[1], 3));
-  particle.geometry.setAttribute('aTime', new THREE.BufferAttribute( attributes.times[1], 1));
-  particle.geometry.setAttribute('aAlpha', new THREE.BufferAttribute( attributes.alphas[1], 1));
-  particle.geometry.setAttribute('aColor', new THREE.BufferAttribute( attributes.colors[1], 3));
-
+  imageIndex +=1;
+  if (imgSrcArr.length <= imageIndex) {
+    imageIndex = 0;
+  }
+  
+  particle.geometry.setAttribute('position', new THREE.BufferAttribute( attributes.positions[imageIndex], 3));
+  particle.geometry.setAttribute('aTarget', new THREE.BufferAttribute( attributes.endPositions[imageIndex], 3));
+  particle.geometry.setAttribute('aTime', new THREE.BufferAttribute( attributes.times[imageIndex], 1));
+  particle.geometry.setAttribute('aAlpha', new THREE.BufferAttribute( attributes.alphas[imageIndex], 1));
+  particle.geometry.setAttribute('aColor', new THREE.BufferAttribute( attributes.colors[imageIndex], 3));
 });
