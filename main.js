@@ -112,7 +112,8 @@ class CustomParticle extends THREE.BufferGeometry {
 class CustomMat extends THREE.ShaderMaterial {
   constructor(){
     var uniforms = {
-        uTime : {type : "f", value : 0}
+        uTime : {type : "f", value : 0},
+        uMousePosition: {type: 'v2', value: new THREE.Vector2( 0.5, 0.5 ) },
     };
     super({
         uniforms: uniforms,
@@ -193,6 +194,9 @@ function range(min, max){
 var theta = 0;
 var time = 0;
 var mouse = new THREE.Vector2();
+// add mouse
+let mousePos = { x: 0, y: 0, px:0, py:0 };
+let targetMousePos = { x: 0, y: 0 };
 
 function loop(){
     var delta = clock.getDelta();
@@ -203,6 +207,10 @@ function loop(){
     camera.position.x = 10 * Math.sin(theta);
     camera.lookAt(new THREE.Vector3())
 
+    // add mouse
+    mousePos.x += (targetMousePos.x - mousePos.x) * .1;
+    mousePos.y += (targetMousePos.y - mousePos.y) * .1;
+    particle.material.uniforms.uMousePosition.value = new THREE.Vector2(mousePos.x, mousePos.y);
     particle.material.uniforms.uTime.value = time;
     renderer.render(scene, camera);
 }
@@ -211,9 +219,15 @@ function loop(){
 
 function onDocumentMouseMove(event){
     event.preventDefault();
-
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    // add mouse
+    mousePos.x = event.clientX;
+    mousePos.y = event.clientY;
+    mousePos.px = mousePos.x / window.innerWidth;
+    mousePos.py = 1.0 - mousePos.y / window.innerHeight;
+    targetMousePos.x = mousePos.px;
+    targetMousePos.y = mousePos.py;
 }
 
 window.addEventListener("resize", function(ev){
