@@ -40,16 +40,16 @@
     
     void main(){
     
-        float curTime = mod(uTime + aTime, .5);
+        float curTime = mod(uTime + aTime, 1.);
         // float rate = curTime/3.; 
         // todo この数字をattributeに
-        float rate = curTime/3.; 
+        float rate = curTime/10.; 
         vec3 pos;
     
-        if(rate < 1.0){
+        if(rate < 2.){
             pos = mix(position, aTarget, rate);
         }else{
-            float fract = rate - 1.0;
+            float fract = rate + 1.0;
             pos = mix(position, aTarget, 1.0 + fract * fract);
         }
     
