@@ -18,7 +18,7 @@ var camera, scene, renderer;
 var texture;
 var datas = [];
 var imagePositions = [];
-var MAX = 50000;
+var MAX = 30000;
 let attributes = {
   positions: [],
   endPositions: [],
@@ -27,7 +27,31 @@ let attributes = {
   times: [],
 };
 
-imagesInit();
+
+const domIsReady = () => {
+  const ua = getDevice();
+  if (ua === 'sp') {
+    MAX = 15000;
+  }
+  imagesInit();
+}
+/**
+ * ua
+ */
+const getDevice = () => {
+  const ua = navigator.userAgent;
+  if(ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0){
+    return 'sp';
+  }else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
+      return 'tablet';
+  }else{
+      return 'pc';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', domIsReady);
+
+
 
 
 /**
@@ -60,8 +84,8 @@ function createAttributes(imagePositions) {
         attr.positions[i][n * count + 1] = 0;
         attr.positions[i][n * count + 2] = data.y;
         
-        attr.endPositions[i][n * count] = range(0, 30);
-        attr.endPositions[i][n * count + 1] = range(0, 30);
+        attr.endPositions[i][n * count] = range(0, 20);
+        attr.endPositions[i][n * count + 1] = range(0, 0);
         attr.endPositions[i][n * count + 2] = range(0, 0);
 
         attr.times[i][n] = count * Math.random();
@@ -71,7 +95,6 @@ function createAttributes(imagePositions) {
         attr.colors[i][n * count + 2] = data.color.b;
       }
     }
-    console.log(attr)
     resolve(attr);
   });
 }
@@ -192,19 +215,22 @@ function range(min, max){
 
 
 var theta = 0;
+var deltaX = 0;
+var deltaY = 0;
 var time = 0;
 var mouse = new THREE.Vector2();
 // add mouse
-let mousePos = { x: 0, y: 0, px:0, py:0 };
+let mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
 let targetMousePos = { x: 0, y: 0 };
 
 function loop(){
     var delta = clock.getDelta();
     time += delta;
     theta += (mouse.x /3 - theta)/10;
-
-    camera.position.z = 10 * Math.cos(theta);
-    camera.position.x = 10 * Math.sin(theta);
+    deltaX += (Math.cos(mousePos.tx) - Math.sin(time))/220;
+    deltaY += (Math.cos(mousePos.ty))/220;
+    camera.position.z = 15 * Math.cos(theta);
+    camera.position.x = 20 * Math.sin(theta);
     camera.lookAt(new THREE.Vector3())
 
     // add mouse
@@ -212,22 +238,68 @@ function loop(){
     mousePos.y += (targetMousePos.y - mousePos.y) * .1;
     particle.material.uniforms.uMousePosition.value = new THREE.Vector2(mousePos.x, mousePos.y);
     particle.material.uniforms.uTime.value = time;
+    updatePositin(mousePos, imageIndex);
+    // particle.geometry.setAttribute('position', new THREE.BufferAttribute( attributes.positions[imageIndex], 3));
+    particle.geometry.setAttribute('aTarget', new THREE.BufferAttribute( attributes.endPositions[imageIndex], 3));
+
     renderer.render(scene, camera);
 }
 
+// @todo 時間差に
+function updatePositin(mousePos, index) {
+    const count = 3;
+    // スマホは除外
+    for (var i = 0; i < MAX; i++) {
+      if (i % 2 !== 0) continue;
+      let targetX = attributes.endPositions[imageIndex][i * count] - (mousePos.tx / 2);
+      targetX = targetX < 80 ? targetX : Math.random() * 80;
+      targetX = targetX > -60 ? targetX : Math.random() * -60;
+      let targetY = attributes.endPositions[imageIndex][i * count + 1] + (mousePos.ty / 2);
+      targetY = targetY < 200 ? targetY : Math.random() * 200;
+      targetY = targetY > -200 ? targetY : Math.random() * -200;
+      attributes.endPositions[imageIndex][i * count] = targetX;
+      attributes.endPositions[imageIndex][i * count + 1] = targetY;
+      attributes.endPositions[imageIndex][i * count + 2] = range(0, 0);
+    }
+  
+}
+
+function rule3(v,vmin,vmax,tmin, tmax){
+  var nv = Math.max(Math.min(v,vmax), vmin);
+  var dv = vmax-vmin;
+  var pc = (nv-vmin)/dv;
+  var dt = tmax-tmin;
+  var tv = tmin + (pc*dt);
+  return tv;
+  
+}
 
 
-function onDocumentMouseMove(event){
+const maxMouseXPos = 4;
+const maxMouseYPos = 10;
+async function onDocumentMouseMove(event){
     event.preventDefault();
+    
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    
     // add mouse
     mousePos.x = event.clientX;
     mousePos.y = event.clientY;
     mousePos.px = mousePos.x / window.innerWidth;
     mousePos.py = 1.0 - mousePos.y / window.innerHeight;
+    
+    
+    mousePos.tx = event.clientX - (window.innerWidth / 2);
+      mousePos.ty = event.clientY - (window.innerHeight / 2);
+      mousePos.tx = mousePos.tx > maxMouseXPos ? maxMouseXPos : mousePos.tx;
+      mousePos.tx = mousePos.tx < -maxMouseXPos ? -maxMouseXPos : mousePos.tx;
+      mousePos.ty = mousePos.ty > maxMouseYPos ? maxMouseYPos : mousePos.ty;
+      mousePos.ty = mousePos.ty < -maxMouseYPos ? -maxMouseYPos : mousePos.ty;
+        
     targetMousePos.x = mousePos.px;
     targetMousePos.y = mousePos.py;
+    
 }
 
 window.addEventListener("resize", function(ev){
