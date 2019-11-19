@@ -22,9 +22,8 @@
     attribute float aTime;
     attribute vec3 aTarget;
     
-    varying float vTime;
-    
     uniform float uTime;
+    uniform vec2 uMousePosition;
     
     varying float vAlpha;
     varying vec3 vColor;
@@ -37,21 +36,22 @@
         highp float dt= dot(co.xy ,vec2(a,b));
         highp float sn= mod(dt,3.14);
         return fract(sin(sn) * c);
-     }
+    }
     
     void main(){
     
-        float curTime = mod(uTime + aTime, .5);
-        float rate = curTime/3.; 
-    
+        float curTime = mod(uTime + aTime, 1.);
+        // float rate = curTime/3.; 
+        // todo この数字をattributeに
+        float rate = curTime/10.; 
         vec3 pos;
     
-         if(rate < 1.0){
+        if(rate < 2.){
             pos = mix(position, aTarget, rate);
-         }else{
-            float fract = rate - 1.0;
-            pos = mix(position, aTarget, 11.0 + fract * fract);
-         }
+        }else{
+            float fract = rate + 1.0;
+            pos = mix(position, aTarget, 1.0 + fract * fract);
+        }
     
         vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
@@ -76,7 +76,6 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
-    <script src="OBJLoader.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
