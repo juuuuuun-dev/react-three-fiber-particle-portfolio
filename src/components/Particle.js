@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useEffect, useContext } from 'react';
 import { Canvas, useThree, useFrame } from 'react-three-fiber';
 import ImageList from '../config/ImageList';
 import AppContext from '../contexts/AppContext';
@@ -10,21 +10,40 @@ let listIndex = 0;
 let MAX = 30000;
 
 export default function Particle() {
-  const { ua } = useContext(AppContext);
+  const [attributes, setAttribute] = useState({
+    /** @todo 空配列入れる */
+  });
+  const ua = useContext(AppContext);
   MAX = useMemo(() => {
     if (ua === 'sp') {
       return 13000;
     }
     return MAX;
   }, []);
-  const initImage = async () => {
-    const imagePositions = await createImagePositions();
-    const attributes = await createAttributes(imagePositions, MAX);
-    console.log(attributes)
-  }
-  initImage();
+  useEffect(() => {
+    const f = async () => {
+      const imagePositions = await createImagePositions();
+      const attribute = await createAttributes(imagePositions, MAX);
+      setAttribute(attribute);
+    };
+    f();
+  }, []);
+  console.log(attributes);
+  // const initImage = async () => {
+  //   const imagePositions = await createImagePositions();
+  //   const attribute = await createAttributes(imagePositions, MAX);
+  // }
+  // initImage();
+  // useFrame(() => {
+    
+  // });
   return (
     <>
+    <points>
+    <bufferGeometry attach="geometry">
+    <bufferAttribute attachObject={['attributes', 'position']} count={attributes.positions[listIndex].length / 3} array={attributes.positions[listIndex]} itemSize={3} />
+    </bufferGeometry>
+    </points>
     </>
   )
 }
@@ -111,8 +130,11 @@ function createAttributes(imagePositions, MAX) {
         attr.endPositions[i][n * count + 1] = range(0, 0);
         attr.endPositions[i][n * count + 2] = range(0, 0);
         
-      
-
+        attr.times[i][n] = count * Math.random();
+        attr.alphas[i][n] = Math.random();
+        attr.colors[i][n * count] = data.color.r;
+        attr.colors[i][n * count + 1] = data.color.g;
+        attr.colors[i][n * count + 2] = data.color.b;
       }
     }
     resolve(attr);
