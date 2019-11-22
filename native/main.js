@@ -61,6 +61,7 @@ async function imagesInit() {
   const canvas = document.createElement("canvas");
   imagePositions = await createImagePositions(canvas);
   attributes = await createAttributes(imagePositions);
+  console.log(attributes);
   init();
 }
 
@@ -224,6 +225,7 @@ let mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
 let targetMousePos = { x: 0, y: 0 };
 
 function loop(){
+    // console.log(attributes.positions[imageIndex]);
     var delta = clock.getDelta();
     time += delta;
     theta += (mouse.x /3 - theta)/10;
@@ -232,7 +234,7 @@ function loop(){
     camera.position.z = 15 * Math.cos(theta);
     camera.position.x = 20 * Math.sin(theta);
     camera.lookAt(new THREE.Vector3())
-
+    console.log(camera)
     // add mouse
     mousePos.x += (targetMousePos.x - mousePos.x) * .1;
     mousePos.y += (targetMousePos.y - mousePos.y) * .1;
