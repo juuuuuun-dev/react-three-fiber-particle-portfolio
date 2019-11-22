@@ -9,13 +9,12 @@ function App() {
   const ua = useMemo(() => {
     return getDevice();
   }, []);
-  console.log(ua)
   return (
     <AppContext.Provider value={{ ua }}>
       <div className="App">
       <Canvas
           className='canvas'
-          camera={{ position: [1, 3, 10], hear: 1, far: 10000, }}
+          camera={{ position: [-5, 100, 280], hear: 0.1, fov: 45, far: 10000, }}
           onCreated={ ({ gl, camera }) => {
             gl.setClearColor(new THREE.Color("#ffffff"))
           }}

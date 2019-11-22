@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useContext } from 'react';
+import React, { useRef, useMemo, useState, useEffect, useContext } from 'react';
 import { Canvas, useThree, useFrame } from 'react-three-fiber';
 import ImageList from '../config/ImageList';
 import AppContext from '../contexts/AppContext';
@@ -10,8 +10,25 @@ let listIndex = 0;
 let MAX = 30000;
 
 export default function Particle() {
-  const [attributes, setAttribute] = useState({
-    /** @todo 空配列入れる */
+  const particleRef = useRef();
+  const [attributes, setAttribute] = useState(() => {
+    const count = 3;
+    let attr = {
+      positions: [],
+      endPositions: [],
+      alphas: [],
+      colors: [],
+      times: [],
+    };
+    let imageLen = ImageList.length;
+    for (let i = 0; imageLen > i; i++) {
+      attr.positions[i] = new Float32Array(MAX * count);
+      attr.endPositions[i] = new Float32Array(MAX * count);
+      attr.alphas[i] = new Float32Array(MAX * count);
+      attr.colors[i] = new Float32Array(MAX * count);
+      attr.times[i] = new Float32Array(MAX);
+    }
+    return attr;
   });
   const ua = useContext(AppContext);
   MAX = useMemo(() => {
@@ -23,26 +40,33 @@ export default function Particle() {
   useEffect(() => {
     const f = async () => {
       const imagePositions = await createImagePositions();
-      const attribute = await createAttributes(imagePositions, MAX);
+      const attribute = await createAttributes(attributes, imagePositions, MAX);
+      console.log(attribute);
       setAttribute(attribute);
+      // console.log(attributes.positions[listIndex]);
     };
     f();
   }, []);
-  console.log(attributes);
   // const initImage = async () => {
   //   const imagePositions = await createImagePositions();
   //   const attribute = await createAttributes(imagePositions, MAX);
   // }
   // initImage();
-  // useFrame(() => {
-    
-  // });
+  useFrame(() => {
+    console.log(particleRef);
+    particleRef.current.attributes.position.needsUpdate = true
+  });
   return (
     <>
     <points>
-    <bufferGeometry attach="geometry">
-    <bufferAttribute attachObject={['attributes', 'position']} count={attributes.positions[listIndex].length / 3} array={attributes.positions[listIndex]} itemSize={3} />
-    </bufferGeometry>
+      <bufferGeometry attach="geometry" ref={particleRef}>
+        <bufferAttribute
+          needsUpdate={true}
+          attachObject={['attributes', 'position']}
+          count={attributes.positions[listIndex].length / 3}
+          array={attributes.positions[listIndex]} itemSize={3}
+        />
+      </bufferGeometry>
     </points>
     </>
   )
@@ -76,6 +100,7 @@ function setImagePosition(image, canvas) {
   ctx.drawImage(image, 0, 0);
   const data = ctx.getImageData(0, 0, image.width, image.height);
   const imageData = data.data;
+  
   for (let y = 0; y < image.height; y++) {
     for (let x = 0; x < image.width; x++ ) {
       const num = 4 * (image.width * y + x) + 3;
@@ -101,23 +126,12 @@ function setImagePosition(image, canvas) {
 /**
  * createAttributes
  */
-function createAttributes(imagePositions, MAX) {
+function createAttributes(attributes, imagePositions, MAX) {
   return new Promise((resolve) => {
     const count = 3;
-    let attr = {
-      positions: [],
-      endPositions: [],
-      alphas: [],
-      colors: [],
-      times: [],
-    };
+    let attr = attributes;
     let imageLen = imagePositions.length;
     for (let i = 0; imageLen > i; i++) {
-      attr.positions[i] = new Float32Array(MAX * count);
-      attr.endPositions[i] = new Float32Array(MAX * count);
-      attr.alphas[i] = new Float32Array(MAX * count);
-      attr.colors[i] = new Float32Array(MAX * count);
-      attr.times[i] = new Float32Array(MAX);
       const datas = imagePositions[i];
       const dataLen = datas.length;
       for (let n = 0; n < MAX; n++) {
