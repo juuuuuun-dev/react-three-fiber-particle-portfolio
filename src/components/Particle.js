@@ -22,7 +22,16 @@ export default function Particle() {
     }
     return 30000;
   }, [ ua ]);
-  const [attributes, setAttribute] = useState(() => {
+  const [ bufferAttribute ] = useState(() => {
+    return {
+      positions: [],
+      endPositions: [],
+      alphas: [],
+      colors: [],
+      times: [],
+    };
+  });
+  const [ attributes ] = useState(() => {
     const count = 3;
     let attr = {
       positions: [],
@@ -46,11 +55,22 @@ export default function Particle() {
     const f = async () => {
       const imagePositions = await createImagePositions();
       const attribute = await createAttributes(attributes, imagePositions, MAX);
-      setAttribute(attribute);
-      // console.log(attributes.positions[listIndex]);
+      const imageLen = ImageList.length;
+      for (let i = 0; imageLen > i; i++) {
+        bufferAttribute.positions[i] = new THREE.BufferAttribute(attribute.positions[i], 3);
+        bufferAttribute.endPositions[i] = new THREE.BufferAttribute(attribute.endPositions[i], 3);
+        bufferAttribute.times[i] = new THREE.BufferAttribute(attribute.times[i], 1);
+        bufferAttribute.alphas[i] = new THREE.BufferAttribute(attribute.alphas[i], 1);
+        bufferAttribute.colors[i] = new THREE.BufferAttribute(attribute.colors[i], 3);
+      }
+      particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
+      particleRef.current.geometry.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
+      particleRef.current.geometry.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+      particleRef.current.geometry.setAttribute('aTime', bufferAttribute.times[listIndex]);
+      particleRef.current.geometry.setAttribute('aColor', bufferAttribute.colors[listIndex]);
     };
     f();
-  }, [ attributes, MAX ]);
+  }, [ bufferAttribute, attributes, MAX ]);
   console.log(MAX)
   const mouse = new THREE.Vector2();
   const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
@@ -65,15 +85,12 @@ export default function Particle() {
     theta += (mouse.x / 3 - theta) / 10;
     camera.position.z = 15 * Math.cos(theta);
     camera.position.x = 20 * Math.sin(theta);
+    camera.position.y = 80 * theta + 100;
     camera.lookAt(new THREE.Vector3())
     particleRef.current.geometry.attributes.position.needsUpdate = true;
     particleRef.current.material.uniforms.uTime.value = time;
     particleRef.current.material.needsUpdate = true;
     
-    // particleRef.current.geometry.setAttribute('aTarget', new THREE.BufferAttribute(attributes.endPositions[listIndex], 3));
-    // particleRef.current.geometry.setAttribute('aTime', new THREE.BufferAttribute(attributes.times[listIndex], 1));
-    // particleRef.current.geometry.setAttribute('aAlpha', new THREE.BufferAttribute(attributes.alphas[listIndex], 1));
-    // particleRef.current.geometry.setAttribute('aColor', new THREE.BufferAttribute(attributes.colors[listIndex], 3));
     mousePos.x += (targetMousePos.x - mousePos.x) * .1;
     mousePos.y += (targetMousePos.y - mousePos.y) * .1;
     updatePositin(mousePos, particleRef.current.geometry.attributes);
@@ -84,14 +101,14 @@ export default function Particle() {
     if (ImageList.length <= listIndex) {
       listIndex = 0;
     }
-    console.log(listIndex);
-    particleRef.current.geometry.setAttribute('position', new THREE.BufferAttribute(attributes.positions[listIndex], 3));
-    // particleRef.current.geometry.setAttribute('aTarget', attributes.endPositions[listIndex]);
+
+    particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
+    // @todo こいつどうするか
     particleRef.current.geometry.setAttribute('aTarget', new THREE.BufferAttribute(attributes.endPositions[listIndex], 3));
-    // @todo newじゃなくて固定
-    particleRef.current.geometry.setAttribute('aTime', new THREE.BufferAttribute(attributes.times[listIndex], 1));
-    particleRef.current.geometry.setAttribute('aAlpha', new THREE.BufferAttribute(attributes.alphas[listIndex], 1));
-    particleRef.current.geometry.setAttribute('aColor', new THREE.BufferAttribute(attributes.colors[listIndex], 3));
+
+    particleRef.current.geometry.setAttribute('aTime', bufferAttribute.times[listIndex]);
+    particleRef.current.geometry.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+    particleRef.current.geometry.setAttribute('aColor', bufferAttribute.colors[listIndex]);
   });
   const maxMouseXPos = 4;
   const maxMouseYPos = 10;
@@ -116,32 +133,33 @@ export default function Particle() {
   });
 
 
-function updatePositin(mousePos, index) {
-  const count = 3;
-  // スマホは除外
-  for (var i = 0; i < MAX; i++) {
-    if (i % 2 !== 0) continue;
-    let targetX = attributes.endPositions[listIndex][i * count] - (mousePos.tx / 2);
-    targetX = targetX < 80 ? targetX : Math.random() * 80;
-    targetX = targetX > -60 ? targetX : Math.random() * -60;
-    let targetY = attributes.endPositions[listIndex][i * count + 1] + (mousePos.ty / 2);
-    targetY = targetY < 200 ? targetY : Math.random() * 200;
-    targetY = targetY > -200 ? targetY : Math.random() * -200;
-    attributes.endPositions[listIndex][i * count] = targetX;
-    attributes.endPositions[listIndex][i * count + 1] = targetY;
-    attributes.endPositions[listIndex][i * count + 2] = range(0, 0);
+  function updatePositin(mousePos, index) {
+    const count = 3;
+    // スマホは除外
+    for (var i = 0; i < MAX; i++) {
+      if (i % 2 !== 0) continue;
+      let targetX = attributes.endPositions[listIndex][i * count] - (mousePos.tx / 2);
+      targetX = targetX < 80 ? targetX : Math.random() * 80;
+      targetX = targetX > -60 ? targetX : Math.random() * -60;
+      let targetY = attributes.endPositions[listIndex][i * count + 1] + (mousePos.ty / 2);
+      targetY = targetY < 200 ? targetY : Math.random() * 200;
+      targetY = targetY > -200 ? targetY : Math.random() * -200;
+      attributes.endPositions[listIndex][i * count] = targetX;
+      attributes.endPositions[listIndex][i * count + 1] = targetY;
+      attributes.endPositions[listIndex][i * count + 2] = range(0, 0);
+    }
   }
-}
 
   return (
     <>
-    <points ref={particleRef} onUpdate={self => console.log('props have been updated')}>
+    <points ref={particleRef}>
       <bufferGeometry attach="geometry">
         <bufferAttribute
           needsUpdate={true}
           attachObject={['attributes', 'position']}
-          count={attributes.positions[listIndex].length / 3}
-          array={attributes.positions[listIndex]} itemSize={3}
+          count={new Float32Array(MAX)}
+          array={new Float32Array(MAX * 3)}
+          itemSize={3}
         />
       </bufferGeometry>
       <shaderMaterial
@@ -165,10 +183,8 @@ function createImagePositions() {
     let positions = [];
     const listLen = ImageList.length;
     for (let i = 0; listLen > i; i++) {
-      await LoadImage(ImageList[i].src)
-        .then(image => {
-          positions[i] = setImagePosition(image, canvas);
-        })
+      const image = await LoadImage(ImageList[i].src);
+      positions[i] = setImagePosition(image, canvas);
     }
     resolve(positions);
   });
@@ -214,8 +230,8 @@ function createAttributes(attributes, imagePositions, MAX) {
     const count = 3;
     let attr = attributes;
     let imageLen = imagePositions.length;
+    
     for (let i = 0; imageLen > i; i++) {
-      
       const datas = imagePositions[i];
       const datasLen = datas.length;
       for (let n = 0; n < MAX; n++) {
