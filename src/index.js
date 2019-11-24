@@ -1,10 +1,12 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Particle from './components/Particle';
-import AppContext from './contexts/AppContext';
+import IndexContext from './contexts/IndexContext';
 import * as THREE from 'three/src/Three';
 import { Canvas } from 'react-three-fiber';
+import { getDevice } from './helpers/UserAgent';
+
 
 import * as serviceWorker from './serviceWorker';
 
@@ -14,33 +16,20 @@ export default function Main() {
   }, []);
 
   return (
-    <AppContext.Provider value={{ ua }}>
+    <>
+    <IndexContext.Provider value={ua}>
       <Canvas
           className='canvas'
-          camera={{ position: [-5, 100, 250], near: 0.1, fov: 45, up: [0,1,0], zoom:1, far: 10000, }}
+          camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0,1,0], zoom:1, far: 10000, }}
           onCreated={ ({ gl, camera }) => {
             gl.setClearColor(new THREE.Color("#ffffff"))
           }}
         >
           <Particle />
         </Canvas>
-    </AppContext.Provider>
+    </IndexContext.Provider>
+    </>
   );
-}
-
-/**
- * ua
- * とりあえずここで
- */
-const getDevice = () => {
-  const ua = navigator.userAgent;
-  if(ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0){
-    return 'sp';
-  }else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
-      return 'tablet';
-  }else{
-      return 'pc';
-  }
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));

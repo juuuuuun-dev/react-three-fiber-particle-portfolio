@@ -61,7 +61,6 @@ async function imagesInit() {
   const canvas = document.createElement("canvas");
   imagePositions = await createImagePositions(canvas);
   attributes = await createAttributes(imagePositions);
-  console.log(attributes);
   init();
 }
 
@@ -233,14 +232,16 @@ function loop(){
     deltaY += (Math.cos(mousePos.ty))/220;
     camera.position.z = 15 * Math.cos(theta);
     camera.position.x = 20 * Math.sin(theta);
+    console.log(camera.position);
     camera.lookAt(new THREE.Vector3())
-    console.log(camera)
     // add mouse
     mousePos.x += (targetMousePos.x - mousePos.x) * .1;
     mousePos.y += (targetMousePos.y - mousePos.y) * .1;
     particle.material.uniforms.uMousePosition.value = new THREE.Vector2(mousePos.x, mousePos.y);
     particle.material.uniforms.uTime.value = time;
+    // console.log(attributes.endPositions[0]);
     updatePositin(mousePos, imageIndex);
+    
     // particle.geometry.setAttribute('position', new THREE.BufferAttribute( attributes.positions[imageIndex], 3));
     particle.geometry.setAttribute('aTarget', new THREE.BufferAttribute( attributes.endPositions[imageIndex], 3));
 
