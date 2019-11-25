@@ -17,7 +17,6 @@ export default function Main() {
 
   return (
     <>
-    <IndexContext.Provider value={ua}>
       <Canvas
           className='canvas'
           camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0,1,0], zoom:1, far: 10000, }}
@@ -25,9 +24,11 @@ export default function Main() {
             gl.setClearColor(new THREE.Color("#ffffff"))
           }}
         >
-          <Particle />
+          {/* Canvasの外だとContextが取得できない */}
+          <IndexContext.Provider value={ua}>
+            <Particle />
+          </IndexContext.Provider>
         </Canvas>
-    </IndexContext.Provider>
     </>
   );
 }

@@ -5,23 +5,21 @@ import IndexContext from '../contexts/IndexContext';
 import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
-import { getDevice } from '../helpers/UserAgent';
 
 let listIndex = 0;
 let time = 0;
 let theta = 0;
 export default function Particle() {
-  // const ua = useContext(IndexContext);
-  const ua = getDevice();
+  const ua = useContext(IndexContext);
   const clock = new THREE.Clock();
-  console.log('start');
-  console.log(ua)
   let MAX = useMemo(() => {
     if (ua === 'sp') {
       return 10000;
     }
     return 30000;
   }, [ ua ]);
+  console.log('start');
+  console.log({ua, MAX})
   const [ bufferAttribute ] = useState(() => {
     return {
       positions: [],
@@ -71,7 +69,6 @@ export default function Particle() {
     };
     f();
   }, [ bufferAttribute, attributes, MAX ]);
-  console.log(MAX)
   const mouse = new THREE.Vector2();
   const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
   const targetMousePos = { x: 0, y: 0 };
@@ -93,7 +90,9 @@ export default function Particle() {
     
     mousePos.x += (targetMousePos.x - mousePos.x) * .1;
     mousePos.y += (targetMousePos.y - mousePos.y) * .1;
+
     updatePositin(mousePos, particleRef.current.geometry.attributes);
+  
   });
 
   window.addEventListener('click', function(e){
@@ -104,7 +103,8 @@ export default function Particle() {
 
     particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
     // @todo こいつどうするか
-    particleRef.current.geometry.setAttribute('aTarget', new THREE.BufferAttribute(attributes.endPositions[listIndex], 3));
+    // particleRef.current.geometry.setAttribute('aTarget', new THREE.BufferAttribute(attributes.endPositions[listIndex], 3));
+    particleRef.current.geometry.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
 
     particleRef.current.geometry.setAttribute('aTime', bufferAttribute.times[listIndex]);
     particleRef.current.geometry.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
@@ -135,9 +135,24 @@ export default function Particle() {
 
   function updatePositin(mousePos, index) {
     const count = 3;
-    // スマホは除外
+    // console.log(bufferAttribute.endPositions[listIndex])
     for (var i = 0; i < MAX; i++) {
       if (i % 2 !== 0) continue;
+
+      // bufferAttr @ todo これは無理らしい isInterleavedBufferAttribute VM488 1.chunk.js:76224 Uncaught TypeError: Cannot read property 'isInterleavedBufferAttribute' of undefined
+      // if (bufferAttribute.endPositions[listIndex] && bufferAttribute.endPositions[listIndex].array) {
+      //   let bufferTargetX = bufferAttribute.endPositions[listIndex].array[i * count] - (mousePos.tx / 2);
+      //   bufferTargetX = bufferTargetX < 80 ? bufferTargetX : Math.random() * 80;
+      //   bufferTargetX = bufferTargetX > -60 ? bufferTargetX : Math.random() * -60;
+      //   let bufferTargetY = bufferAttribute.endPositions[listIndex].array[i * count + 1] + (mousePos.ty / 2);
+      //   bufferTargetY = bufferTargetY < 200 ? bufferTargetY : Math.random() * 200;
+      //   bufferTargetY = bufferTargetY > -200 ? bufferTargetY : Math.random() * -200;
+      //   bufferAttribute.endPositions[listIndex].array[i * count] = bufferTargetX;
+      //   bufferAttribute.endPositions[listIndex].array[i * count + 1] = bufferTargetY;
+      //   bufferAttribute.endPositions[listIndex].array[i * count + 2] = range(0, 0);
+      // }
+      
+      // attr
       let targetX = attributes.endPositions[listIndex][i * count] - (mousePos.tx / 2);
       targetX = targetX < 80 ? targetX : Math.random() * 80;
       targetX = targetX > -60 ? targetX : Math.random() * -60;
