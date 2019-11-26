@@ -84,14 +84,18 @@ export default function Particle() {
     camera.position.x = 20 * Math.sin(theta);
     camera.position.y = 80 * theta + 100;
     camera.lookAt(new THREE.Vector3())
+
+    // mousePos.x += mousePos.px * .01;
+    // mousePos.y += (targetMousePos.y - mousePos.y) * .01;
+    console.log(mousePos.x);
     particleRef.current.geometry.attributes.position.needsUpdate = true;
     particleRef.current.material.uniforms.uTime.value = time;
     particleRef.current.material.needsUpdate = true;
     
-    mousePos.x += (targetMousePos.x - mousePos.x) * .1;
-    mousePos.y += (targetMousePos.y - mousePos.y) * .1;
 
     updatePositin(mousePos, particleRef.current.geometry.attributes);
+    particleRef.current.material.uniforms.uMousePosition.value = mousePos;
+
   
   });
 
@@ -122,12 +126,12 @@ export default function Particle() {
     mousePos.px = mousePos.x / window.innerWidth;
     mousePos.py = 1.0 - mousePos.y / window.innerHeight;
     
-    mousePos.tx = event.clientX - (window.innerWidth / 2);
-    mousePos.ty = event.clientY - (window.innerHeight / 2);
-    mousePos.tx = mousePos.tx > maxMouseXPos ? maxMouseXPos : mousePos.tx;
-    mousePos.tx = mousePos.tx < -maxMouseXPos ? -maxMouseXPos : mousePos.tx;
-    mousePos.ty = mousePos.ty > maxMouseYPos ? maxMouseYPos : mousePos.ty;
-    mousePos.ty = mousePos.ty < -maxMouseYPos ? -maxMouseYPos : mousePos.ty;
+    mousePos.x = event.clientX - (window.innerWidth / 2);
+    mousePos.y = event.clientY - (window.innerHeight / 2);
+    mousePos.x = mousePos.x > maxMouseXPos ? maxMouseXPos : mousePos.x;
+    mousePos.x = mousePos.x < -maxMouseXPos ? -maxMouseXPos : mousePos.x;
+    mousePos.y = mousePos.y > maxMouseYPos ? maxMouseYPos : mousePos.y;
+    mousePos.y = mousePos.y < -maxMouseYPos ? -maxMouseYPos : mousePos.y;
     targetMousePos.x = mousePos.px;
     targetMousePos.y = mousePos.py;
   });

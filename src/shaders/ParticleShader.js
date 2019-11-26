@@ -12,7 +12,7 @@ const ParticleShader = {
     attribute vec3 aTarget;
     
     uniform float uTime;
-    uniform vec2 uMousePosition;
+    uniform vec4 uMousePosition;
     
     varying float vAlpha;
     varying vec3 vColor;
@@ -36,10 +36,10 @@ const ParticleShader = {
         vec3 pos;
     
         if(rate < 2.){
-            pos = mix(position, aTarget, rate);
+            pos = mix(position, aTarget * uMousePosition.x, rate);
         }else{
             float fract = rate + 1.0;
-            pos = mix(position, aTarget, 1.0 + fract * fract);
+            pos = mix(position, aTarget - uMousePosition.x, 1.0 + fract * fract);
         }
     
         vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
