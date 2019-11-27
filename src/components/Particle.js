@@ -87,7 +87,6 @@ export default function Particle() {
 
     // mousePos.x += mousePos.px * .01;
     // mousePos.y += (targetMousePos.y - mousePos.y) * .01;
-    console.log(mousePos.x);
     particleRef.current.geometry.attributes.position.needsUpdate = true;
     particleRef.current.material.uniforms.uTime.value = time;
     particleRef.current.material.needsUpdate = true;
@@ -119,21 +118,30 @@ export default function Particle() {
   document.addEventListener('mousemove', (event) => {
     event.preventDefault();
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    mouse.y = ( event.clientY / window.innerHeight ) * 2 - 1;
+    // mouse.x = mouse.x * 4;
+
+    console.log(mouse.x) 
+
+    mousePos.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mousePos.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    mousePos.x = mousePos.x * 2;
+    mousePos.y = mousePos.y * 2;
+
+    // mousePos.x = event.clientX;
+    // mousePos.y = event.clientY;
+    // mousePos.px = mousePos.x / window.innerWidth;
+    // mousePos.py = 1.0 - mousePos.y / window.innerHeight;
     
-    mousePos.x = event.clientX;
-    mousePos.y = event.clientY;
-    mousePos.px = mousePos.x / window.innerWidth;
-    mousePos.py = 1.0 - mousePos.y / window.innerHeight;
-    
-    mousePos.x = event.clientX - (window.innerWidth / 2);
-    mousePos.y = event.clientY - (window.innerHeight / 2);
-    mousePos.x = mousePos.x > maxMouseXPos ? maxMouseXPos : mousePos.x;
-    mousePos.x = mousePos.x < -maxMouseXPos ? -maxMouseXPos : mousePos.x;
-    mousePos.y = mousePos.y > maxMouseYPos ? maxMouseYPos : mousePos.y;
-    mousePos.y = mousePos.y < -maxMouseYPos ? -maxMouseYPos : mousePos.y;
-    targetMousePos.x = mousePos.px;
-    targetMousePos.y = mousePos.py;
+    // mousePos.x = event.clientX - (window.innerWidth / 2);
+    // mousePos.y = event.clientY - (window.innerHeight / 2);
+    // mousePos.x = mousePos.x > maxMouseXPos ? maxMouseXPos : mousePos.x;
+    // mousePos.x = mousePos.x < -maxMouseXPos ? -maxMouseXPos : mousePos.x;
+    // mousePos.y = mousePos.y > maxMouseYPos ? maxMouseYPos : mousePos.y;
+    // mousePos.y = mousePos.y < -maxMouseYPos ? -maxMouseYPos : mousePos.y;
+    // targetMousePos.x = mousePos.px;
+    // targetMousePos.y = mousePos.py;
+    console.log(mousePos)
   });
 
 
@@ -143,19 +151,6 @@ export default function Particle() {
     for (var i = 0; i < MAX; i++) {
       if (i % 2 !== 0) continue;
 
-      // bufferAttr @ todo これは無理らしい isInterleavedBufferAttribute VM488 1.chunk.js:76224 Uncaught TypeError: Cannot read property 'isInterleavedBufferAttribute' of undefined
-      // if (bufferAttribute.endPositions[listIndex] && bufferAttribute.endPositions[listIndex].array) {
-      //   let bufferTargetX = bufferAttribute.endPositions[listIndex].array[i * count] - (mousePos.tx / 2);
-      //   bufferTargetX = bufferTargetX < 80 ? bufferTargetX : Math.random() * 80;
-      //   bufferTargetX = bufferTargetX > -60 ? bufferTargetX : Math.random() * -60;
-      //   let bufferTargetY = bufferAttribute.endPositions[listIndex].array[i * count + 1] + (mousePos.ty / 2);
-      //   bufferTargetY = bufferTargetY < 200 ? bufferTargetY : Math.random() * 200;
-      //   bufferTargetY = bufferTargetY > -200 ? bufferTargetY : Math.random() * -200;
-      //   bufferAttribute.endPositions[listIndex].array[i * count] = bufferTargetX;
-      //   bufferAttribute.endPositions[listIndex].array[i * count + 1] = bufferTargetY;
-      //   bufferAttribute.endPositions[listIndex].array[i * count + 2] = range(0, 0);
-      // }
-      
       // attr
       let targetX = attributes.endPositions[listIndex][i * count] - (mousePos.tx / 2);
       targetX = targetX < 80 ? targetX : Math.random() * 80;

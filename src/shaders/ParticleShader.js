@@ -29,17 +29,17 @@ const ParticleShader = {
     
     void main(){
     
-        float curTime = mod(uTime + aTime, 1.);
+        float curTime = mod(uTime + aTime, 1.3);
         // float rate = curTime/3.; 
         // todo この数字をattributeに
         float rate = curTime/10.; 
         vec3 pos;
     
-        if(rate < 2.){
+        if(rate < 1.){
             pos = mix(position, aTarget * uMousePosition.x, rate);
         }else{
             float fract = rate + 1.0;
-            pos = mix(position, aTarget - uMousePosition.x, 1.0 + fract * fract);
+            pos = mix(position, aTarget * uMousePosition.y, 1.0 + fract * fract);
         }
     
         vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
