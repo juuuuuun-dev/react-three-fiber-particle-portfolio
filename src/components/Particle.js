@@ -18,8 +18,6 @@ export default function Particle() {
     }
     return 30000;
   }, [ ua ]);
-  console.log('start');
-  console.log({ua, MAX})
   const [ bufferAttribute ] = useState(() => {
     return {
       positions: [],
@@ -61,11 +59,13 @@ export default function Particle() {
         bufferAttribute.alphas[i] = new THREE.BufferAttribute(attribute.alphas[i], 1);
         bufferAttribute.colors[i] = new THREE.BufferAttribute(attribute.colors[i], 3);
       }
-      particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
-      particleRef.current.geometry.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
-      particleRef.current.geometry.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-      particleRef.current.geometry.setAttribute('aTime', bufferAttribute.times[listIndex]);
-      particleRef.current.geometry.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+      console.log(bufferAttribute);
+      geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+      geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+      geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
+      geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+      geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+      geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
     };
     f();
   }, [ bufferAttribute, attributes, MAX ]);
@@ -73,6 +73,9 @@ export default function Particle() {
   const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
   const targetMousePos = { x: 0, y: 0 };
   const particleRef = useRef();
+  const geometryRef = useRef();
+  const materialRef = useRef();
+
   const { camera } = useThree();
   useRender(() => {
     // camera.position.y += 0.01;
@@ -83,19 +86,20 @@ export default function Particle() {
     camera.position.z = 15 * Math.cos(theta);
     camera.position.x = 20 * Math.sin(theta);
     camera.position.y = 80 * theta + 100;
-    camera.lookAt(new THREE.Vector3())
+    camera.lookAt(new THREE.Vector3());
+    console.log(camera);
 
     // mousePos.x += mousePos.px * .01;
     // mousePos.y += (targetMousePos.y - mousePos.y) * .01;
     particleRef.current.geometry.attributes.position.needsUpdate = true;
-    particleRef.current.material.uniforms.uTime.value = time;
-    particleRef.current.material.needsUpdate = true;
     
+    materialRef.current.uniforms.uTime.value = time;
+    materialRef.current.needsUpdate = true;
+    materialRef.current.uniforms.uMousePosition.value = mousePos;
 
     updatePositin(mousePos, particleRef.current.geometry.attributes);
-    particleRef.current.material.uniforms.uMousePosition.value = mousePos;
+    // particleRef.current.material.uniforms.uMousePosition.value = mousePos;
 
-  
   });
 
   window.addEventListener('click', function(e){
@@ -121,27 +125,12 @@ export default function Particle() {
     mouse.y = ( event.clientY / window.innerHeight ) * 2 - 1;
     // mouse.x = mouse.x * 4;
 
-    console.log(mouse.x) 
-
+    
     mousePos.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mousePos.y = -( event.clientY / window.innerHeight ) * 2 + 1;
     mousePos.x = mousePos.x * 2;
     mousePos.y = mousePos.y * 2;
 
-    // mousePos.x = event.clientX;
-    // mousePos.y = event.clientY;
-    // mousePos.px = mousePos.x / window.innerWidth;
-    // mousePos.py = 1.0 - mousePos.y / window.innerHeight;
-    
-    // mousePos.x = event.clientX - (window.innerWidth / 2);
-    // mousePos.y = event.clientY - (window.innerHeight / 2);
-    // mousePos.x = mousePos.x > maxMouseXPos ? maxMouseXPos : mousePos.x;
-    // mousePos.x = mousePos.x < -maxMouseXPos ? -maxMouseXPos : mousePos.x;
-    // mousePos.y = mousePos.y > maxMouseYPos ? maxMouseYPos : mousePos.y;
-    // mousePos.y = mousePos.y < -maxMouseYPos ? -maxMouseYPos : mousePos.y;
-    // targetMousePos.x = mousePos.px;
-    // targetMousePos.y = mousePos.py;
-    console.log(mousePos)
   });
 
 
@@ -167,16 +156,20 @@ export default function Particle() {
   return (
     <>
     <points ref={particleRef}>
-      <bufferGeometry attach="geometry">
+      <bufferGeometry
+        attach="geometry"
+        ref={geometryRef}
+      >
         <bufferAttribute
           needsUpdate={true}
           attachObject={['attributes', 'position']}
-          count={new Float32Array(MAX)}
+          count={MAX}
           array={new Float32Array(MAX * 3)}
           itemSize={3}
         />
       </bufferGeometry>
       <shaderMaterial
+        ref={materialRef}
         attach="material"
         name="material"
         args={[ParticleShader]}
