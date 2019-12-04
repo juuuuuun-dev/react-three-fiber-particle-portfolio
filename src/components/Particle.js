@@ -6,10 +6,10 @@ import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
 
-let listIndex = 0;
-let time = 0;
-let theta = 0;
 export default function Particle() {
+  let listIndex = 0;
+  let time = 0;
+  let theta = 0;
   const ua = useContext(IndexContext);
   const clock = new THREE.Clock();
   let MAX = useMemo(() => {
@@ -27,25 +27,7 @@ export default function Particle() {
       times: [],
     };
   });
-  const [ attributes ] = useState(() => {
-    const count = 3;
-    let attr = {
-      positions: [],
-      endPositions: [],
-      alphas: [],
-      colors: [],
-      times: [],
-    };
-    let imageLen = ImageList.length;
-    for (let i = 0; imageLen > i; i++) {
-      attr.positions[i] = new Float32Array(MAX * count);
-      attr.endPositions[i] = new Float32Array(MAX * count);
-      attr.alphas[i] = new Float32Array(MAX);
-      attr.colors[i] = new Float32Array(MAX * count);
-      attr.times[i] = new Float32Array(MAX);
-    }
-    return attr;
-  });
+  const attributes = [];
 
   useEffect(() => {
     const f = async () => {
@@ -72,7 +54,7 @@ export default function Particle() {
   const mouse = new THREE.Vector2();
   const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
   const targetMousePos = { x: 0, y: 0 };
-  const particleRef = useRef();
+  // const particleRef = useRef();
   const geometryRef = useRef();
   const materialRef = useRef();
 
@@ -87,17 +69,16 @@ export default function Particle() {
     camera.position.x = 20 * Math.sin(theta);
     camera.position.y = 80 * theta + 100;
     camera.lookAt(new THREE.Vector3());
-    console.log(camera);
-
+    
     // mousePos.x += mousePos.px * .01;
     // mousePos.y += (targetMousePos.y - mousePos.y) * .01;
-    particleRef.current.geometry.attributes.position.needsUpdate = true;
+    // particleRef.current.geometry.attributes.position.needsUpdate = true;
     
     materialRef.current.uniforms.uTime.value = time;
     materialRef.current.needsUpdate = true;
     materialRef.current.uniforms.uMousePosition.value = mousePos;
 
-    updatePositin(mousePos, particleRef.current.geometry.attributes);
+    // updatePositin(mousePos, particleRef.current.geometry.attributes);
     // particleRef.current.material.uniforms.uMousePosition.value = mousePos;
 
   });
@@ -107,15 +88,18 @@ export default function Particle() {
     if (ImageList.length <= listIndex) {
       listIndex = 0;
     }
+    console.log('click setAttribute');
 
-    particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
+    geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+    // particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
+    
     // @todo こいつどうするか
     // particleRef.current.geometry.setAttribute('aTarget', new THREE.BufferAttribute(attributes.endPositions[listIndex], 3));
-    particleRef.current.geometry.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
+    geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
 
-    particleRef.current.geometry.setAttribute('aTime', bufferAttribute.times[listIndex]);
-    particleRef.current.geometry.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-    particleRef.current.geometry.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+    geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+    geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+    geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
   });
   const maxMouseXPos = 4;
   const maxMouseYPos = 10;
@@ -155,7 +139,7 @@ export default function Particle() {
 
   return (
     <>
-    <points ref={particleRef}>
+    <points>
       <bufferGeometry
         attach="geometry"
         ref={geometryRef}
@@ -235,10 +219,22 @@ function setImagePosition(image, canvas) {
 function createAttributes(attributes, imagePositions, MAX) {
   return new Promise((resolve) => {
     const count = 3;
-    let attr = attributes;
+    // let attr = attributes;
+    let attr = {
+      positions: [],
+      endPositions: [],
+      alphas: [],
+      colors: [],
+      times: [],
+    };
     let imageLen = imagePositions.length;
     
     for (let i = 0; imageLen > i; i++) {
+      attr.positions[i] = new Float32Array(MAX * count);
+      attr.endPositions[i] = new Float32Array(MAX * count);
+      attr.alphas[i] = new Float32Array(MAX);
+      attr.colors[i] = new Float32Array(MAX * count);
+      attr.times[i] = new Float32Array(MAX);
       const datas = imagePositions[i];
       const datasLen = datas.length;
       for (let n = 0; n < MAX; n++) {

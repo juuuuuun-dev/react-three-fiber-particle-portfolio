@@ -20,9 +20,9 @@ export default function Main() {
       <Canvas
           className='canvas'
           camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0,1,0], zoom:1, far: 10000, }}
-          onCreated={ ({ gl, camera }) => {
-            gl.setClearColor(new THREE.Color("#ffffff"))
-          }}
+          // onCreated={ ({ gl, camera }) => {
+          //   gl.setClearColor(new THREE.Color("#ffffff"))
+          // }}
         >
           {/* Canvasの外だとContextが取得できない */}
           <IndexContext.Provider value={ua}>
