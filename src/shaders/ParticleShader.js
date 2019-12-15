@@ -3,6 +3,7 @@ import { Vector2 } from 'three'
 const ParticleShader = {
   uniforms: {
     uTime: { type: 'f', value: 0 },
+    uCoefficient: { type: 'f', value:0 },
     uMousePosition: { type: 'v2', value:  new Vector2(0.5, 0.5) },
   },
   vertexShader: `
@@ -13,7 +14,7 @@ const ParticleShader = {
     
     uniform float uTime;
     uniform vec4 uMousePosition;
-    
+    uniform float uCoefficient;
     varying float vAlpha;
     varying vec3 vColor;
     
@@ -36,7 +37,7 @@ const ParticleShader = {
         vec3 pos;
     
         if(rate < 1.){
-            pos = mix(position, aTarget * uMousePosition.x, rate);
+            pos = mix(position, aTarget * uMousePosition.x * -uCoefficient, rate);
         }else{
             float fract = rate + 1.0;
             pos = mix(position, aTarget * uMousePosition.y, 1.0 + fract * fract);
