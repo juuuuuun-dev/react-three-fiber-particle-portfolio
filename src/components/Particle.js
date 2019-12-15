@@ -7,10 +7,11 @@ import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
 
 export default function Particle() {
-  let listIndex = 0;
+  // let listIndex = 0;
   let time = 0;
   let theta = 0;
-  const ua = useContext(IndexContext);
+  const { ua, listIndex } = useContext(IndexContext);
+  console.log(ua)
   const clock = new THREE.Clock();
   let MAX = useMemo(() => {
     if (ua === 'sp') {
@@ -88,10 +89,11 @@ export default function Particle() {
   });
 
   window.addEventListener('click', function(e){
-    listIndex += 1;
-    if (ImageList.length <= listIndex) {
-      listIndex = 0;
-    }
+    // listIndex += 1;
+    // if (ImageList.length <= listIndex) {
+    //   listIndex = 0;
+    // }
+    console.log(listIndex)
     coefficient = 15.6;
 
     geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);

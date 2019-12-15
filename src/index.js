@@ -8,9 +8,10 @@ import * as THREE from 'three/src/Three';
 import { Canvas } from 'react-three-fiber';
 import { getDevice } from './helpers/UserAgent';
 
-
-import * as serviceWorker from './serviceWorker';
-
+// import * as serviceWorker from './serviceWorker';
+let isScroll = false;
+let listIndex = 0;
+const listLength = 3;
 export default function Main() {
   const ua = useMemo(() => {
     return getDevice();
@@ -27,9 +28,9 @@ export default function Main() {
           }}
         >
           {/* Canvasの外だとContextが取得できない */}
-          <IndexContext.Provider value={ua}>
+          <IndexContext.Provider value={{ua, listIndex}}>
             <Suspense fallback={null}>
-              <MoveText hAlign="left" position={[0, 4.2, 0]} children="REACT" />
+              <MoveText position={[0, 4.2, 0]} />
             </Suspense>
             <Particle />
           </IndexContext.Provider>
@@ -40,7 +41,21 @@ export default function Main() {
 
 // @todo add listIndex
 function onScroll(e) {
-  console.log('onScroll');
+  if (isScroll) return;
+  const deltaY = e.deltaY;
+  isScroll = true;
+
+  if (deltaY < 0) {
+    listIndex -= 1;
+    if (listIndex < 0) {
+      listIndex += listLength;
+    }
+  } else {
+    listIndex = (listIndex + 1) % listLength;
+  }
+  setTimeout(() => {
+    isScroll = false;
+  }, 500);
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));
@@ -48,4 +63,4 @@ ReactDOM.render(<Main />, document.getElementById('root'));
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// serviceWorker.unregister();
