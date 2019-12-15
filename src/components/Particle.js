@@ -41,7 +41,6 @@ export default function Particle() {
         bufferAttribute.alphas[i] = new THREE.BufferAttribute(attribute.alphas[i], 1);
         bufferAttribute.colors[i] = new THREE.BufferAttribute(attribute.colors[i], 3);
       }
-      console.log(bufferAttribute);
       geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
       geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
       geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
@@ -50,18 +49,22 @@ export default function Particle() {
       geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
     };
     f();
-  }, [ bufferAttribute, attributes, MAX ]);
+  }, [ bufferAttribute, listIndex, attributes, MAX ]);
   const mouse = new THREE.Vector2();
   const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
-  const targetMousePos = { x: 0, y: 0 };
-  // const particleRef = useRef();
   const geometryRef = useRef();
   const materialRef = useRef();
 
   const { camera } = useThree();
+  let coefficient = 0.6;
+  const targetCoefficient = 0.1;
   useRender(() => {
     // camera.position.y += 0.01;
     // camera.position.z += 0.01;
+    coefficient += (targetCoefficient - coefficient) * .1;
+    // console.log(coefficient);
+    // console.log(coefficient);
+    // console.log(coefficient);
     let delta = clock.getDelta();
     time += delta;
     theta += (mouse.x / 3 - theta) / 10;
@@ -75,6 +78,7 @@ export default function Particle() {
     // particleRef.current.geometry.attributes.position.needsUpdate = true;
     
     materialRef.current.uniforms.uTime.value = time;
+    materialRef.current.uniforms.uCoefficient.value = coefficient;
     materialRef.current.needsUpdate = true;
     materialRef.current.uniforms.uMousePosition.value = mousePos;
 
@@ -88,12 +92,11 @@ export default function Particle() {
     if (ImageList.length <= listIndex) {
       listIndex = 0;
     }
-    console.log('click setAttribute');
+    coefficient = 15.6;
 
     geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
     // particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
     
-    // @todo こいつどうするか
     // particleRef.current.geometry.setAttribute('aTarget', new THREE.BufferAttribute(attributes.endPositions[listIndex], 3));
     geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
 
@@ -101,8 +104,6 @@ export default function Particle() {
     geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
     geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
   });
-  const maxMouseXPos = 4;
-  const maxMouseYPos = 10;
   document.addEventListener('mousemove', (event) => {
     event.preventDefault();
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -118,24 +119,7 @@ export default function Particle() {
   });
 
 
-  function updatePositin(mousePos, index) {
-    const count = 3;
-    // console.log(bufferAttribute.endPositions[listIndex])
-    for (var i = 0; i < MAX; i++) {
-      if (i % 2 !== 0) continue;
-
-      // attr
-      let targetX = attributes.endPositions[listIndex][i * count] - (mousePos.tx / 2);
-      targetX = targetX < 80 ? targetX : Math.random() * 80;
-      targetX = targetX > -60 ? targetX : Math.random() * -60;
-      let targetY = attributes.endPositions[listIndex][i * count + 1] + (mousePos.ty / 2);
-      targetY = targetY < 200 ? targetY : Math.random() * 200;
-      targetY = targetY > -200 ? targetY : Math.random() * -200;
-      attributes.endPositions[listIndex][i * count] = targetX;
-      attributes.endPositions[listIndex][i * count + 1] = targetY;
-      attributes.endPositions[listIndex][i * count + 2] = range(0, 0);
-    }
-  }
+  
 
   return (
     <>
