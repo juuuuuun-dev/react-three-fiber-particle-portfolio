@@ -9,6 +9,7 @@ import { Canvas } from 'react-three-fiber';
 import { getDevice } from './helpers/UserAgent';
 
 // import * as serviceWorker from './serviceWorker';
+// @todo zustand
 let isScroll = false;
 let listIndex = 0;
 const listLength = 3;
@@ -16,6 +17,7 @@ export default function Main() {
   const ua = useMemo(() => {
     return getDevice();
   }, []);
+  let isScroll = false;
 
   return (
     <>
@@ -53,6 +55,7 @@ function onScroll(e) {
   } else {
     listIndex = (listIndex + 1) % listLength;
   }
+  console.log(listIndex);
   setTimeout(() => {
     isScroll = false;
   }, 500);
