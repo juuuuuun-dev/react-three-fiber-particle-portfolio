@@ -7,10 +7,10 @@ import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
 
 export default function Particle() {
-  // let listIndex = 0;
+  let listIndex = 0;
   let time = 0;
   let theta = 0;
-  const { ua, listIndex } = useContext(IndexContext);
+  const { ua } = useContext(IndexContext);
   console.log(ua)
   const clock = new THREE.Clock();
   let MAX = useMemo(() => {
@@ -19,15 +19,22 @@ export default function Particle() {
     }
     return 30000;
   }, [ ua ]);
-  const [ bufferAttribute ] = useState(() => {
-    return {
-      positions: [],
-      endPositions: [],
-      alphas: [],
-      colors: [],
-      times: [],
-    };
-  });
+  const bufferAttribute = {
+    positions: [],
+    endPositions: [],
+    alphas: [],
+    colors: [],
+    times: [],
+  }
+  // const [ bufferAttribute ] = useState(() => {
+  //   return {
+  //     positions: [],
+  //     endPositions: [],
+  //     alphas: [],
+  //     colors: [],
+  //     times: [],
+  //   };
+  // });
   const attributes = [];
 
   useEffect(() => {
@@ -89,10 +96,10 @@ export default function Particle() {
   });
 
   window.addEventListener('click', function(e){
-    // listIndex += 1;
-    // if (ImageList.length <= listIndex) {
-    //   listIndex = 0;
-    // }
+    listIndex += 1;
+    if (ImageList.length <= listIndex) {
+      listIndex = 0;
+    }
     console.log(listIndex)
     coefficient = 15.6;
 
