@@ -1,9 +1,12 @@
 import * as THREE from 'three'
 import React, { useMemo, useRef, useState } from 'react'
 import { useLoader, useUpdate, useFrame } from 'react-three-fiber'
+import useStore from '../contexts/store'
 
 export default function({ children, vAlign = 'center', hAlign = 'center', size = 1, color = '#000000', ...props }) {
   const ref = useRef();
+  const count = useStore(state => state.count);
+  console.log({count})
   const [listIndex , setListIndex] = useState(0);
   useFrame(({ clock }) => {
     // ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z = Math.sin(clock.getElapsedTime()) * 0.3
