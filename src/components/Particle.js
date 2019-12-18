@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState, useEffect, useContext } from 'react';
+import React, { useRef, useMemo, useEffect, useContext } from 'react';
 import { useRender, useThree } from 'react-three-fiber';
 import ImageList from '../config/ImageList';
 import IndexContext from '../contexts/IndexContext';
@@ -6,10 +6,13 @@ import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
 
+
 export default function Particle() {
+
   let listIndex = 0;
   let time = 0;
   let theta = 0;
+  // @todo contextなくしてみる
   const { ua } = useContext(IndexContext);
   console.log(ua)
   const clock = new THREE.Clock();
@@ -103,15 +106,12 @@ export default function Particle() {
     console.log(listIndex)
     coefficient = 15.6;
 
-    geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-    // particleRef.current.geometry.setAttribute('position', bufferAttribute.positions[listIndex]);
-    
-    // particleRef.current.geometry.setAttribute('aTarget', new THREE.BufferAttribute(attributes.endPositions[listIndex], 3));
-    geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
+    // geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+    // geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
 
-    geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
-    geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-    geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+    // geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+    // geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+    // geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
   });
   document.addEventListener('mousemove', (event) => {
     event.preventDefault();
