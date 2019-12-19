@@ -1,7 +1,6 @@
 import React, { useRef, useMemo, useEffect, useContext } from 'react';
 import { useRender, useThree } from 'react-three-fiber';
 import ImageList from '../config/ImageList';
-import IndexContext from '../contexts/IndexContext';
 import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
@@ -12,16 +11,16 @@ export default function Particle() {
   let listIndex = 0;
   let time = 0;
   let theta = 0;
-  // @todo contextなくしてみる
-  const { ua } = useContext(IndexContext);
-  console.log(ua)
+  let MAX = 30000;
   const clock = new THREE.Clock();
-  let MAX = useMemo(() => {
-    if (ua === 'sp') {
-      return 10000;
-    }
-    return 30000;
-  }, [ ua ]);
+  // @todo contextなくしてみる
+  // const { ua } = useContext(IndexContext);
+  // let MAX = useMemo(() => {
+  //   if (ua === 'sp') {
+  //     return 10000;
+  //   }
+  //   return 30000;
+  // }, [ ua ]);
   const bufferAttribute = {
     positions: [],
     endPositions: [],
