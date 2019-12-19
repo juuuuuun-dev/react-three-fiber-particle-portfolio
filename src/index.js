@@ -20,7 +20,8 @@ export default function Main() {
   }, []);
 
   const increase = useStore(state => state.increase)
-  const reset = useStore(state => state.reset)
+  // const reset = useStore(state => state.reset)
+  const actions = useStore(state => state.actions)
 
 
 const onScroll = (e) => {
@@ -48,7 +49,8 @@ const onScroll = (e) => {
       <Canvas
           className='canvas'
           camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0,1,0], zoom:1, far: 10000, }}
-          onWheel={onScroll}
+          // onWheel={onScroll}
+          onWheel={actions.onScroll}
           onClick={increase}
           onCreated={ ({ gl, camera }) => {
             gl.setClearColor(new THREE.Color("#ffffff"))

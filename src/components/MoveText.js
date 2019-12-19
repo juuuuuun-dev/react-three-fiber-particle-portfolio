@@ -5,9 +5,9 @@ import useStore from '../contexts/store'
 
 export default function({ children, vAlign = 'center', hAlign = 'center', size = 1, color = '#000000', ...props }) {
   const ref = useRef();
-  const count = useStore(state => state.count);
-  console.log({count})
-  const [listIndex , setListIndex] = useState(0);
+  const listIndex = useStore(state => state.listIndex);
+  console.log({listIndex})
+  // const [listIndex , setListIndex] = useState(0);
   useFrame(({ clock }) => {
     // ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z = Math.sin(clock.getElapsedTime()) * 0.3
     ref.current.rotation.x = 30;
@@ -19,26 +19,21 @@ export default function({ children, vAlign = 'center', hAlign = 'center', size =
   const textList = [
     { top: 'MOVING', bottom: 'FORWARD'},
     { top: 'ABOUT', bottom: 'ME'},
+    { top: 'CONTACT', bottom: 'ME'},
   ]
   // click
   const textListLen = textList.length;
-  document.addEventListener('mousewheel', function() {
-    console.log('mousewheel')
-    // console.log(listIndex);
-    // if (textListLen <= listIndex) {
-    //   setListIndex(0)
-    // } else {
-    //   setListIndex(prevent => prevent+1)
-    // }
-    setListIndex(() => {
-      console.log('click')
-      if (textList.length <= listIndex+1) {
-        return 0;
-      } else {
-        return listIndex+1;
-      }
-    },[textListLen]);
-  },  {passive: true});
+  // document.addEventListener('mousewheel', function() {
+  //   console.log('mousewheel')
+  //   setListIndex(() => {
+  //     console.log('click')
+  //     if (textList.length <= listIndex+1) {
+  //       return 0;
+  //     } else {
+  //       return listIndex+1;
+  //     }
+  //   },[textListLen]);
+  // },  {passive: true});
 
   return (
     <group ref={ref}>
