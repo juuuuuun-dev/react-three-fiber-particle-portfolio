@@ -8,6 +8,7 @@
     "react-scripts": "3.2.0",
     "react-spring": "^8.0.27",
     "react-three-fiber": "^3.0.14",
+    "react-use-gesture": "^6.0.14",
     "redux": "^4.0.4",
     "three": "^0.110.0",
     "zustand": "^2.2.1"

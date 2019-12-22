@@ -18,3 +18,7 @@ body,
   user-select: none;
   overflow: hidden;
 }
+
+.canvas{
+  height: 100%;
+}

@@ -1,26 +1,30 @@
-import React, { useRef, useMemo, useEffect, useContext } from 'react';
-import { useRender, useThree } from 'react-three-fiber';
+import React, { useRef, useMemo, useEffect } from 'react';
+import { useFrame, useThree } from 'react-three-fiber';
 import ImageList from '../config/ImageList';
 import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
+import useStore from '../contexts/store'
+import shallow from 'zustand/shallow'
 
+// todo zustan shallow試す
 
 export default function Particle() {
-
+  // const navList = useStore(state => state.navList);
+  // const navListIndex = useMemo(() => {};
+  const navListLength = useStore(state => state.navListLength);
+  const ua = useStore(state => state.ua);
+  // listIndexをstate(store)にしてしまうと再描画が起こるのでただの変数に
   let listIndex = 0;
   let time = 0;
   let theta = 0;
-  let MAX = 30000;
   const clock = new THREE.Clock();
-  // @todo contextなくしてみる
-  // const { ua } = useContext(IndexContext);
-  // let MAX = useMemo(() => {
-  //   if (ua === 'sp') {
-  //     return 10000;
-  //   }
-  //   return 30000;
-  // }, [ ua ]);
+  let MAX = useMemo(() => {
+    if (ua === 'sp') {
+      return 10000;
+    }
+    return 30000;
+  }, [ ua ]);
   const bufferAttribute = {
     positions: [],
     endPositions: [],
@@ -28,22 +32,13 @@ export default function Particle() {
     colors: [],
     times: [],
   }
-  // const [ bufferAttribute ] = useState(() => {
-  //   return {
-  //     positions: [],
-  //     endPositions: [],
-  //     alphas: [],
-  //     colors: [],
-  //     times: [],
-  //   };
-  // });
   const attributes = [];
 
   useEffect(() => {
     const f = async () => {
       const imagePositions = await createImagePositions();
       const attribute = await createAttributes(attributes, imagePositions, MAX);
-      const imageLen = ImageList.length;
+      const imageLen = navListLength;
       for (let i = 0; imageLen > i; i++) {
         bufferAttribute.positions[i] = new THREE.BufferAttribute(attribute.positions[i], 3);
         bufferAttribute.endPositions[i] = new THREE.BufferAttribute(attribute.endPositions[i], 3);
@@ -59,7 +54,7 @@ export default function Particle() {
       geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
     };
     f();
-  }, [ bufferAttribute, listIndex, attributes, MAX ]);
+  }, [ bufferAttribute, listIndex, attributes, MAX, navListLength ]);
   const mouse = new THREE.Vector2();
   const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
   const geometryRef = useRef();
@@ -68,13 +63,8 @@ export default function Particle() {
   const { camera } = useThree();
   let coefficient = 0.6;
   const targetCoefficient = 0.1;
-  useRender(() => {
-    // camera.position.y += 0.01;
-    // camera.position.z += 0.01;
+  useFrame(() => {
     coefficient += (targetCoefficient - coefficient) * .1;
-    // console.log(coefficient);
-    // console.log(coefficient);
-    // console.log(coefficient);
     let delta = clock.getDelta();
     time += delta;
     theta += (mouse.x / 3 - theta) / 10;
@@ -97,21 +87,20 @@ export default function Particle() {
 
   });
 
-  window.addEventListener('click', function(e){
+  window.addEventListener('wheel', function(e){
     listIndex += 1;
-    if (ImageList.length <= listIndex) {
+    if (navListLength <= listIndex) {
       listIndex = 0;
     }
-    console.log(listIndex)
     coefficient = 15.6;
 
-    // geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-    // geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
-
-    // geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
-    // geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-    // geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+    geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+    geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
+    geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+    geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+    geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
   });
+
   document.addEventListener('mousemove', (event) => {
     event.preventDefault();
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -188,7 +177,7 @@ function setImagePosition(image, canvas) {
       const num = 4 * (image.width * y + x) + 3;
       const alpha = imageData[num];
       if (alpha !== 0) {
-        const rRate = x / image.width * .9;
+        const rRate = x / image.width * 1.3;
         const gRate = y / image.height * .2;
         const color = new THREE.Color();
         color.setRGB(rRate, gRate, 1);
@@ -236,7 +225,7 @@ function createAttributes(attributes, imagePositions, MAX) {
         attr.positions[i][n * count + 2] = data.y;
 
         attr.endPositions[i][n * count] = range(0, 40);
-        attr.endPositions[i][n * count + 1] = range(0, 20);
+        attr.endPositions[i][n * count + 1] = range(0, 40);
         attr.endPositions[i][n * count + 2] = range(0, 0);
 
         attr.times[i][n] = count * Math.random();
