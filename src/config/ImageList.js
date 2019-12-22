@@ -1,15 +1,24 @@
-import img0 from '../images/a.png';
-import img1 from '../images/b.png';
+import img0 from '../images/contact.png';
+import img1 from '../images/about.png';
 import img2 from '../images/cover.png';
 
 export default [
   {
-    src: img0,
-  },
-  {
-    src: img1,
-  },
-  {
+    title: 'Home',
     src: img2,
+    topText: 'CONTINUE',
+    bottomText: 'LEARNING',
+  },
+  {
+    title: 'About',
+    src: img1,
+    topText: 'ABOUT',
+    bottomText: 'ME',
+  },
+  {
+    title: 'Contact',
+    src: img0,
+    topText: 'CONTACT',
+    bottomText: 'ME',
   },
 ];
