@@ -13,11 +13,14 @@ const [ useStore ] = create((set, get) => ({
   coefficient: 0.6,
   targetCoefficient: 0.1,
   isScroll: false,
-  
+  scrollCallbacks: [],
   ua: getDevice(),
   actions: {
     setCoefficient(d) {
       set(() => ({coefficient: d}));
+    },
+    setScrollCollbacks(fn) {
+      set((state) => ({scrollCallbacks: [...state.scrollCallbacks, fn]}));
     },
     // @todo 差分y stateに setTimeoutも
     useYScroll(props) {
@@ -26,7 +29,6 @@ const [ useStore ] = create((set, get) => ({
         ({ xy: [, cy], previous: [, py] }) => {
           if (get().isScroll) return;
           let index = get().navListIndex;
-          
           const diffY = cy - py;
           if (diffY > 10 || diffY < -10) {
             set(() => ({ isScroll: true }));
@@ -40,11 +42,12 @@ const [ useStore ] = create((set, get) => ({
             }
             set(() => ({ navListIndex: index }));
             set(() => ({ coefficient: 3.0 }));
+
+            get().scrollCallbacks.map(fn => fn());
             setTimeout(() => {
               set(() => ({ isScroll: false }))
             }, 500);
           }
-         
           return cy - py;
         }, []
       )
