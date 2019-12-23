@@ -5,13 +5,13 @@ import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
 import useStore from '../contexts/store'
-import shallow from 'zustand/shallow'
 
 // todo zustan shallow試す
 
 export default function Particle() {
   // const navList = useStore(state => state.navList);
-  // const navListIndex = useMemo(() => {};
+  const actions = useStore(state => state.actions);
+  
   const navListLength = useStore(state => state.navListLength);
   const ua = useStore(state => state.ua);
   // listIndexをstate(store)にしてしまうと再描画が起こるのでただの変数に
@@ -86,19 +86,21 @@ export default function Particle() {
     // particleRef.current.material.uniforms.uMousePosition.value = mousePos;
 
   });
-
-  window.addEventListener('wheel', function(e){
+  const scrollCollback = () => {
     listIndex += 1;
     if (navListLength <= listIndex) {
       listIndex = 0;
     }
     coefficient = 15.6;
-
     geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
     geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
     geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
     geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
     geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+  };
+  actions.setScrollCollbacks(scrollCollback);
+  window.addEventListener('wheel', function(e){
+    // scrollCollback();
   });
 
   document.addEventListener('mousemove', (event) => {
@@ -106,8 +108,6 @@ export default function Particle() {
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = ( event.clientY / window.innerHeight ) * 2 - 1;
     // mouse.x = mouse.x * 4;
-
-    
     mousePos.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mousePos.y = -( event.clientY / window.innerHeight ) * 2 + 1;
     mousePos.x = mousePos.x * 2;
