@@ -4,10 +4,9 @@ import { useLoader, useUpdate, useFrame } from 'react-three-fiber'
 import useStore from '../contexts/store'
 
 export default function({ children, vAlign = 'center', hAlign = 'center', size = 1, color = '#000000', ...props }) {
-  const ref = useRef();
   const navListIndex = useStore(state => state.navListIndex);
   const navList = useStore(state => state.navList);
-  const coefficient = useStore(state => state. coefficient);
+  const coefficient = useStore(state => state.coefficient);
   const targetCoefficient = useStore(state => state.targetCoefficient);
   const actions = useStore(state => state.actions);
 
@@ -23,8 +22,6 @@ export default function({ children, vAlign = 'center', hAlign = 'center', size =
     // ref.current.needsUpdate = true;
 
     navList.map((item, index) => {
-      // console.log(refs.current[index].current);
-      
       refs.current[index].current.rotation.x = 30;
       refs.current[index].current.rotation.y = Math.PI * 0.28;
       if (index === navListIndex) {
@@ -38,7 +35,6 @@ export default function({ children, vAlign = 'center', hAlign = 'center', size =
     })
   });
 
-  
   return (
     <>
     {navList.map((item, index) => {
@@ -49,10 +45,6 @@ export default function({ children, vAlign = 'center', hAlign = 'center', size =
         </group>
       )
     })}
-    {/* <group ref={ref}>
-      <Text hAlign="left" position={[-5, -10, 20]} children={navList[navListIndex].topText} />
-      <Text hAlign="left" position={[-5, -15, 20]} children={navList[navListIndex].bottomText} />
-    </group> */}
     </>
   )
 }

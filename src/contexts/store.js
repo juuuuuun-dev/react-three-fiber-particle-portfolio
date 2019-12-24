@@ -43,7 +43,7 @@ const [ useStore ] = create((set, get) => ({
             set(() => ({ navListIndex: index }));
             set(() => ({ coefficient: 3.0 }));
 
-            get().scrollCallbacks.map(fn => fn());
+            get().scrollCallbacks.map(fn => fn(index));
             setTimeout(() => {
               set(() => ({ isScroll: false }))
             }, 500);
