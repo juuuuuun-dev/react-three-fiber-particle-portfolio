@@ -1,41 +1,55 @@
-import React, { useMemo, useRef, Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Particle from './components/Particle';
-import MoveText from './components/MoveText';
-import * as THREE from 'three/src/Three';
-import { Canvas } from 'react-three-fiber';
+import useStore from './contexts/store';
+import { Contact } from "./pages/contact";
+import { About } from "./pages/about";
+import { Index } from "./pages/index";
+// import { Switch, Route, BrowserRouter, NavLink } from "react-router-dom";
 
-import useStore from './contexts/store'
+import './index.scss';
 
 export default function Main() {
-  const canvasRef = useRef();
-  const actions = useStore(state => state.actions);
-  actions.useYScroll({ domTarget: canvasRef });
+  // const canvasRef = useRef();
+  // const actions = useStore(state => state.actions);
+  // actions.useYScroll({ domTarget: canvasRef });
+  const actions = useStore((state) => state.actions);
+  window.onresize = actions.onResize;
+  window.onpopstate = actions.onPopState;
   return (
     <>
-      <div
+      <Index />
+      <About />
+      <Contact />
+      {/* <BrowserRouter>
+        <Switch>
+          <Route path="/contact/" exact component={Contact} />
+        </Switch>
+      </BrowserRouter> */}
+      {/* <div
         ref={canvasRef}
         className='canvas'
         >
       <Canvas
           camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0,1,0], zoom:1, far: 10000, }}
-          // onWheel={actions.onScroll}
-          // onClick={}
+          // onPointerMove={actions.updateMouse}
           onCreated={ ({ gl, camera }) => {
-            gl.setClearColor(new THREE.Color("#ffffff"))
+            gl.setClearColor("white")
           }}
         >
-          {/* Canvasの外だとContextが取得できない */}
-          <Suspense fallback={null}>
-            <MoveText position={[0, 4.2, 0]} />
-          </Suspense>
-          <Particle />
+            <Suspense fallback={null}>
+              <MoveText position={[0, 4.2, 0]} />
+            </Suspense>
+            <Particle />
         </Canvas>
-        </div>
+        </div> */}
+        {/* <Router>
+          <Switch>
+            <Route path="/" exact component={Index} />
+            <Route path="/contact/" exact component={Contact} />
+          </Switch>
+        </Router> */}
     </>
   );
 }
-
 
 ReactDOM.render(<Main />, document.getElementById('root'));
