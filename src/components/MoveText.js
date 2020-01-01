@@ -1,58 +1,106 @@
 import * as THREE from 'three'
-import React, { useMemo, useRef, createRef } from 'react'
+import React, { useMemo, useRef, createRef, useState } from 'react'
 import { useLoader, useUpdate, useFrame } from 'react-three-fiber'
 import useStore from '../contexts/store'
+import { useSpring, config } from 'react-spring'
+// import{ HoverTextShader } from '../shaders/HoverTextShader'
 
-export default function({ children, vAlign = 'center', hAlign = 'center', size = 1, color = '#000000', ...props }) {
+
+// @todo scroll で unhover
+export default function({ children, vAlign = 'center', hAlign = 'left', size = 1, color = '#000000', ...props }) {
   const navListIndex = useStore(state => state.navListIndex);
   const navList = useStore(state => state.navList);
+  const navListLength = useStore(state => state.navListLength);
   const coefficient = useStore(state => state.coefficient);
+
   const targetCoefficient = useStore(state => state.targetCoefficient);
   const actions = useStore(state => state.actions);
-
   const refs = useRef(navList.map(() => createRef()));
+  const [hovered, setHoverd] = useState(false);
+  const canvasElem = document.getElementById('main');
   // let coefficient = 0.6;
   // const targetCoefficient = 0.1;
   useFrame(() => {
     actions.setCoefficient(coefficient + (targetCoefficient - coefficient) * .1);
-    // coefficient += (targetCoefficient - coefficient) * .1;
-    // ref.current.rotation.x = 30;
-    // ref.current.rotation.y = Math.PI * 0.28;
-    // ref.current.position.x = Math.tan(coefficient) * 10.;
-    // ref.current.needsUpdate = true;
-
-    navList.map((item, index) => {
-      refs.current[index].current.rotation.x = 30;
-      refs.current[index].current.rotation.y = Math.PI * 0.28;
-      if (index === navListIndex) {
+    // text
+    for (let i = 0; navListLength > i; i++) {
+      refs.current[i].current.rotation.x = 30;
+      refs.current[i].current.rotation.y = Math.PI * 0.28;
+      if (i === navListIndex) {
         refs.current[navListIndex].current.position.x = Math.tan(coefficient) * 10.;
       } else {
-        refs.current[index].current.position.x = 100;
+        refs.current[i].current.position.x = 100;
       }
-      // refs.current[index].current.position.x = Math.tan(coefficient) * 10. * ((navListIndex * 20) - index);
       refs.current[navListIndex].current.position.x = Math.tan(coefficient) * 10.;
-      refs.current[index].current.needsUpdate = true;
-    })
+      refs.current[i].current.needsUpdate = true;
+    }
+    refs.current[navListIndex].current.position.y = scale.value * 20;
   });
+  const { scale } = useSpring({ scale: hovered ? 1.5 : 1, config: config.stiff })
+
+  const hover = (e) => {
+    if (navList[navListIndex].path) {
+      setHoverd(true);
+      canvasElem.style.cursor = 'pointer';
+    }
+  }
+  const unhover = () => {
+    setHoverd(false);
+    canvasElem.style.cursor = 'default';
+  }
+  
+  const hadleClick = () => {
+    // history.push('/contact');
+    // actions.toggleContact();
+    if (navList[navListIndex].path) {
+      actions.toggleContents(navList[navListIndex].path);
+    }
+  }
 
   return (
     <>
-    {navList.map((item, index) => {
+    {navList.map((_item, index) => {
       return (
-        <group ref={refs.current[index]} key={index}>
-          <Text hAlign="left" position={[-5, -10, 20]} children={navList[index].topText} />
-          <Text hAlign="left" position={[-5, -15, 20]} children={navList[index].bottomText} /> 
-        </group>
+        //
+        <mesh ref={refs.current[index]} key={index} onPointerOver={hover} onPointerOut={unhover}>
+          <Text hAlign={hAlign} vAlign={vAlign} position={[-5, -11, 20]} children={navList[index].topText} />
+          <Text hAlign={hAlign} vAlign={vAlign} position={[-5, -15, 20]} children={navList[index].bottomText} />
+          <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} position={[-5, -9.5, 19]} children={navList[index].topText} />
+        </mesh>
       )
     })}
     </>
   )
 }
 
-function Text({ children, vAlign = 'center', hAlign = 'center', size = 1, color = '#000000', ...props }) {
+// textGeometryだと当たり判定が正確すぎるため
+const HitArea = ({ item, children, vAlign, hAlign, size = 1, color = '#000000', ...props }) => {
+  // 文字数によりsizeを設定
+  const xSclae = Math.max(item.topText.length, item.bottomText.length) * 3.6;
+  const mesh = useUpdate(
+    self => {
+      const size = new THREE.Vector3()
+      self.geometry.computeBoundingBox()
+      self.geometry.boundingBox.getSize(size);
+      self.position.x = hAlign === 'center' ? -size.x / 3 : hAlign === 'right' ? 0 : -size.x / 2.4
+      self.position.y = vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y
+    },
+    [children]
+  )
+  return (
+    <group {...props}>
+      <mesh ref={mesh}>
+        <planeBufferGeometry attach="geometry" args={[xSclae, 8]} />
+        <meshBasicMaterial opacity={0.0} color="black" attach="material" transparent={true} />
+      </mesh>
+    </group>
+    )
+}
+
+function Text({ children, vAlign, hAlign, size = 1, color = '#ffffff', ...props }) {
   const font = useLoader(THREE.FontLoader, '/font/bold.blob')
-  const config = useMemo(
-    () => ({ font, size: 45, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: 1, bevelSize: 1.5, bevelOffset: 0, bevelSegments: 1 }),
+  const textConfig = useMemo(
+    () => ({ font, size: 38, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: 1, bevelSize: 1.5, bevelOffset: 0, bevelSegments: 1 }),
     [font]
   )
   const mesh = useUpdate(
@@ -68,8 +116,8 @@ function Text({ children, vAlign = 'center', hAlign = 'center', size = 1, color 
   return (
     <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
       <mesh ref={mesh}>
-        <textGeometry needsUpdate={true} attach="geometry" args={[children, config]} />
-        <meshBasicMaterial transparent={true} color={new THREE.Color('#404ca6')} attach="material" />
+        <textGeometry needsUpdate={true} attach="geometry" args={[children, textConfig]} />
+        <meshBasicMaterial transparent={true} color={new THREE.Color(color)} attach="material" />
       </mesh>
     </group>
   )

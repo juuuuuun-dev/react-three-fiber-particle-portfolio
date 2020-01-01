@@ -30,6 +30,10 @@ export default function Particle() {
     times: [],
   }
   const attributes = [];
+  const mouse = new THREE.Vector2();
+  const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
+  const geometryRef = useRef();
+  const materialRef = useRef();
 
   useEffect(() => {
     const f = async () => {
@@ -52,19 +56,16 @@ export default function Particle() {
     };
     f();
   }, [ bufferAttribute, listIndex, attributes, MAX, navListLength ]);
-  const mouse = new THREE.Vector2();
-  const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
-  const geometryRef = useRef();
-  const materialRef = useRef();
-
+  
   const { camera } = useThree();
   let coefficient = 0.6;
   const targetCoefficient = 0.1;
+  // @todo スマホは角度固定
   useFrame(() => {
     coefficient += (targetCoefficient - coefficient) * .1;
     let delta = clock.getDelta();
     time += delta;
-    theta += (mouse.x / 3 - theta) / 10;
+    theta += (mouse.x / 4 - theta) / 10;
     camera.position.z = 15 * Math.cos(theta);
     camera.position.x = 20 * Math.sin(theta);
     camera.position.y = 80 * theta + 100;
@@ -78,7 +79,7 @@ export default function Particle() {
     materialRef.current.uniforms.uCoefficient.value = coefficient;
     materialRef.current.needsUpdate = true;
     materialRef.current.uniforms.uMousePosition.value = mousePos;
-
+    
     // updatePositin(mousePos, particleRef.current.geometry.attributes);
     // particleRef.current.material.uniforms.uMousePosition.value = mousePos;
 
@@ -87,14 +88,16 @@ export default function Particle() {
   const scrollCollback = (index) => {
     listIndex = index;
     coefficient = 15.6;
-    geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-    geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
-    geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
-    geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-    geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+    if (geometryRef.current) {
+      geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+      geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
+      geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+      geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+      geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+    }
   };
   actions.setScrollCollbacks(scrollCollback);
-
+  
   document.addEventListener('mousemove', (event) => {
     event.preventDefault();
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -126,7 +129,6 @@ export default function Particle() {
         name="material"
         args={[ParticleShader]}
       />
-      
     </points>
     </>
   )
@@ -143,13 +145,13 @@ function createImagePositions() {
     const listLen = ImageList.length;
     for (let i = 0; listLen > i; i++) {
       const image = await LoadImage(ImageList[i].src);
-      positions[i] = setImagePosition(image, canvas);
+      positions[i] = setImagePosition(image, canvas, i);
     }
     resolve(positions);
   });
 }
 
-function setImagePosition(image, canvas) {
+function setImagePosition(image, canvas, index) {
   let pos = [];
   const scale = 10;
   canvas.width = image.width;
@@ -165,9 +167,10 @@ function setImagePosition(image, canvas) {
       const alpha = imageData[num];
       if (alpha !== 0) {
         const rRate = x / image.width * 1.3;
-        const gRate = y / image.height * .2;
+        const gRate = y / image.height * .9;
         const color = new THREE.Color();
-        color.setRGB(rRate, gRate, 1);
+        // color.setRGB(rRate, gRate, 1);
+        color.setRGB(rRate, .8, .85);
         const data = {
           x: (x - image.width / 2 + 9 * Math.random()) / scale,
           y: (y - image.height / 2) / scale,
