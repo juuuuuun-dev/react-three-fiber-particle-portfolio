@@ -1,8 +1,9 @@
 {
-  "name": "react-sample",
+  "name": "react-pf",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@juggle/resize-observer": "^2.5.0",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

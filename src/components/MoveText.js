@@ -73,7 +73,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
   )
 }
 
-// textGeometryだと当たり判定が正確すぎるため
+// htmlの当たり判定っぽくするため
 const HitArea = ({ item, children, vAlign, hAlign, size = 1, color = '#000000', ...props }) => {
   // 文字数によりsizeを設定
   const xSclae = Math.max(item.topText.length, item.bottomText.length) * 3.6;

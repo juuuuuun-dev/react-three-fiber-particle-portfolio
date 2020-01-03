@@ -8,6 +8,7 @@ import { upperCaseFirst } from "upper-case-first";
 
 
 const [ useStore ] = create((set, get) => ({
+  appTitle: "KATADA",
   navList: NavList,
   navListLength:NavList.length,
   navListIndex: 0,

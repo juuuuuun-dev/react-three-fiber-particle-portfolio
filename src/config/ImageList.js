@@ -12,14 +12,14 @@ export default [
     // bottomText: 'LEARNING',
   },
   {
-    title: 'About',
+    title: 'ABOUT',
     src: img1,
     topText: 'ABOUT',
     bottomText: 'ME',
     path: "/about"
   },
   {
-    title: 'Contact',
+    title: 'CONTACT',
     src: img0,
     topText: 'CONTACT',
     bottomText: 'ME',
