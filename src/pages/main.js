@@ -3,8 +3,9 @@ import Particle from "../components/Particle";
 import MoveText from "../components/MoveText";
 import { Canvas } from "react-three-fiber";
 import useStore from "../contexts/store";
+import polyfill from '@juggle/resize-observer'
 
-export function Index() {
+export function Main() {
   // const history = useHistory();
   const canvasRef = React.useRef();
   const actions = useStore(state => state.actions);
@@ -13,6 +14,7 @@ export function Index() {
     <>
       <div ref={canvasRef} className="canvas" id="main">
         <Canvas
+          resize={{polyfill}}
           camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0, 1, 0], zoom: 1, far: 10000 }}
           onCreated={ ({ gl }) => {
             gl.setClearColor("#43465a")

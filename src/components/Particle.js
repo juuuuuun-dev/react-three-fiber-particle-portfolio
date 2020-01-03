@@ -7,6 +7,10 @@ import ParticleShader from '../shaders/ParticleShader'
 import useStore from '../contexts/store'
 
 
+/**
+ * @todo loading
+ */
+
 export default function Particle() {
   const actions = useStore(state => state.actions);
   

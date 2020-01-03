@@ -8,7 +8,7 @@ export function About() {
   const actions = useStore(state => state.actions);
   
   const styles = useSpring({
-    top: showAbout ? '0px' : -windowHeight + 'px',
+    top: showAbout ? '0px' : windowHeight + 'px',
     // visibility: showContact ? 'visible' : 'hidden',
   }, [windowHeight])
   return (
