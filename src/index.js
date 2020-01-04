@@ -6,7 +6,7 @@ import { About } from "./pages/about";
 import { Main } from "./pages/main";
 import Header from "./components/Header";
 
-import './index.scss';
+import './scss/base.scss';
 
 const Index = () => {
   const appTitle = useStore(state => state.appTitle);

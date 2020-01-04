@@ -49,6 +49,12 @@ const [ useStore ] = create((set, get) => ({
         return name;
       }
     },
+    getContentData(title) {
+      const res = get().navList.filter(value => value.title === title);
+      if (res) {
+        return res[0];
+      }
+    },
     updateMouse({ clientX: x, clientY: y }) {
       get().mutation.mouse.set(x - window.innerWidth / 2, y - window.innerHeight / 2);
       get().mutation.mousePos.set(( x - window.innerWidth / 2 ) * 2 - 1, ( y - window.innerHeight / 2 ) * 2 - 1)

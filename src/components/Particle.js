@@ -9,6 +9,7 @@ import useStore from '../contexts/store'
 
 /**
  * @todo loading
+ * @todo contents表示時 text color
  */
 
 export default function Particle() {

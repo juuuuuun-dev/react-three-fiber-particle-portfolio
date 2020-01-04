@@ -1,0 +1,131 @@
+@import "reset";
+@import "variables";
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+
+html,
+body,
+#root {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 4px;
+  width: 100%;
+  height: 100%;
+  background-color: #43465a;
+  /* -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; */
+  overflow: hidden;
+}
+
+li {
+  list-style: none;
+}
+
+.canvas{
+  height: 100%;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: $global-padding;
+  height: 70px;
+  width: 100%;
+  z-index: 200;
+  color: #fff;
+  font-size: 12px;
+  h1 {
+    font-size: 12px;
+    float: left;
+  }
+  .nav {
+    position: absolute;
+    top: $global-margin;
+    right: $global-margin;
+
+    li {
+      float: left;
+      margin-left: 20px;
+    }
+  }
+}
+
+////////////////////
+// scroll
+////////////////////
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+background-color: rgba(0, 0, 10, .3);
+}
+// firefox
+.contents {
+  scrollbar-color: #2d2f3b #43465a;
+}
+
+////////////////////
+// contents
+////////////////////
+.contents {
+  // background: #43465a;
+  background: rgba(67,70,90, .85);
+  color: #fff;
+  position: fixed;
+  left: 0;
+  padding: $global-padding;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  // inner
+  &__inner {
+    height: 100%;
+    padding: 70px 0 0 0;
+    margin: 0 auto;
+  }
+  &__title {
+    display: inline-block;
+    font-weight: normal;
+    font-size: 2rem;
+    margin-bottom: $global-margin;
+    background: -webkit-linear-gradient(-40deg, #64cdc7, #ffcddd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .back-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 0px;
+    font-size: .7rem;
+    writing-mode: vertical-rl;
+    padding: 25px 5px;
+    background: #fff;
+    color: #43465a;
+    cursor: pointer;
+  }
+}
+
+// safari
+_::-webkit-full-page-media, _:future, :root .back-btn {
+  right: 10px;
+}
+
+////////////////////
+// media screen sm
+////////////////////
+@media screen and (max-width: $sm) {
+  .header {
+      padding: $global-padding $sm-global-pading;
+      .nav {
+        right: $sm-global-margin;
+      }
+  }
+  .contents{
+      padding: $sm-global-pading;
+  } 
+}
