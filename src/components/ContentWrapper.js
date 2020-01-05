@@ -9,7 +9,6 @@ export default function ContentWrapper({ contentTitle, children }) {
   const isShow = useStore(state => state[showName]);
   const windowHeight = useStore(state => state.windowHeight);
   const styles = useSpring({
-    // ref:contentRef,
     from: {
       top: windowHeight + 'px',
       opacity: 0,
@@ -19,12 +18,9 @@ export default function ContentWrapper({ contentTitle, children }) {
       opacity: isShow ? 1 : 0,
     }
   }, [windowHeight])
-
-  console.log(styles);
   return (
     <>
-      <div className="content-wrapper">
-        <animated.div className="contents contents__about" style={{ ...styles }}>
+        {/* <animated.div className="contents contents__about" style={{ ...styles }}> */}
           <div className="scroll-area">
             <div className="contents__inner">
               <h2 className="contents__title">{contentData.title}</h2>
@@ -35,8 +31,6 @@ export default function ContentWrapper({ contentTitle, children }) {
               <div className="contents__footer"></div>
             </div>
           </div>
-        </animated.div>
-      </div>
     </>
   )
 }

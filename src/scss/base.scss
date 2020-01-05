@@ -45,10 +45,10 @@ li {
     position: absolute;
     top: $global-margin;
     right: $global-margin;
-
     li {
       float: left;
       margin-left: 20px;
+      cursor: pointer;
     }
   }
 }

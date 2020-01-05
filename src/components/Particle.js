@@ -10,6 +10,7 @@ import useStore from '../contexts/store'
 /**
  * @todo loading
  * @todo contents表示時 text color
+ * @todo mouse 固定
  */
 
 export default function Particle() {
