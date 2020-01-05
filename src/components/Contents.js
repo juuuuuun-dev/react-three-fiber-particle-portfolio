@@ -3,6 +3,10 @@ import ContentWrapper from "./ContentWrapper";
 import useStore from "../contexts/store";
 import { useSprings, animated } from "react-spring";
 
+/**
+ * @todo useSprings collback
+ * @todo closed contents scroll top
+ */
 export default function Contents() {
   const showContent = useStore(state => state.showContent);
   const actions = useStore(state => state.actions);
@@ -12,7 +16,7 @@ export default function Contents() {
   const [ springs, setSprings ] = useSprings(navList.length, index => {
     let top = windowHeight + 'px';
     let opacity = 0;
-    if (showContent && showContent === navList[index].title) {
+    if (showContent && showContent === navList[index].path) {
       top = 0 + "px";
       opacity = 1;
     }
@@ -22,16 +26,78 @@ export default function Contents() {
       opacity,
     }
   });
-  /**
-   * @todo ここにanimation 
-   */
+  setSprings(index => {
+    let top = windowHeight + 'px';
+    let opacity = 0;
+    if (showContent && showContent === navList[index].path) {
+      top = 0 + "px";
+      opacity = 1;
+    }
+    return {
+      ref: refs[index],
+      top,
+      opacity,
+    }
+  })
+
   return (
     <>
     {springs.map((value, index) => {
         return (
-          <ContentWrapper contentTitle={navList[index].title} key={index}>
-            aa
-          </ContentWrapper>
+          <animated.div
+            key={index}
+            style={{...value}}
+            className="contents"
+          >
+            <ContentWrapper contentTitle={navList[index].title}>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <h3>center</h3>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <p className="text-lerge">lets create something
+              <br />beary great together!</p>
+              <h3>end</h3>
+            </ContentWrapper>
+          </animated.div>
         );
     })}
     </>

@@ -6,7 +6,6 @@ import useStore from "../contexts/store";
 import polyfill from '@juggle/resize-observer'
 
 export function Main() {
-  // const history = useHistory();
   const canvasRef = React.useRef();
   const actions = useStore(state => state.actions);
   actions.useYScroll({ domTarget: canvasRef });

@@ -18,8 +18,6 @@ const [ useStore ] = create((set, get) => ({
   scrollCallbacks: [],
   windowHeight: window.innerHeight,
   ua: getDevice(),
-  showContact: false, //@todo remove
-  showAbout: false, //@todo remove
   showContent: null,
   mutation: {
     mouse: new THREE.Vector2(-250, 50),
@@ -29,18 +27,13 @@ const [ useStore ] = create((set, get) => ({
     onResize() {
       set(() => ({ windowHeight: window.innerHeight }));
     },
+    // history
     onPopState() {
       const pathname = document.location.pathname;
       if (pathname === '/') {
-        set(() => ({ 
-          showContact: false,
-          showAbout: false,
-        }));
+        set(() => ({ showContent: false }));
       } else {
-        const showName = get().actions.getShowName(pathname);
-        if (showName) {
-          set(state => state[showName] = true);
-        }
+        set(state => state.showContent = pathname);
       }
     },
     getHasPathNavList() {
@@ -64,29 +57,20 @@ const [ useStore ] = create((set, get) => ({
       get().mutation.mousePos.set(( x - window.innerWidth / 2 ) * 2 - 1, ( y - window.innerHeight / 2 ) * 2 - 1)
     },
     toggleContents(pathname) {
-      const showName = get().actions.getShowName(pathname);
-        if (showName) {
-          set((state) => {
-            if (state[showName]) {
-              window.history.pushState('','', '/');
-            } else {
-              window.history.pushState('', '', pathname);
-            }
-            set(state => state[showName] = !state[showName]);
-          });
+      const showContent = get().showContent;
+      if (showContent) {
+        if (showContent === pathname) {
+          set(() => ({ showContent: null} ));
+          window.history.pushState('','', '/');
+        } else {
+          set(() => ({ showContent: pathname } ));
+          window.history.pushState('', '', pathname);
         }
+      } else {
+        set(() => ({ showContent: pathname } ));
+        window.history.pushState('', '', pathname);
+      }
     },
-    // toggleContact() {
-    //   set((state) => {
-    //     console.log(state.opendContact);
-    //     if (state.opendContact) {
-    //       window.history.pushState('','', '/');
-    //     } else {
-    //       window.history.pushState('','', '/contact');
-    //     }
-    //     return { opendContact: state.opendContact = !state.opendContact };
-    //   });
-    // },
     setCoefficient(d) {
       set(() => ({coefficient: d}));
     },
