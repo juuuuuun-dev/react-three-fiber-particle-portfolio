@@ -5,7 +5,7 @@ import { Contact } from "./pages/contact";
 import { About } from "./pages/about";
 import { Main } from "./pages/main";
 import Header from "./components/Header";
-
+import Contents from "./components/Contents";
 import './scss/base.scss';
 
 const Index = () => {
@@ -17,8 +17,10 @@ const Index = () => {
     <>
       <Header title={appTitle} />
       <Main />
+      <Contents />
+{/*       
       <About />
-      <Contact />
+      <Contact /> */}
     </>
   );
 }

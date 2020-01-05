@@ -76,17 +76,19 @@ background-color: rgba(0, 0, 10, .3);
   color: #fff;
   position: fixed;
   left: 0;
-  padding: $global-padding;
   z-index: 100;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  .scroll-area {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
   // inner
   &__inner {
     height: 100%;
-    padding: 70px 0 0 0;
-    margin: 0 auto;
+    padding: 70px $global-padding;
   }
   &__title {
     display: inline-block;
@@ -97,8 +99,14 @@ background-color: rgba(0, 0, 10, .3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+  &__footer {
+    margin-bottom: 30px;
+    height: 30px;
+  }
   .back-btn {
     position: absolute;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
     bottom: 30px;
     right: 0px;
     font-size: .7rem;
@@ -125,7 +133,7 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
         right: $sm-global-margin;
       }
   }
-  .contents{
-      padding: $sm-global-pading;
+  .contents__inner{
+      padding: 80px $sm-global-pading;
   } 
 }

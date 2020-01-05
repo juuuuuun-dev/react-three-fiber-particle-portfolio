@@ -18,8 +18,9 @@ const [ useStore ] = create((set, get) => ({
   scrollCallbacks: [],
   windowHeight: window.innerHeight,
   ua: getDevice(),
-  showContact: false,
-  showAbout: false,
+  showContact: false, //@todo remove
+  showAbout: false, //@todo remove
+  showContent: null,
   mutation: {
     mouse: new THREE.Vector2(-250, 50),
     mousePos: new THREE.Vector2(10, 10),
@@ -41,6 +42,9 @@ const [ useStore ] = create((set, get) => ({
           set(state => state[showName] = true);
         }
       }
+    },
+    getHasPathNavList() {
+      return get().navList.filter(value => value.path);
     },
     getShowName(pathname) {
       const res = get().navList.filter(value => value.path === pathname);
