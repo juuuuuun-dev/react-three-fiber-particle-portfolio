@@ -1,6 +1,6 @@
 import React from 'react';
 import useStore from '../contexts/store';
-import { useSprings, animated } from "react-spring";
+import { useSpring, useSprings, animated } from "react-spring";
 
 const Header = () => {
   const actions = useStore(state => state.actions);
@@ -18,14 +18,19 @@ const Header = () => {
       color,
     }
   }
-  const [ navSprings, setNavSprings ] = useSprings(navList.length, index => {
-    return springFunc(index);
-  });
+  const [ navSprings, setNavSprings ] = useSprings(navList.length, index => (springFunc(index)));
+  // @todo ぼかし
   setNavSprings(index => (springFunc(index)));
-  console.log(navSprings);
+  const headerSpring = useSpring({
+    color: showContent ? '#ccc' : "#fff",
+    backgroundColor: showContent ? "rgba(67,70,90, .8)" : "rgba(67,70,90, 0)",
+    // -ms-filter: blur(6px);
+    // filter: blur(6px);
+  });
+  console.log(showContent);
   return (
     <>
-      <div className="header">
+      <animated.div className="header" style={{ ...headerSpring }}>
         <h1 className="logo">{ appTitle }</h1>
         <ul className="nav">
         {navSprings.map((item, index) => {
@@ -40,7 +45,7 @@ const Header = () => {
           )
         })}
         </ul>
-      </div>
+      </animated.div>
     </>
   )
 }
