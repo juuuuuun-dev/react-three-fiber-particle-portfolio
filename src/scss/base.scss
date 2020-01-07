@@ -27,6 +27,9 @@ li {
   height: 100%;
 }
 
+////////////////////
+// header
+////////////////////
 .header {
   position: fixed;
   top: 0;
@@ -52,6 +55,11 @@ li {
     }
   }
 }
+// .header-contents {
+  // opacity: .8;
+  // backdrop-filter: blur(2px);
+  // background: rgba(67,70,90, .8);
+// }
 
 ////////////////////
 // scroll
