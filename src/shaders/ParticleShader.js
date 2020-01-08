@@ -40,7 +40,7 @@ const ParticleShader = {
             pos = mix(position, aTarget * uMousePosition.x * -uCoefficient, rate);
         }else{
             float fract = rate + 1.0;
-            pos = mix(position, aTarget * uMousePosition.y, 1.0 + fract * fract);
+            pos = mix(position, aTarget, 1.0 + fract * fract);
         }
     
         vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);

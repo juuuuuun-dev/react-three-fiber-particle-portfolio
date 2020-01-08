@@ -37,7 +37,9 @@ export default function Particle() {
   }
   const attributes = [];
   const mouse = new THREE.Vector2();
-  const mousePos = { x: 0, y: 0, px:0, py:0, tx:0, ty:0 };
+  mouse.x = -0.5;
+  mouse.y = 0;
+  const mousePos = { x: -1.3, y: 0, px:0, py:0, tx:0, ty:0 };
   const geometryRef = useRef();
   const materialRef = useRef();
 
@@ -76,18 +78,11 @@ export default function Particle() {
     camera.position.x = 20 * Math.sin(theta);
     camera.position.y = 80 * theta + 100;
     camera.lookAt(new THREE.Vector3());
-    
-    // mousePos.x += mousePos.px * .01;
-    // mousePos.y += (targetMousePos.y - mousePos.y) * .01;
-    // particleRef.current.geometry.attributes.position.needsUpdate = true;
-    
     materialRef.current.uniforms.uTime.value = time;
     materialRef.current.uniforms.uCoefficient.value = coefficient;
     materialRef.current.needsUpdate = true;
     materialRef.current.uniforms.uMousePosition.value = mousePos;
-    
-    // updatePositin(mousePos, particleRef.current.geometry.attributes);
-    // particleRef.current.material.uniforms.uMousePosition.value = mousePos;
+
 
   });
   // listIndexをstate(store)にしてしまうと再描画が起こるのでcollbackで処理
@@ -106,12 +101,12 @@ export default function Particle() {
   
   document.addEventListener('mousemove', (event) => {
     event.preventDefault();
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = ( event.clientY / window.innerHeight ) * 2 - 1;
-    mousePos.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mousePos.y = -( event.clientY / window.innerHeight ) * 2 + 1;
-    mousePos.x = mousePos.x * 2;
-    mousePos.y = mousePos.y * 2;
+    // mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    // mouse.y = ( event.clientY / window.innerHeight ) * 2 - 1;
+    // mousePos.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    // mousePos.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    // mousePos.x = mousePos.x * 2;
+    // mousePos.y = mousePos.y * 2;
   });
 
   return (

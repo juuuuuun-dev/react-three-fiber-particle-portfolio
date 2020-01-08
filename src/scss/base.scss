@@ -34,8 +34,8 @@ li {
   position: fixed;
   top: 0;
   left: 0;
-  padding: $global-padding;
-  height: 70px;
+  padding: 20px;
+  height: 60px;
   width: 100%;
   z-index: 200;
   color: #fff;
@@ -46,8 +46,8 @@ li {
   }
   .nav {
     position: absolute;
-    top: $global-margin;
-    right: $global-margin;
+    top: 20px;
+    right: 20px;
     li {
       float: left;
       margin-left: 20px;
@@ -136,7 +136,7 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
 ////////////////////
 @media screen and (max-width: $sm) {
   .header {
-      padding: $global-padding $sm-global-pading;
+      padding: $sm-global-pading;
       .nav {
         right: $sm-global-margin;
       }
