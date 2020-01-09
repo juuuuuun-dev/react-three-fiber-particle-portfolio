@@ -15,7 +15,8 @@ import useStore from '../contexts/store'
 
 export default function Particle() {
   const actions = useStore(state => state.actions);
-  
+  const ready = useStore(state => state.ready);
+  console.log(ready);
   const navListLength = useStore(state => state.navListLength);
   const ua = useStore(state => state.ua);
   let listIndex = 0;
@@ -61,9 +62,10 @@ export default function Particle() {
       geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
       geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
       geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+      actions.setReady(true);
     };
     f();
-  }, [ bufferAttribute, listIndex, attributes, MAX, navListLength ]);
+  }, [ bufferAttribute, actions, listIndex, attributes, MAX, navListLength ]);
   
   const { camera } = useThree();
   let coefficient = 0.6;

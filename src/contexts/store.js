@@ -9,6 +9,7 @@ import { upperCaseFirst } from "upper-case-first";
 
 const [ useStore ] = create((set, get) => ({
   appTitle: "KATADA",
+  ready: false,
   navList: NavList,
   navListLength:NavList.length,
   navListIndex: 0,
@@ -70,6 +71,9 @@ const [ useStore ] = create((set, get) => ({
         set(() => ({ showContent: pathname } ));
         window.history.pushState('', '', pathname);
       }
+    },
+    setReady(val) {
+      set(() => ({ ready: val }));
     },
     setCoefficient(d) {
       set(() => ({coefficient: d}));
