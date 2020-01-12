@@ -21,7 +21,6 @@ const Header = () => {
     }
   }
   const [ navSprings, setNavSprings ] = useSprings(navList.length, index => (springFunc(index)));
-  // @todo header low height
   setNavSprings(index => (springFunc(index)));
   const headerSpring = useSpring({
     backdropFilter:  showContent ? "blur(1px)" : 'blur(0px)',
