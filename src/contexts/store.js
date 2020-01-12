@@ -6,7 +6,6 @@ import NavList from '../config/ImageList';
 import { useGesture } from 'react-use-gesture'
 import variables from '../scss/_variables.scss'
 
-
 const [ useStore ] = create((set, get) => ({
   appTitle: "KATADA",
   description: "descriptionです",
@@ -28,6 +27,9 @@ const [ useStore ] = create((set, get) => ({
     mouse: new THREE.Vector2(-250, 50),
     mousePos: new THREE.Vector2(10, 10),
   },
+  /**
+   * action
+   */
   actions: {
     init() {
       set(() => ({

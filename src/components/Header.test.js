@@ -5,9 +5,19 @@ import Header from "./Header";
 import create from 'zustand';
 import useStore from "../contexts/store";
 
+// @todo test
+
 const expectState = {
   appTitle: 'test',
-  navList: [],
+  navList: [
+    {
+      title: 'test',
+    },
+    {
+      title: 'page1',
+      path: '/page1',
+    }
+  ],
 }
 
 // mock巻き上げ対策の為いったんfnに
