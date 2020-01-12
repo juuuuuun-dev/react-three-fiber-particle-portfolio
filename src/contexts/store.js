@@ -4,11 +4,15 @@ import { useCallback, useEffect } from 'react'
 import { getDevice } from '../helpers/UserAgent';
 import NavList from '../config/ImageList';
 import { useGesture } from 'react-use-gesture'
-import { upperCaseFirst } from "upper-case-first";
+import variables from '../scss/_variables.scss'
 
 
 const [ useStore ] = create((set, get) => ({
   appTitle: "KATADA",
+  description: "descriptionです",
+  pageTitle: "",
+  primaryColor: variables.primaryColor,
+  loading: false,
   ready: false,
   navList: NavList,
   navListLength:NavList.length,
@@ -25,6 +29,13 @@ const [ useStore ] = create((set, get) => ({
     mousePos: new THREE.Vector2(10, 10),
   },
   actions: {
+    init() {
+      set(() => ({
+        loading: true,
+      }));
+      window.onresize = get().actions.onResize;
+      window.onpopstate = get().actions.onPopState;
+    },
     onResize() {
       set(() => ({ windowHeight: window.innerHeight }));
     },
@@ -40,13 +51,6 @@ const [ useStore ] = create((set, get) => ({
     getHasPathNavList() {
       return get().navList.filter(value => value.path);
     },
-    getShowName(pathname) {
-      const res = get().navList.filter(value => value.path === pathname);
-      if (res) {
-        const name = 'show' + upperCaseFirst(pathname.substr(1));
-        return name;
-      }
-    },
     getContentData(title) {
       const res = get().navList.filter(value => value.title === title);
       if (res) {
@@ -61,21 +65,41 @@ const [ useStore ] = create((set, get) => ({
       const showContent = get().showContent;
       if (showContent) {
         if (showContent === pathname) {
-          set(() => ({ showContent: null} ));
+          set((state) => ({
+            showContent: null,
+            pageTitle: '',
+            description: state.navList[0].description,
+          }));
           window.history.pushState('','', '/');
         } else {
-          set(() => ({ showContent: pathname } ));
-          window.history.pushState('', '', pathname);
+          get().actions.setContents(pathname);
         }
       } else {
-        set(() => ({ showContent: pathname } ));
-        window.history.pushState('', '', pathname);
+        get().actions.setContents(pathname);
       }
+    },
+    setContents(pathname) {
+      const [ content ] = get().navList.filter(val => val.path === pathname);
+      set(() => ({
+        showContent: pathname,
+        pageTitle: content.title,
+        description: content.description,
+      }));
+      window.history.pushState('', '', pathname);
     },
     setReady(val) {
       set(() => ({ ready: val }));
     },
-    setCoefficient(d) {
+    setPageTitle(val) {
+
+    },
+    toggleLoading() {
+      set((state) => ({ loading: state.loading = !state.loading }));
+    },
+    setLoading(val) {
+      set(() => ({ loading: val }))
+    },
+    setCoefficient(d = 3.0) {
       set(() => ({coefficient: d}));
     },
     setScrollCollbacks(fn) {
@@ -100,8 +124,7 @@ const [ useStore ] = create((set, get) => ({
             }
             set(() => ({ navListIndex: index }));
             set(() => ({ coefficient: 3.0 }));
-
-            get().scrollCallbacks.map(fn => fn(index));
+            get().actions.execCallbacks(index);
             setTimeout(() => {
               set(() => ({ isScroll: false }))
             }, 500);
@@ -112,6 +135,10 @@ const [ useStore ] = create((set, get) => ({
       const bind = useGesture({ onWheel: fn, onDrag: fn }, props)
       useEffect(() => props && props.domTarget && bind(), [props, bind]);
       return [ y ];
+    },
+    execCallbacks(index) {
+      set(() => ({ navListIndex: index }));
+      get().scrollCallbacks.map(fn => fn(index));
     },
   }
 }))

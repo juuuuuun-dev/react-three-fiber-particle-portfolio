@@ -37,7 +37,7 @@ li {
   padding: 20px;
   height: 60px;
   width: 100%;
-  z-index: 200;
+  z-index: 100;
   color: #fff;
   font-size: 12px;
   h1 {
@@ -52,6 +52,24 @@ li {
       float: left;
       margin-left: 20px;
       cursor: pointer;
+    }
+  }
+}
+////////////////////
+// loader
+////////////////////
+.loader-container {
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #43465a;
+  &__inner{
+    padding: $sm-global-pading;
+    .loader-img{
+      width: 25px;
     }
   }
 }
@@ -84,7 +102,7 @@ background-color: rgba(0, 0, 10, .3);
   color: #fff;
   position: fixed;
   left: 0;
-  z-index: 100;
+  z-index: 99;
   width: 100%;
   height: 100%;
   .scroll-area {

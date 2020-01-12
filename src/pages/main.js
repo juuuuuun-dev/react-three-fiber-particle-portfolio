@@ -19,6 +19,8 @@ export function Main() {
             gl.setClearColor("#43465a")
           }}
         >
+          <spotLight intensity={1.2} color="white" position={[15, 120, 10.5]} />
+          {/* <ambientLight color="white" intensity={0.9} /> */}
           <React.Suspense fallback={ null }>
             <MoveText position={ [0, 4.2, 0] } />
           </React.Suspense>
