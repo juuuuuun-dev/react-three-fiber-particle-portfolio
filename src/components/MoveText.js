@@ -20,8 +20,13 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
   const canvasElem = document.getElementById('main');
   // let coefficient = 0.6;
   // const targetCoefficient = 0.1;
+  
+
+  // actions.setScrollCollbacks(scrollCollback);
+
   useFrame(() => {
     actions.setCoefficient(coefficient + (targetCoefficient - coefficient) * .1);
+    // coefficient += (targetCoefficient - coefficient) * .1;
     // text
     for (let i = 0; navListLength > i; i++) {
       refs.current[i].current.rotation.x = 30;
@@ -36,7 +41,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
     }
     refs.current[navListIndex].current.position.y = scale.value * 20;
   });
-  const { scale } = useSpring({ scale: hovered ? 1.5 : 1, config: config.stiff })
+  const { scale } = useSpring({ scale: hovered ? 1.4 : 1, config: config.stiff })
 
   const hover = (e) => {
     if (navList[navListIndex].path) {
@@ -63,8 +68,8 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
       return (
         //
         <mesh ref={refs.current[index]} key={index} onPointerOver={hover} onPointerOut={unhover}>
-          <Text hAlign={hAlign} vAlign={vAlign} position={[-5, -11, 20]} children={navList[index].topText} />
-          <Text hAlign={hAlign} vAlign={vAlign} position={[-5, -15, 20]} children={navList[index].bottomText} />
+          <Text hAlign={hAlign} vAlign={vAlign} position={[-7, -11, 20]} children={navList[index].topText} />
+          <Text hAlign={hAlign} vAlign={vAlign} position={[-7, -15, 20]} children={navList[index].bottomText} />
           <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} position={[-5, -9.5, 19]} children={navList[index].topText} />
         </mesh>
       )
@@ -100,7 +105,7 @@ const HitArea = ({ item, children, vAlign, hAlign, size = 1, color = '#000000', 
 function Text({ children, vAlign, hAlign, size = 1, color = '#ffffff', ...props }) {
   const font = useLoader(THREE.FontLoader, '/font/bold.blob')
   const textConfig = useMemo(
-    () => ({ font, size: 38, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: 1, bevelSize: 1.5, bevelOffset: 0, bevelSegments: 1 }),
+    () => ({ font, size: 38, height: -0, curveSegments: 32, bevelEnabled: true, bevelThickness: 0.6, bevelSize: 0, bevelOffset: 0, bevelSegments: 1 }),
     [font]
   )
   const mesh = useUpdate(
@@ -117,7 +122,7 @@ function Text({ children, vAlign, hAlign, size = 1, color = '#ffffff', ...props 
     <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
       <mesh ref={mesh}>
         <textGeometry needsUpdate={true} attach="geometry" args={[children, textConfig]} />
-        <meshBasicMaterial transparent={true} color={new THREE.Color(color)} attach="material" />
+        <meshLambertMaterial transparent={true} color={new THREE.Color(color)} attach="material" />
       </mesh>
     </group>
   )

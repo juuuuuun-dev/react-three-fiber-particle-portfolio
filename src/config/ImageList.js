@@ -8,6 +8,7 @@ export default [
     src: img2,
     topText: 'DEVELOPER',
     bottomText: 'KATADA',
+    description: 'descriptionです',
     // topText: 'CONTINUE',
     // bottomText: 'LEARNING',
   },
@@ -16,7 +17,8 @@ export default [
     src: img1,
     topText: 'ABOUT',
     bottomText: 'ME',
-    path: "/about"
+    path: "/about",
+    description: "ABOUT descriptionです",
   },
   {
     title: 'CONTACT',
@@ -24,5 +26,6 @@ export default [
     topText: 'CONTACT',
     bottomText: 'ME',
     path: "/contact",
+    description: "CONTACT descriptionです",
   },
 ];

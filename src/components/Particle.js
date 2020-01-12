@@ -15,8 +15,6 @@ import useStore from '../contexts/store'
 
 export default function Particle() {
   const actions = useStore(state => state.actions);
-  const ready = useStore(state => state.ready);
-  console.log(ready);
   const navListLength = useStore(state => state.navListLength);
   const ua = useStore(state => state.ua);
   let listIndex = 0;
@@ -25,9 +23,9 @@ export default function Particle() {
   const clock = new THREE.Clock();
   let MAX = useMemo(() => {
     if (ua === 'sp') {
-      return 10000;
+      return 8000;
     }
-    return 30000;
+    return 25000;
   }, [ ua ]);
   const bufferAttribute = {
     positions: [],
@@ -48,21 +46,27 @@ export default function Particle() {
     const f = async () => {
       const imagePositions = await createImagePositions();
       const attribute = await createAttributes(attributes, imagePositions, MAX);
-      const imageLen = navListLength;
-      for (let i = 0; imageLen > i; i++) {
-        bufferAttribute.positions[i] = new THREE.BufferAttribute(attribute.positions[i], 3);
-        bufferAttribute.endPositions[i] = new THREE.BufferAttribute(attribute.endPositions[i], 3);
-        bufferAttribute.times[i] = new THREE.BufferAttribute(attribute.times[i], 1);
-        bufferAttribute.alphas[i] = new THREE.BufferAttribute(attribute.alphas[i], 1);
-        bufferAttribute.colors[i] = new THREE.BufferAttribute(attribute.colors[i], 3);
-      }
-      geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-      geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-      geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
-      geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-      geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
-      geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
-      actions.setReady(true);
+      await (() => {
+        return new Promise(resolve => {
+          for (let i = 0; navListLength > i; i++) {
+            bufferAttribute.positions[i] = new THREE.BufferAttribute(attribute.positions[i], 3);
+            bufferAttribute.endPositions[i] = new THREE.BufferAttribute(attribute.endPositions[i], 3);
+            bufferAttribute.times[i] = new THREE.BufferAttribute(attribute.times[i], 1);
+            bufferAttribute.alphas[i] = new THREE.BufferAttribute(attribute.alphas[i], 1);
+            bufferAttribute.colors[i] = new THREE.BufferAttribute(attribute.colors[i], 3);
+          }
+          geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+          geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
+          geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
+          geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
+          geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+          geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
+          actions.setReady(true);
+          actions.setLoading(false);
+          resolve();
+        });
+      })();
+      // ¥
     };
     f();
   }, [ bufferAttribute, actions, listIndex, attributes, MAX, navListLength ]);
@@ -70,9 +74,11 @@ export default function Particle() {
   const { camera } = useThree();
   let coefficient = 0.6;
   const targetCoefficient = 0.1;
+  const mouseTargetCoefficient = -0.5;
   // @todo スマホは角度固定
   useFrame(() => {
     coefficient += (targetCoefficient - coefficient) * .1;
+    mouse.x += (mouseTargetCoefficient - mouse.x) * .1;
     let delta = clock.getDelta();
     time += delta;
     theta += (mouse.x / 4 - theta) / 10;
@@ -84,13 +90,12 @@ export default function Particle() {
     materialRef.current.uniforms.uCoefficient.value = coefficient;
     materialRef.current.needsUpdate = true;
     materialRef.current.uniforms.uMousePosition.value = mousePos;
-
-
   });
   // listIndexをstate(store)にしてしまうと再描画が起こるのでcollbackで処理
   const scrollCollback = (index) => {
     listIndex = index;
     coefficient = 15.6;
+    mouse.x = 2;
     if (geometryRef.current) {
       geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
       geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
@@ -130,12 +135,14 @@ export default function Particle() {
         ref={materialRef}
         attach="material"
         name="material"
+        lights={true}
         args={[ParticleShader]}
       />
     </points>
     </>
   )
 }
+
 
 
 /**
@@ -169,8 +176,8 @@ function setImagePosition(image, canvas, index) {
       const num = 4 * (image.width * y + x) + 3;
       const alpha = imageData[num];
       if (alpha !== 0) {
-        const rRate = x / image.width * 1.3;
-        const gRate = y / image.height * .9;
+        const rRate = x / image.width * 1.5;
+        // const gRate = y / image.height * .9;
         const color = new THREE.Color();
         // color.setRGB(rRate, gRate, 1);
         color.setRGB(rRate, .8, .85);

@@ -7,6 +7,7 @@ const Header = () => {
   const appTitle = useStore(state => state.appTitle);
   const showContent = useStore(state => state.showContent);
   const navList = actions.getHasPathNavList();
+  const navListIndex = useStore(state => state.navListIndex);
   const headerRef = React.useRef();
   const refs = React.useRef(navList.map((_, index) => index));
   const springFunc = (index) => {
@@ -26,6 +27,13 @@ const Header = () => {
     backdropFilter:  showContent ? "blur(1px)" : 'blur(0px)',
     backgroundColor: showContent ? "rgba(67,70,90, .7)" : "rgba(67,70,90, .0)",
   });
+  const handleClick = (index) => {
+    if (navListIndex !== index + 1) {
+      actions.execCallbacks(index + 1);
+      actions.setCoefficient();
+    }
+    actions.toggleContents(navList[index].path);
+  }
   return (
     <>
       <animated.div ref={headerRef} className="header" style={{ ...headerSpring }}>
@@ -35,7 +43,7 @@ const Header = () => {
           return (
             <animated.li
               style={{ ...item }}
-              onClick={() => actions.toggleContents(navList[index].path)}
+              onClick={() => handleClick(index)}
               key={index}
             >
               {navList[index].title}
