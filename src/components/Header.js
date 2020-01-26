@@ -1,8 +1,11 @@
 import React from 'react';
 import useStore from '../contexts/store';
 import { useSpring, useSprings, animated } from "react-spring";
+import variables from '../scss/_variables.scss'
+
 
 const Header = () => {
+  const primaryColor = variables.primaryColor;
   const actions = useStore(state => state.actions);
   const appTitle = useStore(state => state.appTitle);
   const showContent = useStore(state => state.showContent);
@@ -23,8 +26,8 @@ const Header = () => {
   const [ navSprings, setNavSprings ] = useSprings(navList.length, index => (springFunc(index)));
   setNavSprings(index => (springFunc(index)));
   const headerSpring = useSpring({
-    backdropFilter:  showContent ? "blur(1px)" : 'blur(0px)',
-    backgroundColor: showContent ? "rgba(67,70,90, .7)" : "rgba(67,70,90, .0)",
+    backdropFilter:  showContent ? "blur(3px)" : 'blur(0px)',
+    backgroundColor: showContent ? `rgba(54, 59, 78, .7)` : `rgba(54, 59, 78, .0)`,
   });
   const handleClick = (index) => {
     if (navListIndex !== index + 1) {

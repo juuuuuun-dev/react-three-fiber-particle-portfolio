@@ -1,13 +1,13 @@
 import img0 from '../images/contact.png';
-import img1 from '../images/about.png';
-import img2 from '../images/cover.png';
+import img1 from '../images/cover3.png';
+import img2 from '../images/about.png';
 
 export default [
   {
     title: 'Home',
     src: img2,
-    topText: 'DEVELOPER',
-    bottomText: 'KATADA',
+    topText: 'ILOVE',
+    bottomText: 'CREATE',
     description: 'descriptionです',
     // topText: 'CONTINUE',
     // bottomText: 'LEARNING',

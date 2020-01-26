@@ -23,7 +23,8 @@ export default function Particle() {
   const clock = new THREE.Clock();
   let MAX = useMemo(() => {
     if (ua === 'sp') {
-      return 8000;
+      // @todo android firefoxは半分ぐらいでいいかも
+      return 10000;
     }
     return 25000;
   }, [ ua ]);
@@ -72,8 +73,8 @@ export default function Particle() {
   }, [ bufferAttribute, actions, listIndex, attributes, MAX, navListLength ]);
   
   const { camera } = useThree();
-  let coefficient = 0.6;
-  const targetCoefficient = 0.1;
+  let coefficient = 12.0; // first coefficient
+  const targetCoefficient = 0.8;
   const mouseTargetCoefficient = -0.5;
   // @todo スマホは角度固定
   useFrame(() => {
@@ -163,7 +164,7 @@ function createImagePositions() {
 
 function setImagePosition(image, canvas, index) {
   let pos = [];
-  const scale = 10;
+  const scale = 9;
   canvas.width = image.width;
   canvas.height = image.height;
   const ctx = canvas.getContext('2d');
@@ -182,7 +183,7 @@ function setImagePosition(image, canvas, index) {
         // color.setRGB(rRate, gRate, 1);
         color.setRGB(rRate, .8, .85);
         const data = {
-          x: (x - image.width / 2 + 9 * Math.random()) / scale,
+          x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,
           alpha: alpha / 255,
           color,

@@ -7,7 +7,7 @@ import { useGesture } from 'react-use-gesture'
 import variables from '../scss/_variables.scss'
 
 const [ useStore ] = create((set, get) => ({
-  appTitle: "KATADA",
+  appTitle: "JUN KATADA",
   description: "descriptionです",
   pageTitle: "",
   primaryColor: variables.primaryColor,
