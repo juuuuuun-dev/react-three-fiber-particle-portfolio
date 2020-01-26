@@ -1,11 +1,12 @@
 // breakpoint
 $sm: 600px;
 
-$global-margin: 30px;
+$global-margin: 45px;
 $global-padding: $global-margin;
 $sm-global-margin: 20px;
-$sm-global-pading: $sm-global-margin;
-$primary-color: #43465a;
+$sm-global-padding: $sm-global-margin;
+$primary-color: #363b4e;
+$small-margin: 5px;
 
 :export {
   primaryColor: $primary-color;

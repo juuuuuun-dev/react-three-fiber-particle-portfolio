@@ -16,10 +16,10 @@ export function Main() {
           resize={{polyfill}}
           camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0, 1, 0], zoom: 1, far: 10000 }}
           onCreated={ ({ gl }) => {
-            gl.setClearColor("#43465a")
+            gl.setClearColor("#363b4e")
           }}
         >
-          <spotLight intensity={1.2} color="white" position={[15, 120, 10.5]} />
+          <spotLight intensity={1.2} color="white" position={[15, 120, 0.0]} />
           {/* <ambientLight color="white" intensity={0.9} /> */}
           <React.Suspense fallback={ null }>
             <MoveText position={ [0, 4.2, 0] } />

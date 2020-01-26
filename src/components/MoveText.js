@@ -68,9 +68,9 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
       return (
         //
         <mesh ref={refs.current[index]} key={index} onPointerOver={hover} onPointerOut={unhover}>
-          <Text hAlign={hAlign} vAlign={vAlign} position={[-7, -11, 20]} children={navList[index].topText} />
-          <Text hAlign={hAlign} vAlign={vAlign} position={[-7, -15, 20]} children={navList[index].bottomText} />
-          <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} position={[-5, -9.5, 19]} children={navList[index].topText} />
+          <Text hAlign={hAlign} vAlign={vAlign} position={[-9, -9, 18]} children={navList[index].topText} />
+          <Text hAlign={hAlign} vAlign={vAlign} position={[-9, -13, 18]} children={navList[index].bottomText} />
+          <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} position={[-9, -9.5, 17]} children={navList[index].topText} />
         </mesh>
       )
     })}
@@ -105,7 +105,7 @@ const HitArea = ({ item, children, vAlign, hAlign, size = 1, color = '#000000', 
 function Text({ children, vAlign, hAlign, size = 1, color = '#ffffff', ...props }) {
   const font = useLoader(THREE.FontLoader, '/font/bold.blob')
   const textConfig = useMemo(
-    () => ({ font, size: 38, height: -0, curveSegments: 32, bevelEnabled: true, bevelThickness: 0.6, bevelSize: 0, bevelOffset: 0, bevelSegments: 1 }),
+    () => ({ font, size: 38, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: .0, bevelSize: .0, bevelOffset: 0, bevelSegments: 1 }),
     [font]
   )
   const mesh = useUpdate(

@@ -2,6 +2,8 @@ import React from "react";
 import ContentWrapper from "./ContentWrapper";
 import useStore from "../contexts/store";
 import { useSprings, animated } from "react-spring";
+import { About } from "../pages/about";
+import {Contact} from "../pages/contact";
 
 /**
  * @todo useSprings collback
@@ -28,7 +30,14 @@ export default function Contents() {
   }
   const [ springs, setSprings ] = useSprings(navList.length, index => (springFunc(index)));
   setSprings(index => (springFunc(index)));
-
+  const components = (key) => {
+    const list = {
+      ABOUT: About,
+      CONTACT: Contact,
+    }
+    const Component = list[key];
+    return <Component />
+  }
   return (
     <>
     {springs.map((value, index) => {
@@ -40,52 +49,9 @@ export default function Contents() {
             ref={refs.current[index]}
           >
             <ContentWrapper contentTitle={navList[index].title}>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <h3>center</h3>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <p className="text-lerge">lets create something
-              <br />beary great together!</p>
-              <h3>end</h3>
+              {
+                components(navList[index].title)
+              }
             </ContentWrapper>
           </animated.div>
         );
