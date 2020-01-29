@@ -74,7 +74,7 @@ export default function Particle() {
   
   const { camera } = useThree();
   let coefficient = 12.0; // first coefficient
-  const targetCoefficient = 0.8;
+  const targetCoefficient = 0.7;
   const mouseTargetCoefficient = -0.5;
   // @todo スマホは角度固定
   useFrame(() => {
