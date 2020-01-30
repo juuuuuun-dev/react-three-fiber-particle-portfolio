@@ -170,6 +170,7 @@ background-color: rgba(0, 0, 10, .3);
     dt {
       font-weight: bold;
       font-size: 1rem;
+      margin-bottom: 15px;
     }
     dd {
       margin-bottom: $global-margin;
@@ -178,31 +179,38 @@ background-color: rgba(0, 0, 10, .3);
   }
 }
 
-.blockquote {
-  font-family: 'Roboto', sans-serif;
+
+.blockquote{
   position: relative;
+  font-style: italic;
   padding: 30px 15px 8px 15px;
-  border: 1px solid #525568;
-}
-
-.blockquote:before{
-  display: inline-block;
-  position: absolute;
-  top: 13px;
-  left: 15px;
-  vertical-align: middle;
-  content: '\201C';
-  font-family: FontAwesome;
-  color: #009FB7;
-  font-size: 25px;
-  line-height: 1;
-}
-
-.blockquote p {
-  padding: 0;
-  margin: 20px 0 10px;
-  font-size: 15px;
-  line-height: 1.5;
+  &:before {
+    font-family: 'Sanchez', serif;
+    font-size: 1rem;
+      content: '\201C';
+      position: absolute;
+      top: 0.25em;
+      left: -0.15em;
+      font-size: 6em;
+      z-index: -1;
+   }
+  &:after {
+    font-family: 'Sanchez', serif;
+    content: '\201D';
+    position: absolute;
+    bottom: -15px;
+    right: 0;
+    font-size: 6em;
+    font-style: italic;
+    z-index: -1;
+  }
+  footer {
+    margin-top: 15px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.8em;
+    font-weight: 700;
+    float: right;
+  }
 }
 
 // safari
