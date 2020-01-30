@@ -48,20 +48,20 @@ export function About() {
       <div className="paragraph clearfix">
         <h3 className="paragraph__title"><img width="22px" className="mr-2 float-left" src={smile} alt="smile" />Something important</h3>
         <dl>
-          <dt>Strategy</dt>
+          <dt># Strategy</dt>
           {/* <dd>`Honesty is the best policy - 正直は最善の策である。` by zenon</dd> */}
           <dd>
           <blockquote className="blockquote" cite="">
           <p>
             The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.
           </p>
-          <p>マーケティングの目的とは、顧客を理解し、製品とサービスを顧客に合わせ、おのずから売れるようにすることである。</p>
+          <footer>Peter Drucker</footer>
           </blockquote>
-          Peter Drucker （ピーター・ドラッカー）
+
           </dd>
         </dl>
         <dl>
-          <dt>ERD</dt>
+          <dt># ERD</dt>
           <dd>`The executive and the knowledge worker have only on tool information - 経営者と知識労働者にとっての唯一のツールは情報である 。` by Peter Ferdinand Drucker</dd>
         </dl>
         <dl>
