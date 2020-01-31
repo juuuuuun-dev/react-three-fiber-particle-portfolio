@@ -5,7 +5,11 @@ export function About() {
   return (
     <>
       <div className="paragraph clearfix">
-        <h3 className="paragraph__title"><img width="22px" className="mr-2 float-left" src={smile} alt="smile" />I'm web developer</h3>
+        <h3 className="paragraph__title">
+          {/* <img width="22px" className="mr-2 float-left" src={smile} alt="smile" /> */}
+          I'm web developer
+          <img width="22px" className="mr-2 float-left" src={smile} alt="smile" />
+          </h3>
         <p>
           東京に住んでいるWEBデベロッパーです。<br />
           2005年にWEBデザイナーになり、その後サーバーサイドの開発やDevOpsの実装などを行っております。<br />
@@ -14,7 +18,9 @@ export function About() {
       </div>
 
       <div className="paragraph clearfix">
-        <h3 className="paragraph__title"><img width="22px" className="mr-2 float-left" src={smile} alt="smile" />Use programming languages</h3>
+        <h3 className="paragraph__title">
+          {/* <img width="22px" className="mr-2 float-left" src={smile} alt="smile" /> */}
+          Use programming languages</h3>
         <ul>
           <li>C</li>
           <li>Python</li>
@@ -27,7 +33,9 @@ export function About() {
       </div>
 
       <div className="paragraph clearfix">
-        <h3 className="paragraph__title"><img width="22px" className="mr-2 float-left" src={smile} alt="smile" />Using Framework and Library</h3>
+        <h3 className="paragraph__title">
+          {/* <img width="22px" className="mr-2 float-left" src={smile} alt="smile" /> */}
+          Using Framework and Library</h3>
         <ul>
           <li>Django</li>
           <li>Laravel</li>
@@ -46,27 +54,52 @@ export function About() {
       </div>
 
       <div className="paragraph clearfix">
-        <h3 className="paragraph__title"><img width="22px" className="mr-2 float-left" src={smile} alt="smile" />Something important</h3>
+        <h3 className="paragraph__title">
+          {/* <img width="22px" className="mr-2 float-left" src={smile} alt="smile" /> */}
+          Something important</h3>
         <dl>
-          <dt># Strategy</dt>
-          {/* <dd>`Honesty is the best policy - 正直は最善の策である。` by zenon</dd> */}
+          <dt>Strategy</dt>
           <dd>
-          <blockquote className="blockquote" cite="">
-          <p>
-            The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.
-          </p>
-          <footer>Peter Drucker</footer>
-          </blockquote>
-
+            <blockquote className="blockquote" cite="">
+            <p>
+              The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.
+            </p>
+            <footer>Peter Drucker</footer>
+            </blockquote>
           </dd>
         </dl>
         <dl>
-          <dt># ERD</dt>
-          <dd>`The executive and the knowledge worker have only on tool information - 経営者と知識労働者にとっての唯一のツールは情報である 。` by Peter Ferdinand Drucker</dd>
+          <dt>Strategy</dt>
+          <dd>
+            <blockquote className="blockquote" cite="">
+            <p>
+              The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.
+            </p>
+            <footer>Peter Drucker</footer>
+            </blockquote>
+          </dd>
         </dl>
         <dl>
-          <dt>Testing</dt>
-          <dd>code is read</dd>
+          <dt>Strategy</dt>
+          <dd>
+            <blockquote className="blockquote" cite="">
+            <p>
+              The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.
+            </p>
+            <footer>Peter Drucker</footer>
+            </blockquote>
+          </dd>
+        </dl>
+        <dl>
+          <dt>Strategy</dt>
+          <dd>
+            <blockquote className="blockquote" cite="">
+            <p>
+              The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.
+            </p>
+            <footer>Peter Drucker</footer>
+            </blockquote>
+          </dd>
         </dl>
         <dl>
           <dt>その時のBestをなるべく尽くす</dt>
