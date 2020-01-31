@@ -78,11 +78,7 @@ li {
     }
   }
 }
-// .header-contents {
-  // opacity: .8;
-  // backdrop-filter: blur(2px);
-  // background: rgba(67,70,90, .8);
-// }
+
 
 ////////////////////
 // scroll
@@ -100,7 +96,7 @@ background-color: rgba(0, 0, 10, .3);
 .contents {
   // background: #43465a;
   background: rgba($primary-color, 1);
-  color: rgba($color: #ffffff, $alpha: .8);
+  color: rgba($color: #ffffff, $alpha: .9);
   position: fixed;
   left: 0;
   line-height: 2rem;
@@ -187,25 +183,27 @@ background-color: rgba(0, 0, 10, .3);
   position: relative;
   font-style: italic;
   padding: 30px 15px 8px 15px;
-  border-left: 0.3em solid;
+  border-left: 0.2em solid;
   border-color: rgba($color: #7ccbca, $alpha: .5);
   &:before {
     font-family: 'Sanchez', serif;
     font-size: 1rem;
+    color: rgba($color: #fff, $alpha: .1);
     line-height: 1.6rem;
     content: '\201C';
     position: absolute;
     top: 0.25em;
     left: 0.15em;
-    font-size: 3em;
+    font-size: 5em;
    }
   &:after {
     font-family: 'Sanchez', serif;
+    color: rgba($color: #fff, $alpha: .1);
     content: '\201D';
     position: absolute;
     bottom: -15px;
     right: 0;
-    font-size: 3em;
+    font-size: 5em;
     font-style: italic;
   }
   footer {
