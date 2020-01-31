@@ -6,7 +6,7 @@ export default [
   {
     title: 'Home',
     src: img2,
-    topText: 'ILOVE',
+    topText: 'ILOVETO',
     bottomText: 'CREATE',
     description: 'descriptionです',
     // topText: 'CONTINUE',

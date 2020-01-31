@@ -21,7 +21,9 @@ export default function Particle() {
   let time = 0;
   let theta = 0;
   const clock = new THREE.Clock();
+  console.log('memo')
   let MAX = useMemo(() => {
+    
     if (ua === 'sp') {
       // @todo android firefoxは半分ぐらいでいいかも
       return 10000;
@@ -106,16 +108,6 @@ export default function Particle() {
     }
   };
   actions.setScrollCollbacks(scrollCollback);
-  
-  document.addEventListener('mousemove', (event) => {
-    event.preventDefault();
-    // mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    // mouse.y = ( event.clientY / window.innerHeight ) * 2 - 1;
-    // mousePos.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    // mousePos.y = -( event.clientY / window.innerHeight ) * 2 + 1;
-    // mousePos.x = mousePos.x * 2;
-    // mousePos.y = mousePos.y * 2;
-  });
 
   return (
     <>

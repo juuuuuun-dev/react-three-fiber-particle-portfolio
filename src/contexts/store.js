@@ -35,7 +35,7 @@ const [ useStore ] = create((set, get) => ({
       set(() => ({
         loading: true,
       }));
-      window.onresize = get().actions.onResize;
+      // window.onresize = get().actions.onResize;
       window.onpopstate = get().actions.onPopState;
     },
     onResize() {
