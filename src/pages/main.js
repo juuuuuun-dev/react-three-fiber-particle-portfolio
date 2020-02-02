@@ -19,7 +19,7 @@ export function Main() {
             gl.setClearColor("#363b4e")
           }}
         >
-          <spotLight intensity={1.2} color="white" position={[15, 120, 0.0]} />
+          <spotLight intensity={1.2} color="white" position={[20, 70, 0.0]} />
           {/* <ambientLight color="white" intensity={0.9} /> */}
           <React.Suspense fallback={ null }>
             <MoveText position={ [0, 4.2, 0] } />

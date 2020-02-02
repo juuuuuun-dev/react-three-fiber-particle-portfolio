@@ -6,8 +6,11 @@ export default [
   {
     title: 'Home',
     src: img2,
-    topText: 'ILOVETO',
-    bottomText: 'CREATE',
+    texts: [ 'I AM A WEB', 'DEVELOPER', 'I MAKE A', 'MISTAKES' ],
+    textSize: 5.8,
+    lineHeight: 4,
+    topText: 'DEVELOPER',
+    bottomText: 'WHO OFTEN',
     description: 'descriptionです',
     // topText: 'CONTINUE',
     // bottomText: 'LEARNING',
@@ -15,6 +18,7 @@ export default [
   {
     title: 'ABOUT',
     src: img1,
+    texts: [ 'ABOUT', 'ME' ],
     topText: 'ABOUT',
     bottomText: 'ME',
     path: "/about",
@@ -23,6 +27,7 @@ export default [
   {
     title: 'CONTACT',
     src: img0,
+    texts: [ 'COTACT', 'ME' ],
     topText: 'CONTACT',
     bottomText: 'ME',
     path: "/contact",

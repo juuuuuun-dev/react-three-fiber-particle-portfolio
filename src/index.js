@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Contents from "./components/Contents";
 import Loader from "./components/Loader";
 import MetaHead from "./components/MetaHead";
+import IndexFooterText from "./components/IndexFooterText";
 
 import './scss/base.scss';
 
@@ -17,6 +18,7 @@ const Index = () => {
       <MetaHead />
       <Header />
       <Main />
+      <IndexFooterText />
       <Contents />
       <Loader />
     </>
