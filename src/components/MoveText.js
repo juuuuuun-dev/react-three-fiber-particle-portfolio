@@ -63,7 +63,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
   }
   // text bottom y
   const bottomY = -12;
-  const baseLineHeight = 4;
+  const baseLineHeight = 4.5;
   return (
     <>
     {navList.map((item, index) => {
@@ -116,7 +116,7 @@ const HitArea = ({ item, children, vAlign, hAlign, size = 1, color = '#000000', 
     )
 }
 
-function Text({ children, vAlign, hAlign, size = 6.3, color = '#ffffff', ...props }) {
+function Text({ children, vAlign, hAlign, size = 6.5, color = '#ffffff', ...props }) {
   const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json')
   const textConfig = useMemo(
     () => ({ font, size: size, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: .0, bevelSize: .0, bevelOffset: 0, bevelSegments: 1 }),

@@ -18,7 +18,7 @@ const Index = () => {
       <MetaHead />
       <Header />
       <Main />
-      <IndexFooterText />
+      {/* <IndexFooterText /> */}
       <Contents />
       <Loader />
     </>
