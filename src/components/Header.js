@@ -27,7 +27,7 @@ const Header = () => {
   setNavSprings(index => (springFunc(index)));
   const headerSpring = useSpring({
     backdropFilter:  showContent ? "blur(3px)" : 'blur(0px)',
-    backgroundColor: showContent ? `rgba(54, 59, 78, .7)` : `rgba(54, 59, 78, .0)`,
+    backgroundColor: showContent ? `rgba(54, 59, 78, .1)` : `rgba(54, 59, 78, .0)`,
   });
   const handleClick = (index) => {
     if (navListIndex !== index + 1) {

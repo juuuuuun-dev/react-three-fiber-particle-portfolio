@@ -1,11 +1,11 @@
 @import "reset";
 @import "variables";
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Patua+One&display=swap');
 
 html,
 body,
 #root {
-  font-family: 'Open Sans', sans-serif;
+  font-family: sans-serif;
   letter-spacing: 3px;
   width: 100%;
   height: 100%;
@@ -28,6 +28,18 @@ li {
   clear: both;
 }
 
+.index-footer-text{
+  position: relative;
+  z-index: 10;
+  bottom: 10%;
+  line-height: .9rem;
+  padding: 0 15px;
+  letter-spacing: 2px;
+  left: 0;
+  text-align: center;
+  font-size: .8rem;
+  color: rgba($color: #ffffff, $alpha: .8);
+}
 .canvas{
   height: 100%;
 }
@@ -95,6 +107,7 @@ background-color: rgba(0, 0, 10, .3);
 ////////////////////
 .contents {
   // background: #43465a;
+  margin-top: $global-margin / 2;
   background: rgba($primary-color, 1);
   color: rgba($color: #ffffff, $alpha: .9);
   position: fixed;
@@ -113,15 +126,17 @@ background-color: rgba(0, 0, 10, .3);
   &__inner {
     height: 100%;
     padding: 100px;
+    max-width: $max-width;
+    margin: 0 auto;
   }
   &__title {
     display: inline-block;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: $global-margin;
-    background: -webkit-linear-gradient(-40deg, #64cdc7, #ffbce0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    // background: -webkit-linear-gradient(-40deg, #64cdc7, #ffbce0);
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
   }
   &__footer {
     margin-bottom: 30px;
@@ -131,7 +146,7 @@ background-color: rgba(0, 0, 10, .3);
     position: absolute;
     -webkit-transform: translateX(0);
     transform: translateX(0);
-    bottom: 30px;
+    bottom: 70px;
     right: 0px;
     font-size: .7rem;
     writing-mode: vertical-rl;
@@ -151,14 +166,14 @@ background-color: rgba(0, 0, 10, .3);
     }
     p,ul,dl {
       font-weight: normal;
-      font-size: .9rem;
+      font-size: 1rem;
     }
     li {
       background: url(../images/list_box.png) no-repeat;
       float: left;
       font-size: .7rem;
       text-align: center;
-      line-height: 1.3rem;
+      line-height: 1.4rem;
       padding-top: 5px;
       margin-left: 10px;
       margin-bottom: 10px;
@@ -181,7 +196,6 @@ background-color: rgba(0, 0, 10, .3);
 
 .blockquote{
   position: relative;
-  font-style: italic;
   padding: 30px 15px 8px 15px;
   border-left: 0.2em solid;
   border-color: rgba($color: #7ccbca, $alpha: .5);
@@ -209,7 +223,7 @@ background-color: rgba(0, 0, 10, .3);
   footer {
     margin-top: 15px;
     font-family: 'Noto Sans', sans-serif;
-    font-size: 0.9em;
+    font-size: .8em;
     font-weight: 700;
   }
 }
