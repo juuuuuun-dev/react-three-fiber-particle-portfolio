@@ -7,11 +7,11 @@ export function About() {
       <div className="paragraph clearfix">
         <h3 className="paragraph__title">
           {/* <img width="22px" className="mr-2 float-left" src={smile} alt="smile" /> */}
-          I'm web developer
+          I love to create
           <img width="22px" className="mr-2 float-left" src={smile} alt="smile" />
           </h3>
         <p>
-          東京に住んでいるWEBデベロッパーです。<br />
+          私は東京に住んでいるWEBデベロッパーです。<br />
           2005年にWEBデザイナーになり、その後サーバーサイドの開発やDevOpsの実装などを行っております。<br />
           どれもやればやるほど好きになっていくのを実感してます
         </p>
