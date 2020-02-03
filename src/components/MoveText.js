@@ -62,11 +62,12 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
     }
   }
   // text bottom y
-  const bottomY = -12;
-  const baseLineHeight = 4.5;
+  const bottomY = -16;
+  const baseLineHeight = 4.7;
   return (
     <>
     {navList.map((item, index) => {
+      const bottom = item.bottomY || bottomY;
       return (
         //
         <mesh ref={refs.current[index]} key={index} onPointerOver={hover} onPointerOut={unhover}>
@@ -76,7 +77,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', size = 1
               const textLineHeight = item.lineHeight || baseLineHeight;
               let n = 1 + textIndex;
               let lineHeight;
-              lineHeight = bottomY + (len * textLineHeight) - (n * textLineHeight);
+              lineHeight = bottom + (len * textLineHeight) - (n * textLineHeight);
               return (
                 <Text key={textIndex} size={navList[index].textSize} hAlign={hAlign} vAlign={vAlign} position={[-9, lineHeight, 18]} children={textValue} />
                 )
@@ -116,7 +117,7 @@ const HitArea = ({ item, children, vAlign, hAlign, size = 1, color = '#000000', 
     )
 }
 
-function Text({ children, vAlign, hAlign, size = 6.5, color = '#ffffff', ...props }) {
+function Text({ children, vAlign, hAlign, size = 6.6, color = '#ffffff', ...props }) {
   const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json')
   const textConfig = useMemo(
     () => ({ font, size: size, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: .0, bevelSize: .0, bevelOffset: 0, bevelSegments: 1 }),

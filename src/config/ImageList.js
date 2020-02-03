@@ -6,9 +6,10 @@ export default [
   {
     title: 'Home',
     src: img2,
-    texts: [ 'I LOVE', 'WEB DEV' ],
-    textSize: 6.5,
-    lineHeight: 4.5,
+    texts: [ 'I am a web', 'developer', ],
+    textSize: 6.0,
+    lineHeight: 3.5,
+    bottomY: -7,
     topText: 'DEVELOPER',
     bottomText: 'WHO OFTEN',
     description: 'descriptionです',
