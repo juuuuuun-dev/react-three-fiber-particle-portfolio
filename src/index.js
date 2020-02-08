@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import Contents from "./components/Contents";
 import Loader from "./components/Loader";
 import MetaHead from "./components/MetaHead";
-import IndexFooterText from "./components/IndexFooterText";
+import "./components/i18n";
 
 import './scss/base.scss';
 

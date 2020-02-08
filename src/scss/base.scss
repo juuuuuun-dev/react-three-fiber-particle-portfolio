@@ -1,12 +1,12 @@
 @import "reset";
 @import "variables";
-@import url('https://fonts.googleapis.com/css?family=Patua+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 html,
 body,
 #root {
-  font-family: sans-serif;
-  letter-spacing: 3px;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 2px;
   width: 100%;
   height: 100%;
   background-color: $primary-color;
@@ -109,13 +109,14 @@ background-color: rgba(0, 0, 10, .3);
   // background: #43465a;
   margin-top: $global-margin / 2;
   background: rgba($primary-color, 1);
-  color: rgba($color: #ffffff, $alpha: .9);
+  color: rgba($color: #ffffff, $alpha: 1);
   position: fixed;
   left: 0;
   line-height: 2rem;
   z-index: 99;
   width: 100%;
   height: 100%;
+  white-space: pre-line; // i18n
   .scroll-area {
     height: 100%;
     width: 100%;
@@ -159,9 +160,9 @@ background-color: rgba(0, 0, 10, .3);
   .paragraph {
     margin-bottom: $global-margin;
     &__title {
-      font-size: 1.2rem;
-      font-weight: normal;
-      line-height: 1.2rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+      line-height: 1.3rem;
       margin-bottom: $global-margin / 2;
     }
     p,ul,dl {
@@ -189,7 +190,18 @@ background-color: rgba(0, 0, 10, .3);
     dd {
       margin-bottom: $global-margin;
     }
-    
+  }
+  // lang
+  .lang-change {
+    font-size: 1rem;
+  }
+  .lang-change span {
+    cursor: pointer;
+    padding: 2px;
+    text-decoration: underline;
+  }
+  .lang-change span:nth-child(even) {
+    margin-left: 10px;
   }
 }
 

@@ -1,20 +1,18 @@
 import React from "react";
 import smile from "../images/smile.png";
+import { useTranslation } from 'react-i18next';
 
 export function About() {
+  const [ t ] = useTranslation();
   return (
     <>
       <div className="paragraph clearfix">
         <h3 className="paragraph__title">
           {/* <img width="22px" className="mr-2 float-left" src={smile} alt="smile" /> */}
-          I love to create
-          <img width="22px" className="mr-2 float-left" src={smile} alt="smile" />
+          {t('about.firstSection.title')}
+          <img width="30px" className="mr-2 float-left" src={smile} alt="smile" />
           </h3>
-        <p>
-          私は東京に住んでいるWEBデベロッパーです。<br />
-          2005年にWEBデザイナーになり、その後サーバーサイドの開発やDevOpsの実装などを行っております。<br />
-          どれもやればやるほど好きになっていくのを実感してます
-        </p>
+          <p>{t('about.firstSection.description')}</p>
       </div>
 
       <div className="paragraph clearfix">

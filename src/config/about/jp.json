@@ -1,10 +1,10 @@
 {
     "firstSection": {
-        "title": "I love to create",
-        "description": "Hello! My name is Jun Kadada.\nI'm a frontend & backend developer working for a web production company in Tokyo.\nHe became a web designer in 2005, and has since developed frontends and backends.\nI feel that the more I do both design and development, the more I like"
+        "title": "作ること、好きです",
+        "description": "こんにちは！「かただじゅん」と申します。\n東京のWeb制作会社に勤務しているFrontend / Backend開発者です。\n2005年にWebデザイナーになり、その後フロントエンドとバックエンドの開発などを行ってきました。\nデザインと開発、どちらもやればやるほど好きになっていくのを実感してます"
     },
     "skills": {
-        "title": "Skills",
+        "title": "スキル",
         "items": ["c", "Python", "PHP", "SQL", "JavaScript", "HTML", "CSS"]
     },
     "slills2": {
