@@ -7,6 +7,8 @@ import { useGesture } from 'react-use-gesture'
 import variables from '../scss/_variables.scss'
 
 const [ useStore ] = create((set, get) => ({
+  lang: 'en',
+  languages: ['en', 'jp'],
   appTitle: "Jun Katada",
   description: "descriptionです",
   pageTitle: "",
@@ -16,6 +18,7 @@ const [ useStore ] = create((set, get) => ({
   navList: NavList,
   navListLength:NavList.length,
   navListIndex: 0,
+  prevNavListIndex: 0,
   coefficient: 0.6,
   targetCoefficient: 0.1,
   isScroll: false,
@@ -49,6 +52,9 @@ const [ useStore ] = create((set, get) => ({
       } else {
         set(state => state.showContent = pathname);
       }
+    },
+    setLang(lang) {
+      set(() => ({ lang }));
     },
     getHasPathNavList() {
       return get().navList.filter(value => value.path);
@@ -113,6 +119,7 @@ const [ useStore ] = create((set, get) => ({
         ({ xy: [, cy], previous: [, py] }) => {
           if (get().isScroll) return;
           let index = get().navListIndex;
+          set(() => ({ prevNavListIndex: index }));
           const diffY = cy - py;
           if (diffY > 10 || diffY < -10) {
             set(() => ({ isScroll: true }));
