@@ -19,10 +19,11 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
   
   // default value
   const color = '#ffffff';
-  const hoveredScale = 1.5;
+  const hoveredScale = 1.3;
   const defaultSize = 6.1;
   const defaultBottomY = -15;
   const defaultLineHeight = 4.0;
+  const defaultLotationY = 0.90;
   // actions.setScrollCollbacks(scrollCollback);
 
   useFrame(() => {
@@ -46,8 +47,12 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
       refs.current[i].current.needsUpdate = true;
     }
     refs.current[navListIndex].current.position.y = scale.value * 20;
+    refs.current[navListIndex].current.rotation.y = rotationY.value;
   });
-  const { scale } = useSpring({ scale: hovered ? hoveredScale : 1, config: config.stiff })
+  const { scale, rotationY } = useSpring({
+    scale: hovered ? hoveredScale : 1,
+    rotationY: hovered ? 0.80 : navList[navListIndex].lotationY || defaultLotationY,
+  })
   const hover = (e) => {
     if (navList[navListIndex].path) {
       setHoverd(true);
