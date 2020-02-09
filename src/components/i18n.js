@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import enAbout from '../config/about/en.json';
-import jpAbout from '../config/about/jp.json'
+import jaAbout from '../config/about/ja.json'
 
 i18n.use(initReactI18next).init({
   debug: true,
@@ -11,9 +11,9 @@ i18n.use(initReactI18next).init({
         about: enAbout
       },
     },
-    jp: {
+    ja: {
       translation: {
-        about: jpAbout
+        about: jaAbout
       },
     }
   },

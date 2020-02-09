@@ -1,7 +1,7 @@
 import React from "react";
 import useStore from "../contexts/store";
 import { useTranslation } from 'react-i18next';
-import { useSpring, useSprings, animated } from "react-spring";
+import { useSprings, animated } from "react-spring";
 
 export default function ContentWrapper({ contentTitle, children }) {
   const lang = useStore(state => state.lang);
@@ -13,7 +13,7 @@ export default function ContentWrapper({ contentTitle, children }) {
 
   const springFunc = (index) => {
     let color = "#ffffff";
-    if (lang && lang === languages[index]) {
+    if (lang && lang === languages[index].id) {
       color = "#77cec9";
     }
     return {
@@ -22,7 +22,6 @@ export default function ContentWrapper({ contentTitle, children }) {
     }
   }
   const [ langSprings, setLangSprings ] = useSprings(languages.length, index => (springFunc(index)));
-  
   setLangSprings(index => (springFunc(index)));
   
 
@@ -39,11 +38,10 @@ export default function ContentWrapper({ contentTitle, children }) {
               <animated.span
                 key={index}
                 style={{ ...item }}
-                onClick={() => actions.setLang(languages[index])}
+                onClick={() => actions.setLang(languages[index].id, contentData.path)}
               >
-                { languages[index].toUpperCase() }
+                { languages[index].name }
               </animated.span>
-              // <span onClick={() => setLang('ja')}>JP</span>
             )
           })}
           
