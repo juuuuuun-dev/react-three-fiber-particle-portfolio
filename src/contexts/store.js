@@ -8,7 +8,8 @@ import variables from '../scss/_variables.scss'
 
 const [ useStore ] = create((set, get) => ({
   lang: 'en',
-  languages: ['en', 'jp'],
+  defaultLang: 'en',
+  languages: [{id: 'en', name: 'EN'}, {id: 'ja', name: 'JP'}],
   appTitle: "Jun Katada",
   description: "descriptionです",
   pageTitle: "",
@@ -40,21 +41,49 @@ const [ useStore ] = create((set, get) => ({
       }));
       // window.onresize = get().actions.onResize;
       window.onpopstate = get().actions.onPopState;
+      // @todo content reload
+      get().actions.setRouter();
     },
     onResize() {
       set(() => ({ windowHeight: window.innerHeight }));
     },
-    // history
+    // to prevent re-rendering
     onPopState() {
-      const pathname = document.location.pathname;
+      get().actions.setRouter();
+    },
+    setRouter() {
+      let pathname = document.location.pathname;
+      const paths = pathname.split('/');
+      const pathLength = paths.length;
+      if (pathLength >= 2 && paths[1]) {
+        // local
+        for (let i = 0; pathLength >= i; i++) {
+          get().languages.map((value) => {
+            if (paths[i] === value.id) {
+              set(() => ({ lang: value.id }));
+              if (pathLength === 2) {
+                set(() => ({ showContent: false }));
+              }
+            }
+          })
+          if (get().actions.isContentsPath(`/${paths[i]}`)) {
+            set(state => state.showContent = `/${paths[i]}`);
+            if (pathLength === 2) {
+              set(() => ({ lang: get().defaultLang}));
+            }
+          }
+        }
+      }
       if (pathname === '/') {
         set(() => ({ showContent: false }));
-      } else {
-        set(state => state.showContent = pathname);
       }
     },
-    setLang(lang) {
+    setLang(lang, path) {
       set(() => ({ lang }));
+      get().actions.setHistory(path);
+    },
+    isDefaultLang() {
+      return get().defaultLang === get().lang;
     },
     getHasPathNavList() {
       return get().navList.filter(value => value.path);
@@ -65,10 +94,14 @@ const [ useStore ] = create((set, get) => ({
         return res[0];
       }
     },
+    isContentsPath(pathname) {
+      return get().navList.filter(value => value.path === pathname).length;
+    },
     updateMouse({ clientX: x, clientY: y }) {
       get().mutation.mouse.set(x - window.innerWidth / 2, y - window.innerHeight / 2);
       get().mutation.mousePos.set(( x - window.innerWidth / 2 ) * 2 - 1, ( y - window.innerHeight / 2 ) * 2 - 1)
     },
+    // location
     toggleContents(pathname) {
       const showContent = get().showContent;
       if (showContent) {
@@ -78,7 +111,7 @@ const [ useStore ] = create((set, get) => ({
             pageTitle: '',
             description: state.navList[0].description,
           }));
-          window.history.pushState('','', '/');
+          window.history.pushState('','', `/${get().actions.getLangPath()}`);
         } else {
           get().actions.setContents(pathname);
         }
@@ -93,13 +126,22 @@ const [ useStore ] = create((set, get) => ({
         pageTitle: content.title,
         description: content.description,
       }));
-      window.history.pushState('', '', pathname);
+      get().actions.setHistory(pathname);
+    },
+    setHistory(pathname) {
+      // const current_path = document.location.pathname;
+      // console.log({current_path});
+      window.history.pushState('', '', get().actions.getLangPath() + pathname);
     },
     setReady(val) {
       set(() => ({ ready: val }));
     },
-    setPageTitle(val) {
-
+    getLangPath() {
+      const lang = get().lang;
+      if (get().defaultLang !== lang) {
+        return lang;
+      }
+      return '';
     },
     toggleLoading() {
       set((state) => ({ loading: state.loading = !state.loading }));
