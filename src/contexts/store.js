@@ -42,7 +42,7 @@ const [ useStore ] = create((set, get) => ({
       // window.onresize = get().actions.onResize;
       window.onpopstate = get().actions.onPopState;
       // @todo content reload
-      get().actions.setRouter();
+      
     },
     onResize() {
       set(() => ({ windowHeight: window.innerHeight }));

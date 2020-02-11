@@ -2,6 +2,7 @@ import React from "react";
 import useStore from "../contexts/store";
 import { useTranslation } from 'react-i18next';
 import { useSprings, animated } from "react-spring";
+import variables from '../scss/_variables.scss'
 
 export default function ContentWrapper({ contentTitle, children }) {
   const lang = useStore(state => state.lang);
@@ -10,11 +11,12 @@ export default function ContentWrapper({ contentTitle, children }) {
   const actions = useStore(state => state.actions);
   const contentData = actions.getContentData(contentTitle);
   const { i18n } = useTranslation();
+  const activeColor = variables.activeColor;
 
   const springFunc = (index) => {
     let color = "#ffffff";
     if (lang && lang === languages[index].id) {
-      color = "#77cec9";
+      color = activeColor;
     }
     return {
       ref: refs[index],

@@ -26,9 +26,9 @@ export default function Particle() {
     
     if (ua === 'sp') {
       // @todo android firefoxは半分ぐらいでいいかも
-      return 10000;
+      return 8000;
     }
-    return 25000;
+    return 24000;
   }, [ ua ]);
   const bufferAttribute = {
     positions: [],
@@ -66,6 +66,7 @@ export default function Particle() {
           geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
           actions.setReady(true);
           actions.setLoading(false);
+          actions.setRouter();
           resolve();
         });
       })();
@@ -173,7 +174,8 @@ function setImagePosition(image, canvas, index) {
         // const gRate = y / image.height * .9;
         const color = new THREE.Color();
         // color.setRGB(rRate, gRate, 1);
-        color.setRGB(rRate, .8, .85);
+        // color.setRGB(rRate, .8, .85);
+        color.setRGB(.1, .8, .95);
         const data = {
           x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,

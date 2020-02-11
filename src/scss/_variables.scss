@@ -2,13 +2,16 @@ $max-width: 960px;
 // breakpoint
 $sm: 600px;
 
-$global-margin: 80px;
+$global-margin: 120px;
 $global-padding: $global-margin;
 $sm-global-margin: 20px;
 $sm-global-padding: $sm-global-margin;
-$primary-color: #363b4e;
+// $primary-color: #363b4e;
+$primary-color: #3d4870;
 $small-margin: 5px;
+$active-color:#3e99e3;
 
 :export {
   primaryColor: $primary-color;
+  activeColor: $active-color;
 }
