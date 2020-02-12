@@ -1,6 +1,6 @@
 @import "reset";
 @import "variables";
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 
 html,
 body,
@@ -110,7 +110,7 @@ background-color: rgba(255, 255, 255, .3);
   // background: #43465a;
   margin-top: $global-margin / 2;
   // background: rgba($primary-color, 1);
-  background: #fff;
+  background: #f0f0f0;
   color: $primary-color;
   // color: rgba($color: #ffffff, $alpha: 1);
   position: fixed;
@@ -138,14 +138,27 @@ background-color: rgba(255, 255, 255, .3);
     font-weight: bold;
     font-size: 2.5rem;
     margin-bottom: $global-margin;
-    // background: -webkit-linear-gradient(-40deg, #64cdc7, #ffbce0);
-    // -webkit-background-clip: text;
-    // -webkit-text-fill-color: transparent;
   }
   &__footer {
     margin-bottom: 100px;
     height: 30px;
     font-size: .7rem;
+  }
+  &__cover {
+    background-image: url(../images/smile_cover.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: auto 100%;
+    width: 100%;
+    height: 150px;
+    margin-bottom: $global-margin / 2;
+    .message {
+      width: 60%;
+      font-weight: bold;
+      font-size: 2.6rem;
+      line-height: 3rem;
+      padding-top: 40px;
+    }
   }
   .back-btn {
     position: absolute;
@@ -271,19 +284,6 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
 // float
 ////////////////////
 
-.ml-1{margin-left: $small-margin;}
-.ml-2{margin-left: $small-margin * 2;}
-.ml-3{margin-left: $small-margin * 3;}
-.mr-1{margin-right: $small-margin;}
-.mr-2{margin-right: $small-margin * 2;}
-.mr-3{margin-right: $small-margin * 3;}
-.mt-1{margin-top: $small-margin;}
-.mt-2{margin-top: $small-margin * 2;}
-.mt-3{margin-top: $small-margin * 3;}
-.mb-1{margin-bottom: $small-margin;}
-.mb-2{margin-bottom: $small-margin * 2;}
-.mb-3{margin-bottom: $small-margin * 3;}
-
 ////////////////////
 // media screen sm
 ////////////////////
@@ -302,6 +302,13 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
       bottom: 80px;
       font-size: .7rem;
       padding: 25px 5px;
+    }
+    &__cover {
+      background-size: auto 60%;
+      .message {
+        padding-top: 30px;
+        font-size: 1.8rem;
+      }
     }
   }
 }
