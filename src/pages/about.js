@@ -8,9 +8,9 @@ export function About() {
   const [ t ] = useTranslation();
   return (
     <>
-      {/* <img className="cover" src={cover} alt="i love to create" /> */}
       <div className="contents__cover contents__cover--about">
-        <h3 className="message" dangerouslySetInnerHTML={{ __html: t('about.cover')}} />
+        <h3 className="message">I love to create</h3>
+        {/* <h3 className="message" dangerouslySetInnerHTML={{ __html: t('about.cover')}} /> */}
       </div>
       { enAbout['paragraph'].map((value, index)=> {
         return (
