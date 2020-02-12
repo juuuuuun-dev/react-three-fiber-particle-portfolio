@@ -20,7 +20,7 @@ export function Main() {
           camera={{ position: [-5, 100, 50], near: 0.1, fov: 45, up: [0, 1, 0], zoom: 1, far: 10000 }}
           onCreated={ ({ gl }) => {
             // gl.setClearColor("#363b4e")
-            gl.setClearColor(new THREE.Color(primaryColor))
+            // gl.setClearColor(new THREE.Color(primaryColor))
           }}
         >
           <pointLight distance={200} intensity={8} position={[40, 112, 0.0]} color="#363b4e" />

@@ -26,7 +26,7 @@ export default function Particle() {
     
     if (ua === 'sp') {
       // @todo android firefoxは半分ぐらいでいいかも
-      return 8000;
+      return 10000;
     }
     return 24000;
   }, [ ua ]);
@@ -79,7 +79,6 @@ export default function Particle() {
   let coefficient = 12.0; // first coefficient
   const targetCoefficient = 1.0;
   const mouseTargetCoefficient = -0.5; // z
-  // @todo スマホは角度固定
   useFrame(() => {
     coefficient += (targetCoefficient - coefficient) * .1;
     mouse.x += (mouseTargetCoefficient - mouse.x) * .1;
@@ -177,7 +176,7 @@ function setImagePosition(image, canvas, index) {
         // color.setRGB(rRate, gRate, 1);
         // color.setRGB(rRate, .8, .85);
         // color.setRGB(.2, .7, 1); #暫定
-        color.setRGB(.2, .7, 1);
+        color.setRGB(.1, .65, .9);
         const data = {
           x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,
