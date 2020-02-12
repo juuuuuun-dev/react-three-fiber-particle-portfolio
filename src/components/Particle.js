@@ -26,9 +26,9 @@ export default function Particle() {
     
     if (ua === 'sp') {
       // @todo android firefoxは半分ぐらいでいいかも
-      return 10000;
+      return 8000;
     }
-    return 24000;
+    return 22000;
   }, [ ua ]);
   const bufferAttribute = {
     positions: [],
@@ -175,8 +175,8 @@ function setImagePosition(image, canvas, index) {
         const color = new THREE.Color();
         // color.setRGB(rRate, gRate, 1);
         // color.setRGB(rRate, .8, .85);
-        // color.setRGB(.2, .7, 1); #暫定
-        color.setRGB(.1, .65, .9);
+        // color.setRGB(.1, .65, .9); #暫定
+        color.setRGB(1, 1, 1);
         const data = {
           x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,

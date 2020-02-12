@@ -20,9 +20,9 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
   // default value
   const color = '#ffffff';
   const hoveredScale = 1.3;
-  const defaultSize = 6.1;
+  const defaultSize = 6.3;
   const defaultBottomY = -15;
-  const defaultLineHeight = 4.0;
+  const defaultLineHeight = 4.2;
   const defaultLotationY = 0.90;
   // actions.setScrollCollbacks(scrollCollback);
 
