@@ -2,6 +2,7 @@ import React from "react";
 import useStore from "../contexts/store";
 import { useTranslation } from 'react-i18next';
 import { useSprings, animated } from "react-spring";
+import ContentFooter from "./ContentFooter";
 import variables from '../scss/_variables.scss'
 
 export default function ContentWrapper({ contentTitle, children }) {
@@ -12,7 +13,7 @@ export default function ContentWrapper({ contentTitle, children }) {
   const contentData = actions.getContentData(contentTitle);
   const { i18n } = useTranslation();
   const activeColor = variables.activeColor;
-  const primaryColor = variables.primaryColor;
+
 
   const springFunc = (index) => {
     let color = "#aaaaaa";
@@ -54,7 +55,7 @@ export default function ContentWrapper({ contentTitle, children }) {
           <div>
             {children}
           </div>
-          <div className="contents__footer"></div>
+          <ContentFooter />
         </div>
       </div>
     </>
