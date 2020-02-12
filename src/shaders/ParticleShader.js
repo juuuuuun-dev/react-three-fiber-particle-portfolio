@@ -68,7 +68,7 @@ const ParticleShader = {
         // else             vAlpha =  clamp((1.0 - rate)/0.5, 0., 1.0);
         vColor = aColor;
         vNormal = normalMatrix * normal;
-        gl_PointSize = 1.0; //(size * scale) * (1000.0 / length(mvPosition.xyz));
+        gl_PointSize = 0.8; //(size * scale) * (1000.0 / length(mvPosition.xyz));
         gl_Position = projectionMatrix * mvPosition;
         
     }
