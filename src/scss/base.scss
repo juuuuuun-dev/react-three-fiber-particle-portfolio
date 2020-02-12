@@ -109,8 +109,10 @@ background-color: rgba(255, 255, 255, .3);
 .contents {
   // background: #43465a;
   margin-top: $global-margin / 2;
-  background: rgba($primary-color, 1);
-  color: rgba($color: #ffffff, $alpha: 1);
+  // background: rgba($primary-color, 1);
+  background: #fff;
+  color: $primary-color;
+  // color: rgba($color: #ffffff, $alpha: 1);
   position: fixed;
   left: 0;
   line-height: 2rem;
@@ -148,13 +150,13 @@ background-color: rgba(255, 255, 255, .3);
     position: absolute;
     -webkit-transform: translateX(0);
     transform: translateX(0);
-    bottom: 70px;
+    bottom: 80px;
     right: 0px;
     font-size: .7rem;
     writing-mode: vertical-rl;
-    padding: 25px 5px;
-    background: #fff;
-    color: #43465a;
+    padding: 35px 10px;
+    background: $primary-color;
+    color: #fff;
     cursor: pointer;
   }
   // paragraph
@@ -173,6 +175,7 @@ background-color: rgba(255, 255, 255, .3);
     li {
       background: url(../images/list_box.png) no-repeat;
       float: left;
+      color: #fff;
       font-size: .7rem;
       text-align: center;
       line-height: 1.4rem;
@@ -224,17 +227,17 @@ background-color: rgba(255, 255, 255, .3);
   &:before {
     font-family: 'Sanchez', serif;
     font-size: 1rem;
-    color: rgba($color: #fff, $alpha: .1);
+    color: rgba($color: $primary-color, $alpha: .1);
     line-height: 1.6rem;
     content: '\201C';
     position: absolute;
     top: 0.25em;
     left: 0.15em;
     font-size: 5em;
-   }
+  }
   &:after {
     font-family: 'Sanchez', serif;
-    color: rgba($color: #fff, $alpha: .1);
+    color: rgba($color: $primary-color, $alpha: .1);
     content: '\201D';
     position: absolute;
     bottom: -15px;
@@ -244,9 +247,8 @@ background-color: rgba(255, 255, 255, .3);
   }
   footer {
     margin-top: 15px;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: .8em;
-    font-weight: 700;
+    font-size: .8rem;
+    font-style: italic;
   }
 }
 
@@ -294,5 +296,12 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
   }
   .contents__inner{
       padding: 80px $sm-global-padding;
-  } 
+  }
+  .contents {
+    .back-btn {
+      bottom: 80px;
+      font-size: .7rem;
+      padding: 25px 5px;
+    }
+  }
 }

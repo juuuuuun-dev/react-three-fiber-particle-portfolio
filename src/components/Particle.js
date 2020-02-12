@@ -170,12 +170,14 @@ function setImagePosition(image, canvas, index) {
       const num = 4 * (image.width * y + x) + 3;
       const alpha = imageData[num];
       if (alpha !== 0) {
-        const rRate = x / image.width * 1.5;
+        const rRate = x / image.width * 1.1;
+        // const rRate = x / image.width * 1.5;
         // const gRate = y / image.height * .9;
         const color = new THREE.Color();
         // color.setRGB(rRate, gRate, 1);
         // color.setRGB(rRate, .8, .85);
-        color.setRGB(.1, .8, .95);
+        // color.setRGB(.2, .7, 1); #暫定
+        color.setRGB(.2, .7, 1);
         const data = {
           x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,
