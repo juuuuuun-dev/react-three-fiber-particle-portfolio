@@ -6,7 +6,8 @@ export default [
   {
     title: 'Home',
     src: img2,
-    texts: [ 'I am a', 'frontend', '& backend', 'developer' ],
+    // texts: [ 'I am a', 'frontend', '& backend', 'developer' ],
+    texts: [ 'I am a', 'web', 'developer', '& designer' ],
     textSize: 5.3,
     lineHeight: 3.7,
     bottomY: -9.6,

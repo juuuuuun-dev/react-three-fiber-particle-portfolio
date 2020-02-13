@@ -27,7 +27,11 @@
                       {
                           "body": "Find purpose, the means will follow.",
                           "author": "Mohandas Gandhi"
-                      }
+                      },
+                      {
+                        "body": "Efforts and courage are not enough without purpose and direction.",
+                        "author": "John F. Kennedy"
+                    }
                   ]
               },
               {
@@ -71,7 +75,7 @@
                   ]
               },
               {
-                  "title": "The Value of Curiosity",
+                  "title": "Curiosity",
                   "items": [
                       {
                           "body": "Curiosity has its own reason for existing.",
@@ -89,6 +93,15 @@
                   ]
               },
               {
+                "title": "I will not do what I do not do",
+                "items": [
+                    {
+                        "body": " Have a healthy disregard for the impossible and actually build new solutions.",
+                        "author": "Larry Page"
+                    }
+                ]
+            },
+              {
                   "title": "Rival is myself",
                   "items": [
                       {
@@ -105,6 +118,19 @@
                           "author": "Ted Williams"
                       }
                   ]
+              },
+              {
+                "title": "GRIT! The Power of Passion and Perseverance",
+                "items": [
+                  {
+                    "body": "All great achievements require time.",
+                    "author": "Maya Angelou"
+                  },
+                  {
+                    "body": "Continuous effort, not strength or intelligence, is the key to unlocking our potential.",
+                    "author": "Winston Churchill"
+                  }
+                ]
               },
               {
                   "title": "Playfulness is important",

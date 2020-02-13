@@ -26,8 +26,8 @@ const Header = () => {
   const [ navSprings, setNavSprings ] = useSprings(navList.length, index => (springFunc(index)));
   setNavSprings(index => (springFunc(index)));
   const headerSpring = useSpring({
-    backdropFilter:  showContent ? "blur(3px)" : 'blur(0px)',
-    backgroundColor: showContent ? `rgba(54, 59, 78, .1)` : `rgba(54, 59, 78, .0)`,
+    // backdropFilter:  showContent ? "blur(3px)" : 'blur(0px)',
+    // backgroundColor: showContent ? `rgba(54, 59, 78, .1)` : `rgba(54, 59, 78, .0)`,
   });
   const handleClick = (index) => {
     if (navListIndex !== index + 1) {
@@ -38,7 +38,7 @@ const Header = () => {
   }
   return (
     <>
-      <animated.div ref={headerRef} className="header" style={{ ...headerSpring }}>
+      <animated.div ref={headerRef} className="header">
         <h1 className="logo">{ appTitle }</h1>
         <ul className="nav">
         {navSprings.map((item, index) => {

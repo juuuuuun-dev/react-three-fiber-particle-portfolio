@@ -28,7 +28,7 @@ export default function Particle() {
       // @todo android firefoxは半分ぐらいでいいかも
       return 8000;
     }
-    return 22000;
+    return 30000;
   }, [ ua ]);
   const bufferAttribute = {
     positions: [],
