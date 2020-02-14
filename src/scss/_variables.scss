@@ -8,12 +8,13 @@ $sm-global-margin: 20px;
 $sm-global-padding: $sm-global-margin;
 // $primary-color: #0f538f;
 // $primary-color: #2b73b3;
-$primary-color:  #d1d1d1;
+$primary-color:  #d2cebc;
 $secondary-color: #ffffff;
 $small-margin: 5px;
-$active-color:#5493cc;
+$active-color:#fffebc;
 
 :export {
   primaryColor: $primary-color;
+  secondaryColor: $secondary-color;
   activeColor: $active-color;
 }
