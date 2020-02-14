@@ -112,9 +112,9 @@ background-color: rgba($primary-color, .2);
 .contents {
   // background: #43465a;
   margin-top: $global-margin / 2;
-  // background: rgba($primary-color, 1);
-  background: $primary-color;
-  color: $secondary-color;
+  // background: $primary-color;
+  background: $secondary-color;
+  color: $primary-color;
   // color: rgba($color: #ffffff, $alpha: 1);
   position: fixed;
   left: 0;
@@ -139,7 +139,7 @@ background-color: rgba($primary-color, .2);
   &__title {
     display: inline-block;
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     margin-bottom: $global-margin / 2;
   }
   &__footer {
@@ -148,21 +148,12 @@ background-color: rgba($primary-color, .2);
     font-size: .7rem;
   }
   &__cover {
-    background-image: url(../images/cover_white.png);
-    background-repeat: no-repeat;
-    background-position: bottom right;
-    // background-color: #ffe57d;
-    background-size: auto 340px;
-    min-height: 340px;
-    width: 100%;
     margin-bottom: $global-margin / 2;
     .message {
-      width: 50%;
-      text-align: right;
       font-weight: bold;
       color: #ffffff;
-      font-size: 7rem;
-      line-height: 5rem;
+      font-size: 3rem;
+      line-height: 3rem;
       padding-top: 40px;
     }
   }
@@ -176,8 +167,8 @@ background-color: rgba($primary-color, .2);
     font-size: .7rem;
     writing-mode: vertical-rl;
     padding: 35px 10px;
-    background: $primary-color;
-    color: #fff;
+    background: $secondary-color;
+    color: $primary-color;
     cursor: pointer;
   }
   // paragraph
@@ -248,29 +239,28 @@ background-color: rgba($primary-color, .2);
   margin-left: 5%;
   padding: 30px 15px 8px 15px;
   border-left: 0.4em solid;
-  // background: rgba($color: #ffffff, $alpha: 0.7);
-  border-color: rgba($color: #fff, $alpha: 1);
+  border-color: rgba($color: #fff, $alpha: .5);
   &:before {
     font-family: 'Sanchez', serif;
     font-size: 5rem;
     line-height: 1rem;
-    color: rgba($color: #ffdf64, $alpha: 1);
+    color: rgba($color: $secondary-color, $alpha: .3);
     content: '\201C';
     position: absolute;
     top: 13px;
     left: 10px;
   }
-  // &:after {
-  //   font-family: 'Sanchez', serif;
-  //   line-height: 1rem;
-  //   color: rgba($color: $primary-color, $alpha: .1);
-  //   content: '\201D';
-  //   position: absolute;
-  //   bottom: -25px;
-  //   right: 15px;
-  //   font-size: 5rem;
-  //   font-style: italic;
-  // }
+  &:after {
+    font-family: 'Sanchez', serif;
+    line-height: 1rem;
+    color: rgba($color: $secondary-color, $alpha: .3);
+    content: '\201D';
+    position: absolute;
+    bottom: -35px;
+    right: 15px;
+    font-size: 5rem;
+    font-style: italic;
+  }
   footer {
     margin-top: 15px;
     font-size: .8rem;
@@ -318,13 +308,7 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
       padding: 25px 5px;
     }
     &__cover {
-      background-size: auto 130px;
-      min-height: 130px;
       .message {
-        width: 53%;
-        padding-top: 20px;
-        font-size: 3.3rem;
-        line-height: 2.6rem;
       }
     }
   }

@@ -1,5 +1,5 @@
 import img0 from '../images/contact.png';
-import img1 from '../images/cover3.png';
+import img1 from '../images/q.png';
 import img2 from '../images/about.png';
 
 export default [
