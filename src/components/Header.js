@@ -6,6 +6,7 @@ import variables from '../scss/_variables.scss'
 
 const Header = () => {
   const activeColor = variables.activeColor;
+  const textColor = variables.textColor;
   const actions = useStore(state => state.actions);
   const appTitle = useStore(state => state.appTitle);
   const showContent = useStore(state => state.showContent);
@@ -14,7 +15,8 @@ const Header = () => {
   const headerRef = React.useRef();
   const refs = React.useRef(navList.map((_, index) => index));
   const springFunc = (index) => {
-    let color = "#ffffff";
+    // var not working
+    let color = showContent ? "#a79860" : "#ffffff";
     if (showContent && showContent === navList[index].path) {
       color = activeColor;
     }
@@ -26,7 +28,8 @@ const Header = () => {
   const [ navSprings, setNavSprings ] = useSprings(navList.length, index => (springFunc(index)));
   setNavSprings(index => (springFunc(index)));
   const headerSpring = useSpring({
-    // backdropFilter:  showContent ? "blur(3px)" : 'blur(0px)',
+    backdropFilter:  showContent ? "blur(3px)" : 'blur(0px)',
+    color: showContent ? "#a79860" : "#ffffff",
     // backgroundColor: showContent ? `rgba(54, 59, 78, .1)` : `rgba(54, 59, 78, .0)`,
   });
   const handleClick = (index) => {
@@ -38,7 +41,7 @@ const Header = () => {
   }
   return (
     <>
-      <animated.div ref={headerRef} className="header">
+      <animated.div ref={headerRef} style={headerSpring} className="header">
         <h1 className="logo">{ appTitle }</h1>
         <ul className="nav">
         {navSprings.map((item, index) => {

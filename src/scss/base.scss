@@ -10,9 +10,9 @@ body,
   letter-spacing: 2px;
   width: 100%;
   height: 100%;
-  background-color: $primary-color;
+  // background-color: $primary-color;
   // background: linear-gradient(45deg, rgba($primary-color,1) 0%, rgba(#093f6f,1) 100%);
-  // background: radial-gradient(#1b66a8, $primary-color 100%);
+  // background: radial-gradient(#e5dcbc, $primary-color 100%);
 
   /* -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -21,6 +21,9 @@ body,
   -ms-user-select: none;
   user-select: none; */
   overflow: hidden;
+}
+#main {
+  background: radial-gradient(#e5dcbc, $primary-color 100%);
 }
 ul{ margin:0; padding: 0;}
 li {
@@ -103,7 +106,7 @@ li {
   width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-background-color: rgba($primary-color, .2);
+background-color: rgba($primary-color, .5);
 }
 
 ////////////////////
@@ -111,10 +114,10 @@ background-color: rgba($primary-color, .2);
 ////////////////////
 .contents {
   // background: #43465a;
-  margin-top: $global-margin / 2;
-  // background: $primary-color;
+  // margin-top: $global-margin / 2;
   background: $secondary-color;
-  color: $primary-color;
+  // background: $secondary-color;
+  color: $text-color;
   // color: rgba($color: #ffffff, $alpha: 1);
   position: fixed;
   left: 0;
@@ -139,7 +142,7 @@ background-color: rgba($primary-color, .2);
   &__title {
     display: inline-block;
     font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin-bottom: $global-margin / 2;
   }
   &__footer {
@@ -148,10 +151,9 @@ background-color: rgba($primary-color, .2);
     font-size: .7rem;
   }
   &__cover {
-    margin-bottom: $global-margin / 2;
+    margin-bottom: $global-margin;
     .message {
       font-weight: bold;
-      color: #ffffff;
       font-size: 3rem;
       line-height: 3rem;
       padding-top: 40px;
@@ -167,32 +169,31 @@ background-color: rgba($primary-color, .2);
     font-size: .7rem;
     writing-mode: vertical-rl;
     padding: 35px 10px;
-    background: $secondary-color;
-    color: $primary-color;
+    background: $primary-color;
+    color: $secondary-color;
     cursor: pointer;
   }
   // paragraph
   .paragraph {
     margin-bottom: $global-margin;
     &__title {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: bold;
-      line-height: 1.2rem;
-      margin-bottom: $global-margin / 3;
+      line-height: 1.3rem;
+      margin-bottom: $global-margin / 4;
     }
     p,ul,dl {
       font-weight: normal;
-      font-size: 1rem;
+      font-size: .9rem;
+      line-height: 1.3rem;
     }
     p {
-      
-      margin-bottom: $global-margin / 3;
+      margin-bottom: $global-margin / 4;
     }
     li {
       background: url(../images/list_box.png) no-repeat;
       background-size: 140px 40px;
       float: left;
-      // color: #fff;
       font-size: .7rem;
       text-align: center;
       line-height: 1.4rem;
@@ -237,14 +238,15 @@ background-color: rgba($primary-color, .2);
   position: relative;
   max-width: 95%;
   margin-left: 5%;
-  padding: 30px 15px 8px 15px;
+  padding: 30px 15px 20px 15px;
   border-left: 0.4em solid;
-  border-color: rgba($color: #fff, $alpha: .5);
+  background-color: rgba($color: $primary-color, $alpha: .1);
+  border-color: rgba($color: $primary-color, $alpha: .5);
   &:before {
     font-family: 'Sanchez', serif;
     font-size: 5rem;
     line-height: 1rem;
-    color: rgba($color: $secondary-color, $alpha: .3);
+    color: rgba($color: $primary-color, $alpha: .3);
     content: '\201C';
     position: absolute;
     top: 13px;
@@ -253,11 +255,11 @@ background-color: rgba($primary-color, .2);
   &:after {
     font-family: 'Sanchez', serif;
     line-height: 1rem;
-    color: rgba($color: $secondary-color, $alpha: .3);
+    color: rgba($color: $primary-color, $alpha: .3);
     content: '\201D';
     position: absolute;
-    bottom: -35px;
-    right: 15px;
+    bottom: -30px;
+    right: 20px;
     font-size: 5rem;
     font-style: italic;
   }
