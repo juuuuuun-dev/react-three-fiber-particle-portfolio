@@ -23,7 +23,7 @@ body,
   overflow: hidden;
 }
 #main {
-  background: radial-gradient(#e5dcbc, $primary-color 100%);
+  background: radial-gradient($gradient-start-color, $primary-color 100%);
 }
 ul{ margin:0; padding: 0;}
 li {
@@ -89,7 +89,7 @@ li {
   left: 0;
   width: 100%;
   height: 100%;
-  background: $primary-color;
+  background: radial-gradient($gradient-start-color, $primary-color 100%);
   &__inner{
     padding: $sm-global-padding;
     .loader-img{
@@ -142,11 +142,11 @@ background-color: rgba($primary-color, .5);
   &__title {
     display: inline-block;
     font-weight: bold;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin-bottom: $global-margin / 2;
   }
   &__footer {
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     height: 30px;
     font-size: .7rem;
   }
@@ -154,9 +154,8 @@ background-color: rgba($primary-color, .5);
     margin-bottom: $global-margin;
     .message {
       font-weight: bold;
-      font-size: 3rem;
-      line-height: 3rem;
-      padding-top: 40px;
+      font-size: 1.8rem;
+      line-height: 2rem;
     }
   }
   .back-btn {
@@ -184,8 +183,8 @@ background-color: rgba($primary-color, .5);
     }
     p,ul,dl {
       font-weight: normal;
-      font-size: .9rem;
-      line-height: 1.3rem;
+      font-size: .8rem;
+      line-height: 1.4rem;
     }
     p {
       margin-bottom: $global-margin / 4;
@@ -246,7 +245,7 @@ background-color: rgba($primary-color, .5);
     font-family: 'Sanchez', serif;
     font-size: 5rem;
     line-height: 1rem;
-    color: rgba($color: $primary-color, $alpha: .3);
+    color: rgba($color: $primary-color, $alpha: .2);
     content: '\201C';
     position: absolute;
     top: 13px;
@@ -255,10 +254,10 @@ background-color: rgba($primary-color, .5);
   &:after {
     font-family: 'Sanchez', serif;
     line-height: 1rem;
-    color: rgba($color: $primary-color, $alpha: .3);
+    color: rgba($color: $primary-color, $alpha: .2);
     content: '\201D';
     position: absolute;
-    bottom: -30px;
+    bottom: -25px;
     right: 20px;
     font-size: 5rem;
     font-style: italic;
