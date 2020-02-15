@@ -21,6 +21,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
   const color = '#ffffff';
   const hoveredScale = 1.3;
   const defaultSize = 6.3;
+  const defaultPositionX = -10;
   const defaultBottomY = -15;
   const defaultLineHeight = 4.2;
   const defaultLotationY = 0.90;
@@ -73,6 +74,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
     <>
     {navList.map((item, index) => {
       const bottom = item.bottomY || defaultBottomY;
+      const positionX = item.positionX || defaultPositionX;
       return (
         <mesh ref={refs.current[index]} key={index} onPointerOver={hover} onPointerOut={unhover}>
           {
@@ -84,7 +86,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
               let lineHeight;
               lineHeight = bottom + (len * textLineHeight) - (n * textLineHeight);
               return (
-                <Text key={textIndex} size={size} hAlign={hAlign} vAlign={vAlign} position={[-10, lineHeight, 18]} color={color} children={textValue} />
+                <Text key={textIndex} size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, lineHeight, 18]} color={color} children={textValue} />
                 )
             })
           }

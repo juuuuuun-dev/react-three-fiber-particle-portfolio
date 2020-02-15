@@ -12,11 +12,11 @@ export default function ContentWrapper({ contentTitle, children }) {
   const actions = useStore(state => state.actions);
   const contentData = actions.getContentData(contentTitle);
   const { i18n } = useTranslation();
-  const secondaryColor = variables.secondaryColor;
+  const primaryColor = variables.primaryColor;
   const activeColor = variables.activeColor;
 
   const springFunc = (index) => {
-    let color = secondaryColor;
+    let color = primaryColor;
     if (lang && lang === languages[index].id) {
       color = activeColor;
     }

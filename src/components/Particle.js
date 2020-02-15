@@ -77,7 +77,7 @@ export default function Particle() {
   
   const { camera } = useThree();
   let coefficient = 12.0; // first coefficient
-  const targetCoefficient = 1.0;
+  const targetCoefficient = 0.9;
   const mouseTargetCoefficient = -0.5; // z
   useFrame(() => {
     coefficient += (targetCoefficient - coefficient) * .1;

@@ -5,10 +5,10 @@ import { Canvas } from "react-three-fiber";
 import useStore from "../contexts/store";
 import polyfill from '@juggle/resize-observer'
 import * as THREE from 'three'
-import variables from '../scss/_variables.scss'
+// import variables from '../scss/_variables.scss'
 
 export function Main() {
-  const primaryColor = variables.primaryColor;
+  // const primaryColor = variables.primaryColor;
   const canvasRef = React.useRef();
   const actions = useStore(state => state.actions);
   actions.useYScroll({ domTarget: canvasRef });
