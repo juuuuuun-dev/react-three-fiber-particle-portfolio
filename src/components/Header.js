@@ -6,7 +6,7 @@ import variables from '../scss/_variables.scss'
 
 const Header = () => {
   const activeColor = variables.activeColor;
-  const textColor = variables.textColor;
+  const textColor = "#8b8055";
   const actions = useStore(state => state.actions);
   const appTitle = useStore(state => state.appTitle);
   const showContent = useStore(state => state.showContent);
@@ -16,7 +16,7 @@ const Header = () => {
   const refs = React.useRef(navList.map((_, index) => index));
   const springFunc = (index) => {
     // var not working
-    let color = showContent ? "#a79860" : "#ffffff";
+    let color = showContent ? textColor : "#ffffff";
     if (showContent && showContent === navList[index].path) {
       color = activeColor;
     }
@@ -29,7 +29,7 @@ const Header = () => {
   setNavSprings(index => (springFunc(index)));
   const headerSpring = useSpring({
     backdropFilter:  showContent ? "blur(3px)" : 'blur(0px)',
-    color: showContent ? "#a79860" : "#ffffff",
+    color: showContent ? textColor : "#ffffff",
     // backgroundColor: showContent ? `rgba(54, 59, 78, .1)` : `rgba(54, 59, 78, .0)`,
   });
   const handleClick = (index) => {
