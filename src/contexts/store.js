@@ -23,6 +23,9 @@ const [ useStore ] = create((set, get) => ({
   coefficient: 0.6,
   targetCoefficient: 0.1,
   isScroll: false,
+  stopMainFrame: false,
+  resizeTimer: 200,
+  doResize: false,
   scrollCallbacks: [],
   windowHeight: window.innerHeight,
   ua: getDevice(),
@@ -39,13 +42,21 @@ const [ useStore ] = create((set, get) => ({
       set(() => ({
         loading: true,
       }));
-      // window.onresize = get().actions.onResize;
+      window.onresize = get().actions.onResize;
       window.onpopstate = get().actions.onPopState;
       // @todo content reload
       
     },
     onResize() {
-      set(() => ({ windowHeight: window.innerHeight }));
+      clearTimeout(get().doResize);
+      set(() => ({ doResize: setTimeout(get().actions.resizedw, 200) }));
+      set(() => ({ stopMainFrame: true }));
+      // set(() => ({ windowHeight: window.innerHeight }));
+    },
+    resizedw() {
+      console.log('end');
+      set(() => ({ stopMainFrame: false }));
+      set(() => ({ navListIndex: 0 }));
     },
     // to prevent re-rendering
     onPopState() {

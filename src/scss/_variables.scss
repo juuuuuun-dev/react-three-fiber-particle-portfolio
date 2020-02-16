@@ -4,21 +4,24 @@ $sm: 600px;
 
 $global-margin: 120px;
 $global-padding: $global-margin;
-$sm-global-margin: 20px;
+$sm-global-margin: 30px;
 $sm-global-padding: $sm-global-margin;
-// $primary-color: #0f538f;
-// $primary-color: #2b73b3;
-$primary-color:  #cec39d;
-$gradient-start-color: #e9e2c9;
+// white
+$primary-color:  #beb07c;
+$gradient-start-color: #e0d6b2;
 $secondary-color: #ffffff;
-$text-color:  #8b8055;
+// dark
+// $primary-color:  #27241a;
+// $gradient-start-color: #343024;
+// $secondary-color: #333333;
+$text-color:  #ece9dc;
 $description-color:  #807b6e;
 $small-margin: 5px;
-$active-color:#d4c179;
+$active-color:#c0b58d;
 
 :export {
   primaryColor: $primary-color;
   secondaryColor: $secondary-color;
   activeColor: $active-color;
-  textXolor: $text-color;
+  textColor: $text-color;
 }

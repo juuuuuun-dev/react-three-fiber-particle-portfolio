@@ -15,6 +15,7 @@ import useStore from '../contexts/store'
 
 export default function Particle() {
   const actions = useStore(state => state.actions);
+  const stopMainFrame = useStore(state => state.stopMainFrame);
   const navListLength = useStore(state => state.navListLength);
   const ua = useStore(state => state.ua);
   let listIndex = 0;
@@ -80,8 +81,11 @@ export default function Particle() {
   const targetCoefficient = 0.9;
   const mouseTargetCoefficient = -0.5; // z
   useFrame(() => {
-    coefficient += (targetCoefficient - coefficient) * .1;
-    mouse.x += (mouseTargetCoefficient - mouse.x) * .1;
+    if (stopMainFrame) {
+      return;
+    }
+    coefficient += (targetCoefficient - coefficient) * .08;
+    mouse.x += (mouseTargetCoefficient - mouse.x) * .08;
     let delta = clock.getDelta();
     time += delta;
     theta += (mouse.x / 4 - theta) / 10;
@@ -173,10 +177,8 @@ function setImagePosition(image, canvas, index) {
         // const rRate = x / image.width * 1.5;
         // const gRate = y / image.height * .9;
         const color = new THREE.Color();
-        // color.setRGB(rRate, gRate, 1);
-        // color.setRGB(rRate, .8, .85);
-        // color.setRGB(.1, .65, .9); #暫定
-        color.setRGB(1, 1, 1);
+        // color.setRGB(.55, .55, .55); // dark
+        color.setRGB(1, 1, 1); // white
         const data = {
           x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,

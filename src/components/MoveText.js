@@ -28,7 +28,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
   // actions.setScrollCollbacks(scrollCollback);
 
   useFrame(() => {
-    actions.setCoefficient(coefficient + (targetCoefficient - coefficient) * .1);
+    actions.setCoefficient(coefficient + (targetCoefficient - coefficient) * .06);
     // coefficient += (targetCoefficient - coefficient) * .1;
     for (let i = 0; navListLength > i; i++) {
       refs.current[i].current.rotation.x = 30;
