@@ -220,12 +220,12 @@ background-color: rgba($primary-color, .7);
       margin-left: 5%;
       padding: 30px 15px 20px 15px;
       border-left: 0.4em solid;
-      // background-color: rgba($color: $text-color, $alpha: .05);
-      border-color: rgba($color: $text-color, $alpha: .2);
+      // background-color: rgba($color: $text-color, $alpha: .01);
+      border-color: rgba($color: $text-color, $alpha: .1);
       
       &:before {
         font-family: 'Sanchez', serif;
-        font-size: 5rem;
+        font-size: 4rem;
         line-height: 1rem;
         color: rgba($color: $text-color, $alpha: .1);
         content: '\201C';
@@ -241,7 +241,7 @@ background-color: rgba($primary-color, .7);
         position: absolute;
         bottom: -25px;
         right: 20px;
-        font-size: 5rem;
+        font-size: 4rem;
         font-style: italic;
       }
       footer {
@@ -299,6 +299,7 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
 @media screen and (max-width: $sm) {
   .header {
       padding: $sm-global-padding;
+      height: 80px;
       .nav {
         right: $sm-global-margin;
       }
