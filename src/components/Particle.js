@@ -23,13 +23,12 @@ export default function Particle() {
   let theta = 0;
   const clock = new THREE.Clock();
   console.log('memo')
-  let MAX = useMemo(() => {
-    
+  let [MAX, COLOR] = useMemo(() => {
     if (ua === 'sp') {
       // @todo android firefoxは半分ぐらいでいいかも
-      return 8000;
+      return [4000, [.75, .75, .75]];
     }
-    return 30000;
+    return [20000, [1, 1, 1]];
   }, [ ua ]);
   const bufferAttribute = {
     positions: [],
@@ -48,7 +47,7 @@ export default function Particle() {
 
   useEffect(() => {
     const f = async () => {
-      const imagePositions = await createImagePositions();
+      const imagePositions = await createImagePositions(COLOR);
       const attribute = await createAttributes(attributes, imagePositions, MAX);
       await (() => {
         return new Promise(resolve => {
@@ -145,20 +144,20 @@ export default function Particle() {
 /**
  * createImagePositions
  */
-function createImagePositions() {
+function createImagePositions(COLOR) {
   return new Promise(async (resolve) => {
     const canvas = document.createElement("canvas");
     let positions = [];
     const listLen = ImageList.length;
     for (let i = 0; listLen > i; i++) {
       const image = await LoadImage(ImageList[i].src);
-      positions[i] = setImagePosition(image, canvas, i);
+      positions[i] = setImagePosition(image, canvas, i, COLOR);
     }
     resolve(positions);
   });
 }
 
-function setImagePosition(image, canvas, index) {
+function setImagePosition(image, canvas, index, COLOR) {
   let pos = [];
   const scale = 9;
   canvas.width = image.width;
@@ -178,7 +177,7 @@ function setImagePosition(image, canvas, index) {
         // const gRate = y / image.height * .9;
         const color = new THREE.Color();
         // color.setRGB(.55, .55, .55); // dark
-        color.setRGB(1, 1, 1); // white
+        color.setRGB(COLOR[0], COLOR[1], COLOR[2]); // white
         const data = {
           x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,
