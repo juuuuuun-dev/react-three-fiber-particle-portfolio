@@ -6,7 +6,7 @@ import variables from '../scss/_variables.scss'
 
 const Header = () => {
   const activeColor = variables.activeColor;
-  const textColor = "#8b8055";
+  const textColor = variables.textColor;
   const actions = useStore(state => state.actions);
   const appTitle = useStore(state => state.appTitle);
   const showContent = useStore(state => state.showContent);
@@ -15,7 +15,6 @@ const Header = () => {
   const headerRef = React.useRef();
   const refs = React.useRef(navList.map((_, index) => index));
   const springFunc = (index) => {
-    // var not working
     let color = showContent ? textColor : "#ffffff";
     if (showContent && showContent === navList[index].path) {
       color = activeColor;

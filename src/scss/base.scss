@@ -1,11 +1,11 @@
 @import "reset";
 @import "variables";
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Hind+Vadodara:400,700&display=swap');
 
 html,
 body,
 #root {
-  font-family: "Roboto", sans-serif;
+  font-family: "Hind Vadodara", sans-serif;
   scroll-behavior: smooth;
   letter-spacing: 2px;
   width: 100%;
@@ -70,8 +70,8 @@ li {
   }
   .nav {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: $sm-global-margin;
+    right: $sm-global-margin;
     li {
       float: left;
       margin-left: 20px;
@@ -106,7 +106,7 @@ li {
   width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-background-color: rgba($primary-color, .5);
+background-color: rgba($primary-color, .7);
 }
 
 ////////////////////
@@ -115,7 +115,7 @@ background-color: rgba($primary-color, .5);
 .contents {
   // background: #43465a;
   // margin-top: $global-margin / 2;
-  background: $secondary-color;
+  background: $primary-color;
   // background: $secondary-color;
   color: $text-color;
   // color: rgba($color: #ffffff, $alpha: 1);
@@ -135,15 +135,15 @@ background-color: rgba($primary-color, .5);
   // inner
   &__inner {
     height: 100%;
-    padding: 100px;
+    padding: $global-margin;
     max-width: $max-width;
     margin: 0 auto;
   }
   &__title {
     display: inline-block;
     font-weight: bold;
-    font-size: 1.4rem;
-    margin-bottom: $global-margin / 2;
+    font-size: 1.2rem;
+    margin-bottom: $global-margin;
   }
   &__footer {
     margin-bottom: 30px;
@@ -168,17 +168,17 @@ background-color: rgba($primary-color, .5);
     font-size: .7rem;
     writing-mode: vertical-rl;
     padding: 35px 10px;
-    background: $primary-color;
-    color: $secondary-color;
+    background: $text-color;
+    color: $primary-color;
     cursor: pointer;
   }
   // paragraph
   .paragraph {
     margin-bottom: $global-margin;
     &__title {
-      font-size: 1.3rem;
+      font-size: 1.0rem;
       font-weight: bold;
-      line-height: 1.3rem;
+      line-height: 1.0rem;
       margin-bottom: $global-margin / 4;
     }
     p,ul,dl {
@@ -191,17 +191,17 @@ background-color: rgba($primary-color, .5);
     }
     li {
       background: url(../images/list_box.png) no-repeat;
-      background-size: 140px 40px;
+      background-size: 130px 36px;
       float: left;
       font-size: .7rem;
       text-align: center;
-      line-height: 1.4rem;
+      line-height: 1.3rem;
       padding-top: 5px;
-      margin-left: 10px;
+      margin-right: 10px;
       margin-bottom: 10px;
       width: auto;
-      min-width: 140px;
-      height: 40px;
+      min-width: 130px;
+      height: 36px;
     }
     dl {
       margin-bottom: $global-margin;
@@ -214,10 +214,49 @@ background-color: rgba($primary-color, .5);
     dd {
       margin-bottom: $global-margin / 3;
     }
+    .blockquote{
+      position: relative;
+      max-width: 95%;
+      margin-left: 5%;
+      padding: 30px 15px 20px 15px;
+      border-left: 0.4em solid;
+      // background-color: rgba($color: $text-color, $alpha: .05);
+      border-color: rgba($color: $text-color, $alpha: .2);
+      
+      &:before {
+        font-family: 'Sanchez', serif;
+        font-size: 5rem;
+        line-height: 1rem;
+        color: rgba($color: $text-color, $alpha: .1);
+        content: '\201C';
+        position: absolute;
+        top: 13px;
+        left: 10px;
+      }
+      &:after {
+        font-family: 'Sanchez', serif;
+        line-height: 1rem;
+        color: rgba($color: $text-color, $alpha: .1);
+        content: '\201D';
+        position: absolute;
+        bottom: -25px;
+        right: 20px;
+        font-size: 5rem;
+        font-style: italic;
+      }
+      footer {
+        margin-top: 15px;
+        font-size: .8rem;
+        font-style: italic;
+        text-align: right;
+      }
+    }
   }
   // lang
   .lang-change {
     font-size: 1rem;
+    font-weight: 600;
+    margin-left: 10px;
   }
   .lang-change span {
     cursor: pointer;
@@ -233,42 +272,7 @@ background-color: rgba($primary-color, .5);
   }
 }
 
-.blockquote{
-  position: relative;
-  max-width: 95%;
-  margin-left: 5%;
-  padding: 30px 15px 20px 15px;
-  border-left: 0.4em solid;
-  background-color: rgba($color: $primary-color, $alpha: .1);
-  border-color: rgba($color: $primary-color, $alpha: .5);
-  &:before {
-    font-family: 'Sanchez', serif;
-    font-size: 5rem;
-    line-height: 1rem;
-    color: rgba($color: $primary-color, $alpha: .2);
-    content: '\201C';
-    position: absolute;
-    top: 13px;
-    left: 10px;
-  }
-  &:after {
-    font-family: 'Sanchez', serif;
-    line-height: 1rem;
-    color: rgba($color: $primary-color, $alpha: .2);
-    content: '\201D';
-    position: absolute;
-    bottom: -25px;
-    right: 20px;
-    font-size: 5rem;
-    font-style: italic;
-  }
-  footer {
-    margin-top: 15px;
-    font-size: .8rem;
-    font-style: italic;
-    text-align: right;
-  }
-}
+
 
 // safari
 _::-webkit-full-page-media, _:future, :root .back-btn {
@@ -300,20 +304,24 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
       }
   }
   .contents__inner{
-      padding: 80px $sm-global-padding;
+      padding: $global-margin $sm-global-padding;
   }
   .contents {
     .back-btn {
-      bottom: 80px;
+      bottom: 50px;
       font-size: .7rem;
-      padding: 25px 5px;
+      padding: 30px 2px;
     }
-    &__cover {
-      .message {
+    .paragraph {
+      li {
+        margin-bottom: 5px;
+      }
+      li:nth-child(odd) {
+        margin-right: 5px;
       }
     }
   }
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 5px;
   }
 }

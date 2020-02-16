@@ -18,8 +18,8 @@
           "list": ["Django", "Laravel", "TypeScript", "React", "Vue", "NuxtJS", "WebGL", "Three.js", "Vuetify", "Docker", "Photoshop", "Illustrator"]
       },
       {
-          "title": "大切にしてる心構え",
-          "description": "サービスを作る上でのことと、生活において大切にしてる心構えを偉人達の名言と一緒にご紹介します！",
+          "title": "大切にしてる事",
+          "description": "サービスを作る上でのことと、生活において大切にしてる心構えを偉人達の名言と一緒にご紹介します😎",
           "quotes": [
               {
                   "title": "# 戦略",
