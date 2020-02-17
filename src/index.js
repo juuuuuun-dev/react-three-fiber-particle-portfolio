@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import useStore from './contexts/store';
-import { Main } from "./pages/main";
-import Header from "./components/Header";
-import Contents from "./components/Contents";
-import Loader from "./components/Loader";
-import MetaHead from "./components/MetaHead";
-import "./components/i18n";
-
+import { Main } from './pages/main';
+import Header from './components/Header';
+import Contents from './components/Contents';
+import Loader from './components/Loader';
+import MetaHead from './components/MetaHead';
+import './components/i18n';
 import './scss/base.scss';
 
 const Index = () => {
-  const actions = useStore((state) => state.actions);
+  const actions = useStore(state => state.actions);
   actions.init();
   return (
     <>
@@ -23,6 +22,6 @@ const Index = () => {
       <Loader />
     </>
   );
-}
+};
 
 ReactDOM.render(<Index />, document.getElementById('root'));
