@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import React, { useMemo, useRef, createRef, useState } from 'react'
 import { useLoader, useUpdate, useFrame } from 'react-three-fiber'
 import useStore from '../contexts/store'
-import { useSpring, config } from 'react-spring'
+import { useSpring } from 'react-spring'
 
 export default function({ children, vAlign = 'center', hAlign = 'left', ...props }) {
   const navListIndex = useStore(state => state.navListIndex);

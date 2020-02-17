@@ -1,4 +1,4 @@
-version: "2"
+version: '3.4'
 services:
   node:
     tty: true
@@ -8,4 +8,4 @@ services:
     volumes:
       - ./:/usr/src/app
     ports:
-      - "3005:3005"
+      - '3005:3005'

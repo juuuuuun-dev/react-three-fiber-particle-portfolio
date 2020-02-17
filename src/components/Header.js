@@ -7,7 +7,6 @@ import variables from '../scss/_variables.scss'
 const Header = () => {
   const activeColor = variables.activeColor;
   const textColor = variables.textColor;
-  const primaryColor = variables.primaryColor;
   const actions = useStore(state => state.actions);
   const appTitle = useStore(state => state.appTitle);
   const showContent = useStore(state => state.showContent);

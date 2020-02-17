@@ -1,33 +1,25 @@
 import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
-import ImageList from '../config/ImageList';
 import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
 import useStore from '../contexts/store'
 
-
-/**
- * @todo loading
- * @todo contents表示時 text color
- * @todo mouse 固定
- */
-
 export default function Particle() {
   const actions = useStore(state => state.actions);
   const stopMainFrame = useStore(state => state.stopMainFrame);
+  const navList = useStore(state => state.navList);
   const navListLength = useStore(state => state.navListLength);
   const ua = useStore(state => state.ua);
   let listIndex = 0;
   let time = 0;
   let theta = 0;
   const clock = new THREE.Clock();
-  console.log('memo')
   let [MAX, COLOR] = useMemo(() => {
     if (ua === 'sp') {
-      // @todo android firefoxは半分ぐらいでいいかも
-      return [4000, [.75, .75, .75]];
+      return [4000, [.65, .65, .65]];
     }
+    // pc
     return [20000, [1, 1, 1]];
   }, [ ua ]);
   const bufferAttribute = {
@@ -47,7 +39,7 @@ export default function Particle() {
 
   useEffect(() => {
     const f = async () => {
-      const imagePositions = await createImagePositions(COLOR);
+      const imagePositions = await createImagePositions(COLOR, navList, navListLength);
       const attribute = await createAttributes(attributes, imagePositions, MAX);
       await (() => {
         return new Promise(resolve => {
@@ -70,10 +62,9 @@ export default function Particle() {
           resolve();
         });
       })();
-      // ¥
     };
     f();
-  }, [ bufferAttribute, actions, listIndex, attributes, MAX, navListLength ]);
+  }, [ bufferAttribute, actions, listIndex, attributes, MAX, COLOR, navList, navListLength ]);
   
   const { camera } = useThree();
   let coefficient = 12.0; // first coefficient
@@ -131,7 +122,6 @@ export default function Particle() {
         ref={materialRef}
         attach="material"
         name="material"
-        lights={true}
         args={[ParticleShader]}
       />
     </points>
@@ -144,20 +134,19 @@ export default function Particle() {
 /**
  * createImagePositions
  */
-function createImagePositions(COLOR) {
+const createImagePositions = (COLOR, navList, navListLength) => {
   return new Promise(async (resolve) => {
     const canvas = document.createElement("canvas");
     let positions = [];
-    const listLen = ImageList.length;
-    for (let i = 0; listLen > i; i++) {
-      const image = await LoadImage(ImageList[i].src);
+    for (let i = 0; navListLength > i; i++) {
+      const image = await LoadImage(navList[i].src);
       positions[i] = setImagePosition(image, canvas, i, COLOR);
     }
     resolve(positions);
   });
 }
 
-function setImagePosition(image, canvas, index, COLOR) {
+const setImagePosition = (image, canvas, index, COLOR) => {
   let pos = [];
   const scale = 9;
   canvas.width = image.width;
@@ -172,11 +161,9 @@ function setImagePosition(image, canvas, index, COLOR) {
       const num = 4 * (image.width * y + x) + 3;
       const alpha = imageData[num];
       if (alpha !== 0) {
-        const rRate = x / image.width * 1.1;
-        // const rRate = x / image.width * 1.5;
+        // const rRate = x / image.width * 1.1;
         // const gRate = y / image.height * .9;
         const color = new THREE.Color();
-        // color.setRGB(.55, .55, .55); // dark
         color.setRGB(COLOR[0], COLOR[1], COLOR[2]); // white
         const data = {
           x: (x - image.width / 2) / scale,
@@ -194,10 +181,9 @@ function setImagePosition(image, canvas, index, COLOR) {
 /**
  * createAttributes
  */
-function createAttributes(attributes, imagePositions, MAX) {
+const createAttributes = (attributes, imagePositions, MAX) => {
   return new Promise((resolve) => {
     const count = 3;
-    // let attr = attributes;
     let attr = {
       positions: [],
       endPositions: [],

@@ -1,0 +1,30 @@
+          ok  Starting native_osx for sync sync-node
+          ok  sync-node container still running, restarting unison in container
+     command  docker exec sync-node supervisorctl restart unison
+unison: stopped
+unison: started
+          ok  starting initial sync of sync-node
+     success  Sync container started
+     success  Showing unison logs from your sync container: sync-node
+[2020-02-17 18:29:25 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) started propagating changes at 18:29:25.16 on 17 Feb 2020
+[2020-02-17 18:29:25 +0900] Sync Log:  [BGN] Copying .docker-sync/daemon.log from /host_sync to /app_sync
+[2020-02-17 18:29:25 +0900] Sync Log:  [END] Copying .docker-sync/daemon.log
+[2020-02-17 18:29:25 +0900] Sync Log:  [BGN] Copying .docker-sync/daemon.pid from /host_sync to /app_sync
+[2020-02-17 18:29:25 +0900] Sync Log:  [END] Copying .docker-sync/daemon.pid
+[2020-02-17 18:29:25 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) finished propagating changes at 18:29:25.17 on 17 Feb 2020
+[2020-02-17 18:29:25 +0900] Sync Log:  Synchronization complete at 18:29:25  (2 items transferred, 0 skipped, 0 failed)
+[2020-02-17 18:30:04 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) started propagating changes at 18:30:04.33 on 17 Feb 2020
+[2020-02-17 18:30:04 +0900] Sync Log:  [BGN] Updating file .docker-sync/daemon.log from /host_sync to /app_sync
+[2020-02-17 18:30:04 +0900] Sync Log:  [END] Updating file .docker-sync/daemon.log
+[2020-02-17 18:30:04 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) finished propagating changes at 18:30:04.34 on 17 Feb 2020
+[2020-02-17 18:30:04 +0900] Sync Log:  Synchronization complete at 18:30:04  (1 item transferred, 0 skipped, 0 failed)
+[2020-02-17 18:33:53 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) started propagating changes at 18:33:52.98 on 17 Feb 2020
+[2020-02-17 18:33:53 +0900] Sync Log:  [BGN] Updating file docker-compose.yml from /host_sync to /app_sync
+[2020-02-17 18:33:53 +0900] Sync Log:  [END] Updating file docker-compose.yml
+[2020-02-17 18:33:53 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) finished propagating changes at 18:33:52.98 on 17 Feb 2020
+[2020-02-17 18:33:53 +0900] Sync Log:  Synchronization complete at 18:33:52  (1 item transferred, 0 skipped, 0 failed)
+[2020-02-17 18:34:13 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) started propagating changes at 18:34:12.91 on 17 Feb 2020
+[2020-02-17 18:34:13 +0900] Sync Log:  [BGN] Updating file .docker-sync/daemon.log from /host_sync to /app_sync
+[2020-02-17 18:34:13 +0900] Sync Log:  [END] Updating file .docker-sync/daemon.log
+[2020-02-17 18:34:13 +0900] Sync Log:  UNISON 2.51.2 (OCAML 4.08.1) finished propagating changes at 18:34:12.91 on 17 Feb 2020
+[2020-02-17 18:34:13 +0900] Sync Log:  Synchronization complete at 18:34:12  (1 item transferred, 0 skipped, 0 failed)
