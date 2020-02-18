@@ -1,10 +1,10 @@
 import * as THREE from 'three'
-import React, { useMemo, useRef, createRef, useState } from 'react'
+import React, { useMemo, useRef, createRef, forwardRef, useState } from 'react'
 import { useLoader, useUpdate, useFrame } from 'react-three-fiber'
 import useStore from '../contexts/store'
 import { useSpring } from 'react-spring'
 
-export default function({ children, vAlign = 'center', hAlign = 'left', ...props }) {
+export default function ({ children, vAlign = 'center', hAlign = 'left', ...props }) {
   const navListIndex = useStore(state => state.navListIndex);
   const prevNavListIndex = useStore(state => state.prevNavListIndex);
   const navList = useStore(state => state.navList);
@@ -16,7 +16,7 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
   const refs = useRef(navList.map(() => createRef()));
   const [hovered, setHoverd] = useState(false);
   const canvasElem = document.getElementById('main');
-  
+
   // default value
   const color = '#ffffff';
   const hoveredScale = 1.3;
@@ -29,11 +29,13 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
 
   useFrame(() => {
     actions.setCoefficient(coefficient + (targetCoefficient - coefficient) * .06);
+    console.log(refs);
     // coefficient += (targetCoefficient - coefficient) * .1;
     for (let i = 0; navListLength > i; i++) {
+      // @todo ここでrefのroop必要
       refs.current[i].current.rotation.x = 30;
       refs.current[i].current.rotation.y = Math.PI * 0.28;
-      const x =  Math.tan(coefficient) * 10.;
+      const x = Math.tan(coefficient) * 10.;
       if (i === navListIndex) {
         if (x > 0) {
           refs.current[navListIndex].current.position.x = x;
@@ -72,34 +74,39 @@ export default function({ children, vAlign = 'center', hAlign = 'left', ...props
 
   return (
     <>
-    {navList.map((item, index) => {
-      const bottom = item.bottomY || defaultBottomY;
-      const positionX = item.positionX || defaultPositionX;
-      return (
-        <mesh ref={refs.current[index]} key={index} onPointerOver={hover} onPointerOut={unhover}>
-          {
-            item.texts.map((textValue, textIndex) => {
-              const len = navList[index].texts.length;
-              const textLineHeight = item.lineHeight || defaultLineHeight;
-              const size = navList[index].textSize || defaultSize;
-              let n = 1 + textIndex;
-              let lineHeight;
-              lineHeight = bottom + (len * textLineHeight) - (n * textLineHeight);
-              return (
-                <Text key={textIndex} size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, lineHeight, 18]} color={color} children={textValue} />
+      {navList.map((item, index) => {
+        const bottom = item.bottomY || defaultBottomY;
+        const positionX = item.positionX || defaultPositionX;
+        const reverseX = positionX * 2;
+        return (
+          <mesh ref={refs.current[index]} key={index + '_mesh'} onPointerOver={hover} onPointerOut={unhover}>
+            {
+              item.texts.map((textValue, textIndex) => {
+                const len = navList[index].texts.length;
+                const textLineHeight = item.lineHeight || defaultLineHeight;
+                const size = navList[index].textSize || defaultSize;
+                let n = 1 + textIndex;
+                let lineHeight;
+                lineHeight = bottom + (len * textLineHeight) - (n * textLineHeight);
+                const reverseHeight = lineHeight - (len * textLineHeight);
+                return (
+                  <>
+                    <Text ref={refs.current[index]} key={textIndex + '_text'} size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, lineHeight, 18]} color={color} children={textValue} />
+                    <Text ref={refs.current[index]} key={textIndex + '_reverse'} size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, reverseHeight, 18]} color={color} children={textValue} />
+                  </>
                 )
-            })
-          }
-          {item.path && <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} lineHeight={defaultLineHeight} position={[-9, -9.5, 17]} children={navList[index].topText} />}
-          }
+              })
+            }
+            {item.path && <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} lineHeight={defaultLineHeight} position={[-9, -9.5, 17]} children={navList[index].topText} />}
+            }
         </mesh>
-      )
-    })}
+        )
+      })}
     </>
   )
 }
 
-const Text = ({ children, vAlign, hAlign, size, color, ...props }) => {
+let Text = ({ children, vAlign, hAlign, size, color, ...props }, textRef) => {
   const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json')
   const textConfig = useMemo(
     () => ({ font, size: size, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: .0, bevelSize: .0, bevelOffset: 0, bevelSegments: 1 }),
@@ -116,7 +123,7 @@ const Text = ({ children, vAlign, hAlign, size, color, ...props }) => {
     [children]
   )
   return (
-    <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
+    <group ref={textRef} {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
       <mesh ref={mesh}>
         <textGeometry needsUpdate={true} attach="geometry" args={[children, textConfig]} />
         <meshLambertMaterial transparent={true} color={new THREE.Color(color)} attach="material" />
@@ -125,6 +132,7 @@ const Text = ({ children, vAlign, hAlign, size, color, ...props }) => {
   )
 }
 
+Text = forwardRef(Text);
 // like html link
 const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
   const singleXScale = 3.5;
@@ -146,7 +154,7 @@ const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
         <meshBasicMaterial opacity={0.0} color="black" attach="material" transparent={true} />
       </mesh>
     </group>
-    )
+  )
 }
 
 const getMaxTextLength = (arr) => {
