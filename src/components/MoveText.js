@@ -14,6 +14,7 @@ export default function ({ children, vAlign = 'center', hAlign = 'left', ...prop
   const targetCoefficient = useStore(state => state.targetCoefficient);
   const actions = useStore(state => state.actions);
   const refs = useRef(navList.map(() => createRef()));
+  const revRefs = useRef(navList.map(() => createRef()));
   const [hovered, setHoverd] = useState(false);
   const canvasElem = document.getElementById('main');
 
@@ -29,10 +30,14 @@ export default function ({ children, vAlign = 'center', hAlign = 'left', ...prop
 
   useFrame(() => {
     actions.setCoefficient(coefficient + (targetCoefficient - coefficient) * .06);
-    console.log(refs);
     // coefficient += (targetCoefficient - coefficient) * .1;
+
     for (let i = 0; navListLength > i; i++) {
       // @todo ここでrefのroop必要
+      // revRefs.current[i].current.rotation.x = 60;
+      if (revRefs.current[i].current) {
+        revRefs.current[i].current.rotation.x = 10;
+      }
       refs.current[i].current.rotation.x = 30;
       refs.current[i].current.rotation.y = Math.PI * 0.28;
       const x = Math.tan(coefficient) * 10.;
@@ -79,34 +84,53 @@ export default function ({ children, vAlign = 'center', hAlign = 'left', ...prop
         const positionX = item.positionX || defaultPositionX;
         const reverseX = positionX * 2;
         return (
-          <mesh ref={refs.current[index]} key={index + '_mesh'} onPointerOver={hover} onPointerOut={unhover}>
-            {
-              item.texts.map((textValue, textIndex) => {
-                const len = navList[index].texts.length;
-                const textLineHeight = item.lineHeight || defaultLineHeight;
-                const size = navList[index].textSize || defaultSize;
-                let n = 1 + textIndex;
-                let lineHeight;
-                lineHeight = bottom + (len * textLineHeight) - (n * textLineHeight);
-                const reverseHeight = lineHeight - (len * textLineHeight);
-                return (
-                  <>
-                    <Text ref={refs.current[index]} key={textIndex + '_text'} size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, lineHeight, 18]} color={color} children={textValue} />
-                    <Text ref={refs.current[index]} key={textIndex + '_reverse'} size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, reverseHeight, 18]} color={color} children={textValue} />
-                  </>
-                )
-              })
-            }
-            {item.path && <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} lineHeight={defaultLineHeight} position={[-9, -9.5, 17]} children={navList[index].topText} />}
-            }
-        </mesh>
+          <>
+            <mesh ref={refs.current[index]} key={index + '_mesh'} onPointerOver={hover} onPointerOut={unhover}>
+              {// @todo 多分これをもう一個
+                item.texts.map((textValue, textIndex) => {
+                  const len = navList[index].texts.length;
+                  const textLineHeight = item.lineHeight || defaultLineHeight;
+                  const size = navList[index].textSize || defaultSize;
+                  let n = 1 + textIndex;
+                  let lineHeight;
+                  lineHeight = bottom + (len * textLineHeight) - (n * textLineHeight);
+                  const reverseHeight = lineHeight - (len * textLineHeight);
+                  return (
+                    <mesh key={textIndex} ref={revRefs.current[index]}>
+                      <Text size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, lineHeight, 18]} color={color} children={textValue} />
+                      <Text size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, reverseHeight, 18]} color={color} children={textValue} />
+                    </mesh>
+                  )
+                })
+              }
+              {item.path && <HitArea onClick={hadleClick} item={navList[index]} hAlign={hAlign} vAlign={vAlign} lineHeight={defaultLineHeight} position={[-9, -9.5, 17]} children={navList[index].topText} />}
+              }
+          </mesh>
+            <mesh ref={revRefs.current[index]} key={index + '_mesh'} onPointerOver={hover} onPointerOut={unhover}>
+              {// @todo 多分これをもう一個
+                item.texts.map((textValue, textIndex) => {
+                  const len = navList[index].texts.length;
+                  const textLineHeight = item.lineHeight || defaultLineHeight;
+                  const size = navList[index].textSize || defaultSize;
+                  let n = 1 + textIndex;
+                  let lineHeight;
+                  lineHeight = bottom + (len * textLineHeight) - (n * textLineHeight);
+                  const reverseHeight = lineHeight - (len * textLineHeight);
+                  return (
+                    <Text size={size} hAlign={hAlign} vAlign={vAlign} position={[positionX, reverseHeight, 18]} color={color} children={textValue} />
+                  )
+                })
+              }
+              }
+          </mesh>
+          </>
         )
       })}
     </>
   )
 }
 
-let Text = ({ children, vAlign, hAlign, size, color, ...props }, textRef) => {
+let Text = ({ children, vAlign, hAlign, size, key, color, ...props }, textRef) => {
   const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json')
   const textConfig = useMemo(
     () => ({ font, size: size, height: -0, curveSegments: 32, bevelEnabled: false, bevelThickness: .0, bevelSize: .0, bevelOffset: 0, bevelSegments: 1 }),
