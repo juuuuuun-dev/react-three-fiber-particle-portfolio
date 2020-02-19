@@ -1,6 +1,6 @@
 version: '2'
 options:
-  compose-file-path: 'docker-compose.yml'
+#   compose-file-path: 'docker-compose.yml'
   compose-dev-file-path: 'docker-compose-dev.yml'
   unison_image: 'eugenmayer/unison:2.51.2.2'
   verbose: true
