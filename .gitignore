@@ -3,4 +3,5 @@
 .env
 yarn-error.log
 /build
-.docker-sync/
+.docker-sync
+coverage

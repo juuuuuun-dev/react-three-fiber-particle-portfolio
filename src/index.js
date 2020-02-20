@@ -11,7 +11,18 @@ import './scss/base.scss';
 
 const Index = () => {
   const actions = useStore(state => state.actions);
+  // const navListIndex = useStore(state => state.navListIndex);
+  // const navList = actions.getHasPathNavList();
+
   actions.init();
+
+  // const handleClick = index => {
+  //   if (navListIndex !== index + 1) {
+  //     actions.execCallbacks(index + 1);
+  //     actions.setCoefficient();
+  //   }
+  //   actions.toggleContents(navList[index].path);
+  // };
   return (
     <>
       <MetaHead />
