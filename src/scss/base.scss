@@ -1,11 +1,11 @@
-@import "reset";
-@import "variables";
+@import 'reset';
+@import 'variables';
 @import url('https://fonts.googleapis.com/css?family=Hind+Vadodara:400,700&display=swap');
 
 html,
 body,
 #root {
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: 'Hind Vadodara', sans-serif;
   scroll-behavior: smooth;
   letter-spacing: 2px;
   width: 100%;
@@ -25,29 +25,32 @@ body,
 #main {
   background: radial-gradient($gradient-start-color, $primary-color 100%);
 }
-ul{ margin:0; padding: 0;}
+ul {
+  margin: 0;
+  padding: 0;
+}
 li {
   list-style: none;
 }
 .clearfix::after {
-  content: "";
+  content: '';
   display: block;
   clear: both;
 }
 
-.index-footer-text{
+.index-footer-text {
   position: relative;
   z-index: 10;
   bottom: 10%;
-  line-height: .9rem;
+  line-height: 0.9rem;
   padding: 0 15px;
   letter-spacing: 2px;
   left: 0;
   text-align: center;
-  font-size: .8rem;
-  color: rgba($color: #ffffff, $alpha: .8);
+  font-size: 0.8rem;
+  color: rgba($color: #ffffff, $alpha: 0.8);
 }
-.canvas{
+.canvas {
   height: 100%;
 }
 
@@ -90,14 +93,13 @@ li {
   width: 100%;
   height: 100%;
   background: radial-gradient($gradient-start-color, $primary-color 100%);
-  &__inner{
+  &__inner {
     padding: $sm-global-padding;
-    .loader-img{
+    .loader-img {
       width: 25px;
     }
   }
 }
-
 
 ////////////////////
 // scroll
@@ -106,7 +108,7 @@ li {
   width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-background-color: rgba($primary-color, .7);
+  background-color: rgba($text-color, 0.4);
 }
 
 ////////////////////
@@ -148,7 +150,7 @@ background-color: rgba($primary-color, .7);
   &__footer {
     margin-bottom: 30px;
     height: 30px;
-    font-size: .7rem;
+    font-size: 0.7rem;
   }
   &__cover {
     margin-bottom: $global-margin;
@@ -156,6 +158,12 @@ background-color: rgba($primary-color, .7);
       font-weight: bold;
       font-size: 1.8rem;
       line-height: 2rem;
+      span {
+        font-size: 0.9rem;
+        display: block;
+        font-weight: normal;
+        text-align: right;
+      }
     }
   }
   .back-btn {
@@ -165,7 +173,7 @@ background-color: rgba($primary-color, .7);
     z-index: 20;
     bottom: 80px;
     right: 0px;
-    font-size: .7rem;
+    font-size: 0.7rem;
     writing-mode: vertical-rl;
     padding: 35px 10px;
     background: $text-color;
@@ -176,14 +184,16 @@ background-color: rgba($primary-color, .7);
   .paragraph {
     margin-bottom: $global-margin;
     &__title {
-      font-size: 1.0rem;
+      font-size: 1rem;
       font-weight: bold;
-      line-height: 1.0rem;
+      line-height: 1rem;
       margin-bottom: $global-margin / 5;
     }
-    p,ul,dl {
+    p,
+    ul,
+    dl {
       font-weight: normal;
-      font-size: .9rem;
+      font-size: 0.9rem;
       line-height: 1.5rem;
     }
     p {
@@ -193,7 +203,7 @@ background-color: rgba($primary-color, .7);
       background: url(../images/list_box.png) no-repeat;
       background-size: 130px 36px;
       float: left;
-      font-size: .7rem;
+      font-size: 0.7rem;
       text-align: center;
       line-height: 1.3rem;
       padding-top: 5px;
@@ -214,20 +224,20 @@ background-color: rgba($primary-color, .7);
     dd {
       margin-bottom: $global-margin / 3;
     }
-    .blockquote{
+    .blockquote {
       position: relative;
       max-width: 95%;
       margin-left: 5%;
       padding: 30px 15px 20px 15px;
       border-left: 0.4em solid;
       // background-color: rgba($color: $text-color, $alpha: .01);
-      border-color: rgba($color: $text-color, $alpha: .1);
-      
+      border-color: rgba($color: $text-color, $alpha: 0.1);
+
       &:before {
         font-family: 'Sanchez', serif;
         font-size: 4rem;
         line-height: 1rem;
-        color: rgba($color: $text-color, $alpha: .1);
+        color: rgba($color: $text-color, $alpha: 0.1);
         content: '\201C';
         position: absolute;
         top: 13px;
@@ -236,7 +246,7 @@ background-color: rgba($primary-color, .7);
       &:after {
         font-family: 'Sanchez', serif;
         line-height: 1rem;
-        color: rgba($color: $text-color, $alpha: .1);
+        color: rgba($color: $text-color, $alpha: 0.1);
         content: '\201D';
         position: absolute;
         bottom: -25px;
@@ -246,7 +256,7 @@ background-color: rgba($primary-color, .7);
       }
       footer {
         margin-top: 15px;
-        font-size: .8rem;
+        font-size: 0.8rem;
         font-style: italic;
         text-align: right;
       }
@@ -272,10 +282,10 @@ background-color: rgba($primary-color, .7);
   }
 }
 
-
-
 // safari
-_::-webkit-full-page-media, _:future, :root .back-btn {
+_::-webkit-full-page-media,
+_:future,
+:root .back-btn {
   right: 10px;
 }
 // firefox
@@ -286,7 +296,7 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
 ////////////////////
 // float
 ////////////////////
-.float-left{
+.float-left {
   float: left;
 }
 ////////////////////
@@ -298,19 +308,19 @@ _::-webkit-full-page-media, _:future, :root .back-btn {
 ////////////////////
 @media screen and (max-width: $sm) {
   .header {
-      padding: $sm-global-padding;
-      height: 80px;
-      .nav {
-        right: $sm-global-margin;
-      }
+    padding: $sm-global-padding;
+    height: 80px;
+    .nav {
+      right: $sm-global-margin;
+    }
   }
-  .contents__inner{
-      padding: $global-margin $sm-global-padding;
+  .contents__inner {
+    padding: $global-margin $sm-global-padding;
   }
   .contents {
     .back-btn {
       bottom: 50px;
-      font-size: .7rem;
+      font-size: 0.7rem;
       padding: 30px 2px;
     }
     .paragraph {

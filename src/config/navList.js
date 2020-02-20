@@ -7,26 +7,26 @@ export default [
     title: 'Home',
     src: img1,
     // texts: [ 'I am a', 'frontend', '& backend', 'developer' ],
-    texts: ["I am a", 'web', 'developer', '&designer'],
+    texts: ['I am a', 'web', 'developer', '&designer'],
     textSize: 4.6,
     lineHeight: 3.4,
     bottomY: -9.0,
     positionX: -14.0,
-    lotationY: .80,
-    description: 'descriptionです',
+    lotationY: 0.8,
+    description: 'descriptionです'
   },
   {
     title: 'ABOUT',
     src: img2,
     texts: ['ABOUT', 'ME'],
-    path: "/about",
-    description: "ABOUT descriptionです",
+    path: '/about',
+    description: 'ABOUT descriptionです'
   },
   {
     title: 'CONTACT',
     src: img3,
     texts: ['COTACT', 'ME'],
-    path: "/contact",
-    description: "CONTACT descriptionです",
-  },
+    path: '/contact',
+    description: 'CONTACT descriptionです'
+  }
 ];
