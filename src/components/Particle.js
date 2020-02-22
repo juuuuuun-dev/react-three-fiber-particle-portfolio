@@ -5,6 +5,10 @@ import * as THREE from 'three/src/Three';
 import ParticleShader from '../shaders/ParticleShader'
 import useStore from '../contexts/store'
 
+/**
+ * @todo
+ * three.module.js:10325 Uncaught TypeError: Cannot read property 'isInterleavedBufferAttribute' of undefined
+ */
 export default function Particle() {
   const actions = useStore(state => state.actions);
   const stopMainFrame = useStore(state => state.stopMainFrame);
@@ -21,7 +25,7 @@ export default function Particle() {
     }
     // pc
     return [20000, [1, 1, 1]];
-  }, [ ua ]);
+  }, [ua]);
   const bufferAttribute = {
     positions: [],
     endPositions: [],
@@ -33,7 +37,7 @@ export default function Particle() {
   const mouse = new THREE.Vector2();
   mouse.x = -0.5;
   mouse.y = 0;
-  const mousePos = { x: -1.3, y: 0, px:0, py:0, tx:0, ty:0 };
+  const mousePos = { x: -1.3, y: 0, px: 0, py: 0, tx: 0, ty: 0 };
   const geometryRef = useRef();
   const materialRef = useRef();
 
@@ -64,8 +68,8 @@ export default function Particle() {
       })();
     };
     f();
-  }, [ bufferAttribute, actions, listIndex, attributes, MAX, COLOR, navList, navListLength ]);
-  
+  }, [bufferAttribute, actions, listIndex, attributes, MAX, COLOR, navList, navListLength]);
+
   const { camera } = useThree();
   let coefficient = 12.0; // first coefficient
   const targetCoefficient = 0.9;
@@ -105,26 +109,26 @@ export default function Particle() {
 
   return (
     <>
-    <points>
-      <bufferGeometry
-        attach="geometry"
-        ref={geometryRef}
-      >
-        <bufferAttribute
-          needsUpdate={true}
-          attachObject={['attributes', 'position']}
-          count={MAX}
-          array={new Float32Array(MAX * 3)}
-          itemSize={3}
+      <points>
+        <bufferGeometry
+          attach="geometry"
+          ref={geometryRef}
+        >
+          <bufferAttribute
+            needsUpdate={true}
+            attachObject={['attributes', 'position']}
+            count={MAX}
+            array={new Float32Array(MAX * 3)}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <shaderMaterial
+          ref={materialRef}
+          attach="material"
+          name="material"
+          args={[ParticleShader]}
         />
-      </bufferGeometry>
-      <shaderMaterial
-        ref={materialRef}
-        attach="material"
-        name="material"
-        args={[ParticleShader]}
-      />
-    </points>
+      </points>
     </>
   )
 }
@@ -155,9 +159,9 @@ const setImagePosition = (image, canvas, index, COLOR) => {
   ctx.drawImage(image, 0, 0);
   const data = ctx.getImageData(0, 0, image.width, image.height);
   const imageData = data.data;
-  
+
   for (let y = 0; y < image.height; y++) {
-    for (let x = 0; x < image.width; x++ ) {
+    for (let x = 0; x < image.width; x++) {
       const num = 4 * (image.width * y + x) + 3;
       const alpha = imageData[num];
       if (alpha !== 0) {
@@ -192,7 +196,7 @@ const createAttributes = (attributes, imagePositions, MAX) => {
       times: [],
     };
     let imageLen = imagePositions.length;
-    
+
     for (let i = 0; imageLen > i; i++) {
       attr.positions[i] = new Float32Array(MAX * count);
       attr.endPositions[i] = new Float32Array(MAX * count);
@@ -222,6 +226,6 @@ const createAttributes = (attributes, imagePositions, MAX) => {
   });
 }
 
-function range(min, max){
+function range(min, max) {
   return min + (max - min) * Math.random();
 }

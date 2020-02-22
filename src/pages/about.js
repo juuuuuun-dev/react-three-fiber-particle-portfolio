@@ -1,9 +1,9 @@
 import React from 'react';
 import Paragraph from '../components/Paragraph';
-import enAbout from '../config/about/en.json';
+import enAbout from '../config/about/en';
 import { useTranslation } from 'react-i18next';
 
-export function About() {
+const About = () => {
   const [t] = useTranslation();
   return (
     <>
@@ -21,3 +21,5 @@ export function About() {
     </>
   );
 }
+
+export default About;
