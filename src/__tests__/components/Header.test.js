@@ -19,16 +19,10 @@ afterEach(() => {
 });
 
 it('renders Header', () => {
-  const action = () => {};
-  const hasPathNav = navList.filter(value => value.path);
-
   act(() => {
-    render(<Header navList={hasPathNav} onClick={action} />, container);
+    render(<Header />, container);
   });
   expect(container.querySelector('.logo').textContent).toBe(
     commonConfig.appTitle
   );
-  container.querySelectorAll('.nav li').forEach((value, index) => {
-    expect(value.textContent).toBe(hasPathNav[index].title);
-  });
 });

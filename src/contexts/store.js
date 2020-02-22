@@ -31,7 +31,7 @@ const [useStore] = create((set, get) => ({
   scrollCallbacks: [],
   windowHeight: window.innerHeight,
   ua: getDevice(),
-  showContent: null,
+  showContent: null, // pathname
   mutation: {
     mouse: new THREE.Vector2(-250, 50),
     mousePos: new THREE.Vector2(10, 10)
@@ -160,11 +160,12 @@ const [useStore] = create((set, get) => ({
     },
     useYScroll(props) {
       let y = 0;
-      const fn = useCallback(({ xy: [, cy], previous: [, py] }) => {
+      const fn = useCallback(({ wheeling, xy: [, cy], previous: [, py], ...pp }) => {
         if (get().isScroll) return;
         let index = get().navListIndex;
         set(() => ({ prevNavListIndex: index }));
-        const diffY = cy - py;
+        console.log(wheeling);
+        const diffY = wheeling ? cy - py : py - cy;
         if (diffY > 10 || diffY < -10) {
           set(() => ({ isScroll: true }));
           if (diffY < 0) {

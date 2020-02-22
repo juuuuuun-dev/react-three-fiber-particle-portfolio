@@ -1,41 +1,26 @@
-{
+import common from './common.json';
+
+export default {
   "cover": "I'm a man who was said to be \"You have a lot of energy*\" <span>(* By fortune-telling)</span>",
   "paragraph": [
     {
       "title": "I love to create",
-      "description": "Hello! My name is <strong>Jun Kadada</strong>.\nI'm a frontend & backend developer working for a web production company in Tokyo.\nHe became a web designer in 2005, and has since developed frontends and backends.\nI feel that the more I do both design and development, the more I like"
-    },
-    {
-      "title": "What i am aiming for",
-      "description": "What I'm aiming for in creating a service is a functional and good design that hijacks the purpose of the service. If these three match, an explosion may occur!"
+      "description": "Hello! My name is <strong>Jun Kadada</strong>.<br>I'm a frontend & backend developer working for a web production company in Tokyo.<br><br>I became a web designer in 2005, and has since developed frontends and backends.\nI feel that the more I do both design and development, the more I like<br><br>There are a lot of difficult things, but when I was working on this site, I was happy that I was happy."
     },
     {
       "title": "Skills",
-      "list": ["c", "Python", "PHP", "SQL", "JavaScript", "HTML", "CSS"]
+      "list": common.skill1,
     },
     {
       "title": "Skills 2",
-      "list": [
-        "Django",
-        "Laravel",
-        "TypeScript",
-        "React",
-        "Vue",
-        "NuxtJS",
-        "WebGL",
-        "Three.js",
-        "Vuetify",
-        "Docker",
-        "Photoshop",
-        "Illustrator"
-      ]
+      "list": common.skill2,
     },
     {
-      "title": "Something important",
+      "title": "Something important, with quotes",
       "description": "Introducing what we value in making it together with great people's quotes!",
       "quotes": [
         {
-          "title": "Strategy",
+          "title": "# Strategy",
           "items": [
             {
               "body": "Find purpose, the means will follow.",
@@ -48,7 +33,7 @@
           ]
         },
         {
-          "title": "Marketing",
+          "title": "# Marketing",
           "items": [
             {
               "body": "The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself",
@@ -70,7 +55,7 @@
           ]
         },
         {
-          "title": "Write test code",
+          "title": "# Modern development environment",
           "items": [
             {
               "body": "To be prepared is half the victory.",
@@ -79,7 +64,7 @@
           ]
         },
         {
-          "title": "Not afraid of fashion",
+          "title": "# Not afraid of fashion",
           "items": [
             {
               "body": "It is not the strongest of the species that survive, nor the most intelligent but the ones most responsive to change.",
@@ -88,7 +73,7 @@
           ]
         },
         {
-          "title": "Curiosity",
+          "title": "# Curiosity",
           "items": [
             {
               "body": "Curiosity has its own reason for existing.",
@@ -97,7 +82,7 @@
           ]
         },
         {
-          "title": "I will try it",
+          "title": "# I will try it",
           "items": [
             {
               "body": "Believe you can and you’re halfway there.",
@@ -106,7 +91,7 @@
           ]
         },
         {
-          "title": "I will not do what I do not do",
+          "title": "# I will not do what I do not do",
           "items": [
             {
               "body": " Have a healthy disregard for the impossible and actually build new solutions.",
@@ -115,7 +100,7 @@
           ]
         },
         {
-          "title": "Rival is myself",
+          "title": "# Rival is myself",
           "items": [
             {
               "body": "Whether you think you can or whether you think you can’t – you’re right.",
@@ -124,7 +109,7 @@
           ]
         },
         {
-          "title": "I continue to study a little every day",
+          "title": "# I continue to study a little every day",
           "items": [
             {
               "body": "Just keep going. Everybody gets better if they keep at it.",
@@ -133,7 +118,7 @@
           ]
         },
         {
-          "title": "GRIT! The Power of Passion and Perseverance",
+          "title": "# GRIT! The Power of Passion and Perseverance",
           "items": [
             {
               "body": "All great achievements require time.",
@@ -146,7 +131,7 @@
           ]
         },
         {
-          "title": "Playfulness is important",
+          "title": "# Playfulness is important",
           "items": [
             {
               "body": "Life is play.",
@@ -155,7 +140,7 @@
           ]
         },
         {
-          "title": "health comes first",
+          "title": "# Health comes first",
           "items": [
             {
               "body": "Thou shouldst eat to live; not live to eat.",
@@ -164,7 +149,7 @@
           ]
         },
         {
-          "title": "Do exercise",
+          "title": "# Do exercise",
           "items": [
             {
               "body": "Just remember, you can’t climb the ladder of success with your hands in your pockets.",
@@ -173,7 +158,7 @@
           ]
         },
         {
-          "title": "Time is so important",
+          "title": "# Time is so important",
           "items": [
             {
               "body": "A man who dares to waste one hour of time has not discovered the value of life.",
@@ -183,40 +168,5 @@
         }
       ]
     }
-  ],
-  "firstSection": {
-    "title": "I love to create",
-    "description": "Hello! My name is <strong>Jun Kadada</strong>.\nI'm a frontend & backend developer working for a web production company in Tokyo.\nHe became a web designer in 2005, and has since developed frontends and backends.\nI feel that the more I do both design and development, the more I like"
-  },
-  "skills": {
-    "title": "Skills",
-    "items": ["c", "Python", "PHP", "SQL", "JavaScript", "HTML", "CSS"]
-  },
-  "slills2": {
-    "title": "Frameworks Libraries Tools",
-    "items": [
-      "Django",
-      "Laravel",
-      "TypeScript",
-      "React",
-      "Vue",
-      "NuxtJS",
-      "WebGL",
-      "Three.js",
-      "Vuetify",
-      "Docker",
-      "Photoshop",
-      "Illustrator"
-    ]
-  },
-  "somesingImportant": {
-    "title": "Something important",
-    "items": [
-      {
-        "title": "Strategy",
-        "body": "The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself.",
-        "author": "Peter Drucker"
-      }
-    ]
-  }
+  ]
 }
