@@ -14,22 +14,21 @@ export default function ContentWrapper({ contentTitle, children }) {
   const { i18n } = useTranslation();
   const textColor = variables.textColor;
   const activeColor = variables.activeColor;
-
   const springFunc = index => {
     let color = textColor;
     if (lang && lang === languages[index].id) {
       color = activeColor;
     }
-    return {
+    const res = {
       ref: refs[index],
       color
-    };
+    }
+    return res;
   };
   const [langSprings, setLangSprings] = useSprings(languages.length, index =>
     springFunc(index)
   );
   setLangSprings(index => springFunc(index));
-
   React.useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang, i18n]);

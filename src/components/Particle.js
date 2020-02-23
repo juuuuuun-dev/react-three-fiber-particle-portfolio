@@ -70,13 +70,13 @@ export default function Particle() {
     f();
   }, [bufferAttribute, actions, listIndex, attributes, MAX, COLOR, navList, navListLength]);
 
-  const { camera } = useThree();
+  const { camera, invalidate } = useThree();
   let coefficient = 12.0; // first coefficient
   const targetCoefficient = 0.9;
   const mouseTargetCoefficient = -0.5; // z
   useFrame(() => {
     if (stopMainFrame) {
-      return;
+      invalidate();
     }
     coefficient += (targetCoefficient - coefficient) * .08;
     mouse.x += (mouseTargetCoefficient - mouse.x) * .08;

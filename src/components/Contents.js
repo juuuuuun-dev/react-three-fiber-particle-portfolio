@@ -1,17 +1,16 @@
 import React from 'react';
 import ContentWrapper from './ContentWrapper';
 import useStore from '../contexts/store';
-import { config, useSprings, animated } from 'react-spring';
-import { About } from '../pages/about';
+import { useSprings, animated } from 'react-spring';
+import About from '../pages/About';
 import { Contact } from '../pages/contact';
 
-export default function Contents() {
+const Contents = () => {
   const showContent = useStore(state => state.showContent);
   const actions = useStore(state => state.actions);
   const windowHeight = useStore(state => state.windowHeight);
   const navList = actions.getHasPathNavList();
   const refs = React.useRef(navList.map(() => React.createRef()));
-
   const springFunc = index => {
     let top = windowHeight + 'px';
     let opacity = 0;
@@ -46,22 +45,6 @@ export default function Contents() {
   };
   return (
     <>
-      {/* {transitions.map(({ item, props, key }, index) => {
-        if (showContent && item === showContent) {
-          return (
-            <animated.div
-              key={index}
-              style={props}
-              className='contents'
-              ref={refs.current[index]}
-            >
-              <ContentWrapper contentTitle={showContentData.title}>
-                {components(showContentData.title)}
-              </ContentWrapper>
-            </animated.div>
-          )
-        }
-      })} */}
       {springs.map((value, index) => {
         return (
           <animated.div
@@ -79,3 +62,5 @@ export default function Contents() {
     </>
   );
 }
+
+export default Contents;
