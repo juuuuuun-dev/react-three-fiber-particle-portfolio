@@ -9,6 +9,7 @@ const About = () => {
     <>
       <div className='contents__cover'>
         <p
+          data-testid="cover"
           className='message'
           dangerouslySetInnerHTML={{
             __html: t(`about.cover`)

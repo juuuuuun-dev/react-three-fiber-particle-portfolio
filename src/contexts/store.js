@@ -49,12 +49,16 @@ const [useStore] = create((set, get) => ({
     },
     onResize() {
       clearTimeout(get().doResize);
-      set(() => ({ doResize: setTimeout(get().actions.resizedw, 200) }));
+      set(() => ({ doResize: setTimeout(get().actions.resizedw, 500) }));
       set(() => ({ stopMainFrame: true }));
+      set(() => ({ isScroll: true }));
     },
     resizedw() {
       set(() => ({ stopMainFrame: false }));
       set(() => ({ navListIndex: 0 }));
+      setTimeout(() => {
+        set(() => ({ isScroll: false }));
+      }, 500);
     },
     // to prevent re-rendering
     onPopState() {
@@ -161,10 +165,9 @@ const [useStore] = create((set, get) => ({
     useYScroll(props) {
       let y = 0;
       const fn = useCallback(({ wheeling, xy: [, cy], previous: [, py], ...pp }) => {
-        if (get().isScroll) return;
+        if (get().isScroll || get().stopMainFrame) return;
         let index = get().navListIndex;
         set(() => ({ prevNavListIndex: index }));
-        console.log(wheeling);
         const diffY = wheeling ? cy - py : py - cy;
         if (diffY > 10 || diffY < -10) {
           set(() => ({ isScroll: true }));

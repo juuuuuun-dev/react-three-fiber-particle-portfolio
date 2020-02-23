@@ -4,7 +4,7 @@ import { useLoader, useUpdate, useFrame } from 'react-three-fiber';
 import useStore from '../contexts/store';
 import { useSpring } from 'react-spring';
 
-export default function({
+export default function ({
   children,
   vAlign = 'center',
   hAlign = 'left',
@@ -86,47 +86,46 @@ export default function({
         const bottom = item.bottomY || defaultBottomY;
         const positionX = item.positionX || defaultPositionX;
         return (
-          <>
-            <mesh
-              ref={refs.current[index]}
-              key={index}
-              onPointerOver={hover}
-              onPointerOut={unhover}
-            >
-              {item.texts.map((textValue, textIndex) => {
-                const len = navList[index].texts.length;
-                const textLineHeight = item.lineHeight || defaultLineHeight;
-                const size = navList[index].textSize || defaultSize;
-                let n = 1 + textIndex;
-                let lineHeight;
-                lineHeight = bottom + len * textLineHeight - n * textLineHeight;
-                return (
-                  <mesh key={textIndex + '_text' + index}>
-                    <Text
-                      size={size}
-                      hAlign={hAlign}
-                      vAlign={vAlign}
-                      position={[positionX, lineHeight, 18]}
-                      color={color}
-                      children={textValue}
-                    />
-                  </mesh>
-                );
-              })}
-              {item.path && (
-                <HitArea
-                  onClick={hadleClick}
-                  item={navList[index]}
-                  hAlign={hAlign}
-                  vAlign={vAlign}
-                  lineHeight={defaultLineHeight}
-                  position={[-9, -9.5, 17]}
-                  children={navList[index].topText}
-                />
-              )}
-              }
+          <mesh
+            ref={refs.current[index]}
+            key={index}
+            onPointerOver={hover}
+            onPointerOut={unhover}
+          >
+            {item.texts.map((textValue, textIndex) => {
+              const len = navList[index].texts.length;
+              const textLineHeight = item.lineHeight || defaultLineHeight;
+              const size = navList[index].textSize || defaultSize;
+              let n = 1 + textIndex;
+              let lineHeight;
+              lineHeight = bottom + len * textLineHeight - n * textLineHeight;
+              return (
+                <mesh key={textIndex + '_text' + index}>
+                  <Text
+                    size={size}
+                    hAlign={hAlign}
+                    vAlign={vAlign}
+                    position={[positionX, lineHeight, 18]}
+                    color={color}
+                    children={textValue}
+                  />
+                </mesh>
+              );
+            })}
+            {item.path && (
+              <HitArea
+                key={index}
+                onClick={hadleClick}
+                item={navList[index]}
+                hAlign={hAlign}
+                vAlign={vAlign}
+                lineHeight={defaultLineHeight}
+                position={[-9, -9.5, 17]}
+                children={navList[index].topText}
+              />
+            )}
+            }
             </mesh>
-          </>
         );
       })}
     </>
@@ -201,8 +200,8 @@ const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
       hAlign === 'center'
         ? -size.x / 3
         : hAlign === 'right'
-        ? 0
-        : -size.x / 2.2;
+          ? 0
+          : -size.x / 2.2;
     self.position.y =
       vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y;
   });

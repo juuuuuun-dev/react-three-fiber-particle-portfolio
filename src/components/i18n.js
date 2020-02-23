@@ -4,7 +4,7 @@ import enAbout from '../config/about/en';
 import jaAbout from '../config/about/ja'
 
 i18n.use(initReactI18next).init({
-  debug: true,
+  debug: false,
   resources: {
     en: {
       translation: {
