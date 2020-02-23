@@ -52,6 +52,7 @@ const Contents = () => {
             style={{ ...value }}
             className='contents'
             ref={refs.current[index]}
+            data-testid={`content-${navList[index].title}`}
           >
             <ContentWrapper contentTitle={navList[index].title}>
               {components(navList[index].title)}

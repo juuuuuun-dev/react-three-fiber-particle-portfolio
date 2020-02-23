@@ -5,7 +5,7 @@ export default {
   "paragraph": [
     {
       "title": "I love to create",
-      "description": "Hello! My name is <strong>Jun Kadada</strong>.<br>I'm a frontend & backend developer working for a web production company in Tokyo.<br><br>I became a web designer in 2005, and has since developed frontends and backends.\nI feel that the more I do both design and development, the more I like<br><br>There are a lot of difficult things, but when I was working on this site, I was happy that I was happy."
+      "description": "Hello! My name is <strong>Jun Kadada</strong>.<br>I'm a frontend and backend developer working for a web production company in Tokyo.<br><br>I became a web designer in 2005, and has since developed frontends and backends.\nI feel that the more I do both design and development, the more I like<br><br>There are a lot of difficult things, but when I was working on this site, I was happy that I was happy."
     },
     {
       "title": "Skills",

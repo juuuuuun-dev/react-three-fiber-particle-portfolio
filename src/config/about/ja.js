@@ -1,7 +1,7 @@
 import common from './common.json';
 
 export default {
-  "cover": "私は「行動力が抜群」と言われた男です<br /><span>(※占いで)</span> ",
+  "cover": "私は「行動力が抜群」と言われた男です<br><span>(※占いで)</span> ",
   "paragraph": [
     {
       "title": "作ること、好きです",
