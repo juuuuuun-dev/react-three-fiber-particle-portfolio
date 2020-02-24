@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, cleanup, getByTestId } from '@testing-library/react'
-import { Particle, cameraFrame, createImagePositions, setImagePosition, createAttributes } from '../../components/Particle';
+import { Particle, cameraFrame, materialFrame, createImagePositions, setImagePosition, createAttributes } from '../../components/Particle';
 import { Canvas } from 'react-three-fiber';
 import navList from '../../config/navList'
 import * as THREE from 'three';
+import ParticleShader from '../../shaders/ParticleShader';
 
 // import img from '../../images/smile.png'
 import LoadImage from '../../helpers/LoadImage'
@@ -61,7 +62,21 @@ describe("Particle", () => {
     expect(camera.position.x).not.toBe(0);
     expect(camera.position.y).not.toBe(0);
     expect(camera.position.z).not.toBe(0);
-
+  });
+  it('materialFrame', () => {
+    const materialRef = {
+      current: {
+        uniforms: ParticleShader.uniforms
+      }
+    }
+    const time = 10;
+    const coefficient = 10;
+    const mousePos = { x: 1, y: 0 }
+    expect(materialRef.current.uniforms).toBe(ParticleShader.uniforms)
+    materialFrame(materialRef, time, coefficient, mousePos);
+    expect(materialRef.current.uniforms.uTime.value).toBe(time);
+    expect(materialRef.current.uniforms.uCoefficient.value).toBe(coefficient);
+    expect(materialRef.current.uniforms.uMousePosition.value).toBe(mousePos)
   });
   it('should be callable', () => {
     const ctx = canvas.getContext('2d');

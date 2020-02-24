@@ -35,7 +35,7 @@ export const Particle = () => {
   const mouse = new THREE.Vector2();
   mouse.x = -0.5;
   mouse.y = 0;
-  const mousePos = { x: -1.3, y: 0, px: 0, py: 0, tx: 0, ty: 0 };
+  const mousePos = { x: -1.4, y: 0 }; // x particle moved
   const geometryRef = useRef();
   const materialRef = useRef();
 
@@ -132,7 +132,7 @@ export const cameraFrame = (camera, theta) => {
   camera.lookAt(new THREE.Vector3());
 }
 
-const materialFrame = (materialRef, time, coefficient, mousePos) => {
+export const materialFrame = (materialRef, time, coefficient, mousePos) => {
   materialRef.current.uniforms.uTime.value = time;
   materialRef.current.uniforms.uCoefficient.value = coefficient;
   materialRef.current.needsUpdate = true;
