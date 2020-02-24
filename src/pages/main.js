@@ -1,5 +1,5 @@
 import React from 'react';
-import Particle from '../components/Particle';
+import { Particle } from '../components/Particle';
 import MoveText from '../components/MoveText';
 import { Canvas, Dom } from 'react-three-fiber';
 import useStore from '../contexts/store';

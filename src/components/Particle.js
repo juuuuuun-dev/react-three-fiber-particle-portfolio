@@ -3,13 +3,11 @@ import { useFrame, useThree } from 'react-three-fiber';
 import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three';
 import ParticleShader from '../shaders/ParticleShader'
-import useStore from '../contexts/store'
+import useStore from '../contexts/store';
+import { range } from '../helpers/Range';
 
-/**
- * @todo
- * three.module.js:10325 Uncaught TypeError: Cannot read property 'isInterleavedBufferAttribute' of undefined
- */
-export default function Particle() {
+
+export const Particle = () => {
   const actions = useStore(state => state.actions);
   const stopMainFrame = useStore(state => state.stopMainFrame);
   const navList = useStore(state => state.navList);
@@ -44,7 +42,7 @@ export default function Particle() {
   useEffect(() => {
     const f = async () => {
       const imagePositions = await createImagePositions(COLOR, navList, navListLength);
-      const attribute = await createAttributes(attributes, imagePositions, MAX);
+      const attribute = await createAttributes(imagePositions, MAX);
       await (() => {
         return new Promise(resolve => {
           for (let i = 0; navListLength > i; i++) {
@@ -83,15 +81,11 @@ export default function Particle() {
     let delta = clock.getDelta();
     time += delta;
     theta += (mouse.x / 4 - theta) / 10;
-    camera.position.z = 15 * Math.cos(theta);
-    camera.position.x = 20 * Math.sin(theta);
-    camera.position.y = 80 * theta + 100;
-    camera.lookAt(new THREE.Vector3());
-    materialRef.current.uniforms.uTime.value = time;
-    materialRef.current.uniforms.uCoefficient.value = coefficient;
-    materialRef.current.needsUpdate = true;
-    materialRef.current.uniforms.uMousePosition.value = mousePos;
+    cameraFrame(camera, theta);
+    materialFrame(materialRef, time, coefficient, mousePos)
   });
+
+
   // listIndexをstate(store)にしてしまうと再描画が起こるのでcollbackで処理
   const scrollCollback = (index) => {
     listIndex = index;
@@ -115,8 +109,6 @@ export default function Particle() {
           ref={geometryRef}
         >
           <bufferAttribute
-            needsUpdate={true}
-            attachObject={['attributes', 'position']}
             count={MAX}
             array={new Float32Array(MAX * 3)}
             itemSize={3}
@@ -133,12 +125,25 @@ export default function Particle() {
   )
 }
 
+export const cameraFrame = (camera, theta) => {
+  camera.position.x = 20 * Math.sin(theta);
+  camera.position.y = 80 * theta + 100;
+  camera.position.z = 15 * Math.cos(theta);
+  camera.lookAt(new THREE.Vector3());
+}
+
+const materialFrame = (materialRef, time, coefficient, mousePos) => {
+  materialRef.current.uniforms.uTime.value = time;
+  materialRef.current.uniforms.uCoefficient.value = coefficient;
+  materialRef.current.needsUpdate = true;
+  materialRef.current.uniforms.uMousePosition.value = mousePos;
+}
 
 
 /**
  * createImagePositions
  */
-const createImagePositions = (COLOR, navList, navListLength) => {
+export const createImagePositions = (COLOR, navList, navListLength) => {
   return new Promise(async (resolve) => {
     const canvas = document.createElement("canvas");
     let positions = [];
@@ -150,7 +155,7 @@ const createImagePositions = (COLOR, navList, navListLength) => {
   });
 }
 
-const setImagePosition = (image, canvas, index, COLOR) => {
+export const setImagePosition = (image, canvas, index, COLOR) => {
   let pos = [];
   const scale = 9;
   canvas.width = image.width;
@@ -159,7 +164,6 @@ const setImagePosition = (image, canvas, index, COLOR) => {
   ctx.drawImage(image, 0, 0);
   const data = ctx.getImageData(0, 0, image.width, image.height);
   const imageData = data.data;
-
   for (let y = 0; y < image.height; y++) {
     for (let x = 0; x < image.width; x++) {
       const num = 4 * (image.width * y + x) + 3;
@@ -185,7 +189,7 @@ const setImagePosition = (image, canvas, index, COLOR) => {
 /**
  * createAttributes
  */
-const createAttributes = (attributes, imagePositions, MAX) => {
+export const createAttributes = (imagePositions, MAX) => {
   return new Promise((resolve) => {
     const count = 3;
     let attr = {
@@ -207,6 +211,7 @@ const createAttributes = (attributes, imagePositions, MAX) => {
       const datasLen = datas.length;
       for (let n = 0; n < MAX; n++) {
         const data = datas[parseInt(datasLen * Math.random())];
+
         attr.positions[i][n * count] = data.x;
         attr.positions[i][n * count + 1] = 0;
         attr.positions[i][n * count + 2] = data.y;
@@ -224,8 +229,4 @@ const createAttributes = (attributes, imagePositions, MAX) => {
     }
     resolve(attr);
   });
-}
-
-function range(min, max) {
-  return min + (max - min) * Math.random();
 }
