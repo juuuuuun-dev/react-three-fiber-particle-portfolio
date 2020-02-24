@@ -10,7 +10,7 @@ const MetaHead = () => {
   const pageTitle = useStore(state => state.pageTitle);
   return (
     <>
-      <Helmet defaultTitle={appTitle} titleTemplate={`%s | ${appTitle}`}>
+      <Helmet data-testid="helmet" defaultTitle={appTitle} titleTemplate={`%s | ${appTitle}`}>
         <meta charSet='utf-8' />
         {pageTitle && <title>{pageTitle}</title>}
         <meta

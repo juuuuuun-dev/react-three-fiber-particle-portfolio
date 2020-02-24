@@ -1,7 +1,7 @@
 import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import LoadImage from '../helpers/LoadImage';
-import * as THREE from 'three/src/Three';
+import * as THREE from 'three';
 import ParticleShader from '../shaders/ParticleShader'
 import useStore from '../contexts/store'
 
