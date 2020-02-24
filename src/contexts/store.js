@@ -22,6 +22,7 @@ const [useStore] = create((set, get) => ({
   navList: navList,
   navListLength: navList.length,
   navListIndex: 0,
+  homeText: navList[0] ? navList[0].texts.join(' ') : null,
   prevNavListIndex: 0,
   coefficient: 0.6,
   targetCoefficient: 0.1,

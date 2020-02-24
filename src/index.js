@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import useStore from './contexts/store';
-import { Main } from './pages/main';
+import Main from './pages/Main';
 import Header from './components/Header';
 import Contents from './components/Contents';
 import Loader from './components/Loader';

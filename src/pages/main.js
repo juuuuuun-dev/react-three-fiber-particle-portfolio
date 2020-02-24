@@ -1,20 +1,22 @@
 import React from 'react';
 import Particle from '../components/Particle';
 import MoveText from '../components/MoveText';
-import { Canvas } from 'react-three-fiber';
+import { Canvas, Dom } from 'react-three-fiber';
 import useStore from '../contexts/store';
-import polyfill from '@juggle/resize-observer';
+// import polyfill from '@juggle/resize-observer';
 import * as THREE from 'three';
 
-export function Main() {
+const Main = () => {
   const canvasRef = React.useRef();
   const actions = useStore(state => state.actions);
+  const homeText = useStore(state => state.homeText);
   actions.useYScroll({ domTarget: canvasRef });
   return (
     <>
       <div ref={canvasRef} className='canvas' id='main'>
         <Canvas
-          resize={{ polyfill }}
+          data-testid="canvas"
+          // resize={{ polyfill }}
           camera={{
             position: [-5, 100, 50],
             near: 0.1,
@@ -24,6 +26,9 @@ export function Main() {
             far: 10000
           }}
         >
+          <Dom position={[100, 0, 100]}>
+            <h1>{homeText}</h1>
+          </Dom>
           <pointLight
             distance={200}
             intensity={8}
@@ -39,3 +44,5 @@ export function Main() {
     </>
   );
 }
+
+export default Main;
