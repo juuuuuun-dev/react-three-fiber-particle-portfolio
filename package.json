@@ -46,11 +46,19 @@
         "@testing-library/react": "^9.4.0",
         "@testing-library/react-hooks": "^3.2.1",
         "identity-obj-proxy": "^3.0.0",
+        "jest-useragent-mock": "^0.0.3",
         "react-test-renderer": "^16.12.0"
     },
     "jest": {
         "moduleNameMapper": {
-            "\\.(css|scss|less)$": "identity-obj-proxy"
+            "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+            "\\.(css|scss|less)$": "identity-obj-proxy",
+            "testEnvironmentOptions": {
+                "resources": "usable"
+            },
+            "setupFiles": [
+                "jest-useragent-mock"
+            ]
         }
     }
 }

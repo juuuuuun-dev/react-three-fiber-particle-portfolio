@@ -1,4 +1,4 @@
-export default function(src) {
+export default function (src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.crossOrigin = 'Anonymouse';
