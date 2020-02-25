@@ -27,18 +27,15 @@ const Contents = () => {
     };
   };
 
-
   const [springs, setSprings] = useSprings(navList.length, index =>
     springFunc(index)
   );
   setSprings(index => springFunc(index));
 
-
-
   const components = key => {
     const list = {
       ABOUT: About,
-      CONTACT: Contact,
+      CONTACT: Contact
     };
     const Component = list[key];
     return <Component />;
@@ -62,6 +59,6 @@ const Contents = () => {
       })}
     </>
   );
-}
+};
 
 export default Contents;
