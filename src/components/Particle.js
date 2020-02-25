@@ -2,10 +2,10 @@ import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three';
-import ParticleShader from '../shaders/ParticleShader'
+import ParticleShader from '../shaders/ParticleShader';
 import useStore from '../contexts/store';
 import { range } from '../helpers/Range';
-
+import config from '../config/particle';
 
 export const Particle = () => {
   const actions = useStore(state => state.actions);
@@ -17,97 +17,76 @@ export const Particle = () => {
   let time = 0;
   let theta = 0;
   const clock = new THREE.Clock();
-  let [MAX, COLOR] = useMemo(() => {
-    if (ua === 'sp') {
-      return [4000, [.65, .65, .65]];
-    }
-    // pc
-    return [20000, [1, 1, 1]];
-  }, [ua]);
+  const [MAX, COLOR] = useMemo(() => getUaParticleData(ua), [ua]);
+
+  let tilt = config.tilt;
+  const attributes = [];
+  const mousePos = { x: -1.4, y: 0 }; // x particle moved
+  const geometryRef = useRef();
+  const materialRef = useRef();
   const bufferAttribute = {
     positions: [],
     endPositions: [],
     alphas: [],
     colors: [],
-    times: [],
-  }
-  const attributes = [];
-  const mouse = new THREE.Vector2();
-  mouse.x = -0.5;
-  mouse.y = 0;
-  const mousePos = { x: -1.4, y: 0 }; // x particle moved
-  const geometryRef = useRef();
-  const materialRef = useRef();
-
+    times: []
+  };
   useEffect(() => {
-    const f = async () => {
-      const imagePositions = await createImagePositions(COLOR, navList, navListLength);
+    const fn = async () => {
+      const imagePositions = await createImagePositions(
+        COLOR,
+        navList,
+        navListLength
+      );
       const attribute = await createAttributes(imagePositions, MAX);
-      await (() => {
-        return new Promise(resolve => {
-          for (let i = 0; navListLength > i; i++) {
-            bufferAttribute.positions[i] = new THREE.BufferAttribute(attribute.positions[i], 3);
-            bufferAttribute.endPositions[i] = new THREE.BufferAttribute(attribute.endPositions[i], 3);
-            bufferAttribute.times[i] = new THREE.BufferAttribute(attribute.times[i], 1);
-            bufferAttribute.alphas[i] = new THREE.BufferAttribute(attribute.alphas[i], 1);
-            bufferAttribute.colors[i] = new THREE.BufferAttribute(attribute.colors[i], 3);
-          }
-          geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-          geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-          geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
-          geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-          geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
-          geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
-          actions.setReady(true);
-          actions.setLoading(false);
-          actions.setRouter();
-          resolve();
-        });
-      })();
+      await setBufferAttributes(bufferAttribute, attribute, navListLength);
+      await setGeometory(geometryRef, bufferAttribute, listIndex);
+      actions.setReady(true);
+      actions.setLoading(false);
+      actions.setRouter();
     };
-    f();
-  }, [bufferAttribute, actions, listIndex, attributes, MAX, COLOR, navList, navListLength]);
+    fn();
+  }, [
+    bufferAttribute,
+    actions,
+    listIndex,
+    attributes,
+    MAX,
+    COLOR,
+    navList,
+    navListLength
+  ]);
 
   const { camera, invalidate } = useThree();
-  let coefficient = 12.0; // first coefficient
+  let positionCoefficient = config.positionCoefficient; // first coefficient
   const targetCoefficient = 0.9;
-  const mouseTargetCoefficient = -0.5; // z
+  const tiltCoefficient = -0.5; // z
   useFrame(() => {
     if (stopMainFrame) {
       invalidate();
     }
-    coefficient += (targetCoefficient - coefficient) * .08;
-    mouse.x += (mouseTargetCoefficient - mouse.x) * .08;
-    let delta = clock.getDelta();
+    positionCoefficient += (targetCoefficient - positionCoefficient) * 0.08;
+    tilt += (tiltCoefficient - tilt) * 0.08;
+    const delta = clock.getDelta();
     time += delta;
-    theta += (mouse.x / 4 - theta) / 10;
+    theta += (tilt / 4 - theta) / 10;
     cameraFrame(camera, theta);
-    materialFrame(materialRef, time, coefficient, mousePos)
+    materialFrame(materialRef, time, positionCoefficient, mousePos);
   });
 
-
   // listIndexをstate(store)にしてしまうと再描画が起こるのでcollbackで処理
-  const scrollCollback = (index) => {
-    listIndex = index;
-    coefficient = 15.6;
-    mouse.x = 2;
-    if (geometryRef.current) {
-      geometryRef.current.setAttribute('position', bufferAttribute.positions[listIndex]);
-      geometryRef.current.setAttribute('aTarget', bufferAttribute.endPositions[listIndex]);
-      geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
-      geometryRef.current.setAttribute('aAlpha', bufferAttribute.alphas[listIndex]);
-      geometryRef.current.setAttribute('aColor', bufferAttribute.colors[listIndex]);
-    }
+  const scrollCollback = index => {
+    positionCoefficient = 15.6;
+    tilt = 2;
+    changeAttribute(index, geometryRef, bufferAttribute);
   };
+
   actions.setScrollCollbacks(scrollCollback);
 
   return (
     <>
       <points>
-        <bufferGeometry
-          attach="geometry"
-          ref={geometryRef}
-        >
+        <bufferGeometry attach='geometry' ref={geometryRef}>
           <bufferAttribute
             count={MAX}
             array={new Float32Array(MAX * 3)}
@@ -116,36 +95,119 @@ export const Particle = () => {
         </bufferGeometry>
         <shaderMaterial
           ref={materialRef}
-          attach="material"
-          name="material"
+          attach='material'
+          name='material'
           args={[ParticleShader]}
         />
       </points>
     </>
-  )
-}
+  );
+};
+
+export const getUaParticleData = ua => {
+  if (ua === 'sp') {
+    return [config.spParticleNumber, config.spParticleColor];
+  }
+  // pc
+  return [config.pcParticleNumber, config.pcParticleColor];
+};
+export const changeAttribute = (listIndex, geometryRef, bufferAttribute) => {
+  if (geometryRef.current) {
+    geometryRef.current.setAttribute(
+      'position',
+      bufferAttribute.positions[listIndex]
+    );
+    geometryRef.current.setAttribute(
+      'aTarget',
+      bufferAttribute.endPositions[listIndex]
+    );
+    geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+    geometryRef.current.setAttribute(
+      'aAlpha',
+      bufferAttribute.alphas[listIndex]
+    );
+    geometryRef.current.setAttribute(
+      'aColor',
+      bufferAttribute.colors[listIndex]
+    );
+  }
+};
 
 export const cameraFrame = (camera, theta) => {
   camera.position.x = 20 * Math.sin(theta);
   camera.position.y = 80 * theta + 100;
   camera.position.z = 15 * Math.cos(theta);
   camera.lookAt(new THREE.Vector3());
-}
+};
 
 export const materialFrame = (materialRef, time, coefficient, mousePos) => {
   materialRef.current.uniforms.uTime.value = time;
   materialRef.current.uniforms.uCoefficient.value = coefficient;
   materialRef.current.needsUpdate = true;
   materialRef.current.uniforms.uMousePosition.value = mousePos;
-}
+};
 
+export const setGeometory = (geometryRef, bufferAttribute, listIndex) => {
+  return new Promise(resolve => {
+    geometryRef.current.setAttribute(
+      'position',
+      bufferAttribute.positions[listIndex]
+    );
+    geometryRef.current.setAttribute(
+      'aTarget',
+      bufferAttribute.endPositions[listIndex]
+    );
+    geometryRef.current.setAttribute(
+      'aAlpha',
+      bufferAttribute.alphas[listIndex]
+    );
+    geometryRef.current.setAttribute('aTime', bufferAttribute.times[listIndex]);
+    geometryRef.current.setAttribute(
+      'aColor',
+      bufferAttribute.colors[listIndex]
+    );
+    resolve();
+  });
+};
+
+export const setBufferAttributes = (
+  bufferAttribute,
+  attribute,
+  navListLength
+) => {
+  return new Promise(resolve => {
+    for (let i = 0; navListLength > i; i++) {
+      bufferAttribute.positions[i] = new THREE.BufferAttribute(
+        attribute.positions[i],
+        3
+      );
+      bufferAttribute.endPositions[i] = new THREE.BufferAttribute(
+        attribute.endPositions[i],
+        3
+      );
+      bufferAttribute.times[i] = new THREE.BufferAttribute(
+        attribute.times[i],
+        1
+      );
+      bufferAttribute.alphas[i] = new THREE.BufferAttribute(
+        attribute.alphas[i],
+        1
+      );
+      bufferAttribute.colors[i] = new THREE.BufferAttribute(
+        attribute.colors[i],
+        3
+      );
+    }
+    resolve(bufferAttribute);
+  });
+};
 
 /**
  * createImagePositions
  */
 export const createImagePositions = (COLOR, navList, navListLength) => {
-  return new Promise(async (resolve) => {
-    const canvas = document.createElement("canvas");
+  return new Promise(async resolve => {
+    const canvas = document.createElement('canvas');
     let positions = [];
     for (let i = 0; navListLength > i; i++) {
       const image = await LoadImage(navList[i].src);
@@ -153,7 +215,7 @@ export const createImagePositions = (COLOR, navList, navListLength) => {
     }
     resolve(positions);
   });
-}
+};
 
 export const setImagePosition = (image, canvas, index, COLOR) => {
   let pos = [];
@@ -177,27 +239,27 @@ export const setImagePosition = (image, canvas, index, COLOR) => {
           x: (x - image.width / 2) / scale,
           y: (y - image.height / 2) / scale,
           alpha: alpha / 255,
-          color,
-        }
+          color
+        };
         pos.push(data);
       }
     }
   }
   return pos;
-}
+};
 
 /**
  * createAttributes
  */
 export const createAttributes = (imagePositions, MAX) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const count = 3;
     let attr = {
       positions: [],
       endPositions: [],
       alphas: [],
       colors: [],
-      times: [],
+      times: []
     };
     let imageLen = imagePositions.length;
 
@@ -229,4 +291,4 @@ export const createAttributes = (imagePositions, MAX) => {
     }
     resolve(attr);
   });
-}
+};
