@@ -15,7 +15,7 @@ export default function ({
   const navList = useStore(state => state.navList);
   const navListLength = useStore(state => state.navListLength);
   const coefficient = useStore(state => state.coefficient);
-
+  console.log('moveText')
   const targetCoefficient = useStore(state => state.targetCoefficient);
   const actions = useStore(state => state.actions);
   const refs = useRef(navList.map(() => createRef()));

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Particle } from '../components/Particle';
 import MoveText from '../components/MoveText';
+import Test from '../components/Test';
 import { Canvas, Dom } from 'react-three-fiber';
 import useStore from '../contexts/store';
 // import polyfill from '@juggle/resize-observer';
@@ -10,6 +11,7 @@ const Main = () => {
   const canvasRef = React.useRef();
   const actions = useStore(state => state.actions);
   const homeText = useStore(state => state.homeText);
+  console.log("Main")
   actions.useYScroll({ domTarget: canvasRef });
   return (
     <>
@@ -36,6 +38,7 @@ const Main = () => {
             color={new THREE.Color(0.5, 0.5, 0.23)}
           />
           <React.Suspense fallback={null}>
+            <Test />
             <MoveText position={[0, 4.2, 0]} />
           </React.Suspense>
           <Particle />
