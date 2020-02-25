@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, getByTestId } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import {
   Particle,
   cameraFrame,
@@ -17,16 +17,13 @@ import navList from '../../config/navList';
 import * as THREE from 'three';
 import ParticleShader from '../../shaders/ParticleShader';
 import config from '../../config/particle';
-
-// import img from '../../images/smile.png'
-import LoadImage from '../../helpers/LoadImage';
 import 'jest-canvas-mock';
 import '@testing-library/jest-dom/extend-expect';
 // three
 import 'mutationobserver-shim';
 
-// jest.mock('../../images/smile.png');
-// global.Promise = jest.requireActual('promise');
+afterEach(() => cleanup());
+
 let canvas;
 const img = new Image();
 img.src = 'https://placekitten.com/100/50';
@@ -42,7 +39,6 @@ describe('Particle', () => {
         <Particle />
       </Canvas>
     );
-    console.log(container.getInstance());
     const COLOR = [1, 1, 1];
     const navListLength = navList.length;
     const imagePositions = createImagePositions(COLOR, navList, navListLength);
