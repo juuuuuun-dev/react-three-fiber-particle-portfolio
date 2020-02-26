@@ -38,7 +38,6 @@ const Main = () => {
             color={new THREE.Color(0.5, 0.5, 0.23)}
           />
           <React.Suspense fallback={null}>
-            <Test />
             <MoveText position={[0, 4.2, 0]} />
           </React.Suspense>
           <Particle />

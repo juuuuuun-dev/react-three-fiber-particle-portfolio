@@ -10,18 +10,19 @@ export default function ({
   hAlign = 'left',
   ...props
 }) {
-  const navListIndex = useStore(state => state.navListIndex);
-  const prevNavListIndex = useStore(state => state.prevNavListIndex);
+  let navListIndex = 0;
+  let prevNavListIndex = 1;
+  // const navListIndex = useStore(state => state.navListIndex);
+  // const prevNavListIndex = useStore(state => state.prevNavListIndex);
   const navList = useStore(state => state.navList);
   const navListLength = useStore(state => state.navListLength);
-  const coefficient = useStore(state => state.coefficient);
   console.log('moveText')
-  const targetCoefficient = useStore(state => state.targetCoefficient);
+  // const targetCoefficient = useStore(state => state.targetCoefficient);
   const actions = useStore(state => state.actions);
   const refs = useRef(navList.map(() => createRef()));
-  const [hovered, setHoverd] = useState(false);
+  // const [hovered, setHoverd] = useState(false);
   const canvasElem = document.getElementById('main');
-
+  let hovered = false;
   // default value
   const color = '#ffffff';
   const hoveredScale = 1.3;
@@ -30,13 +31,15 @@ export default function ({
   const defaultBottomY = -15;
   const defaultLineHeight = 4.2;
   const defaultLotationY = 0.9;
+  const targetCoefficient = 0.1;
+  let coefficient = 0.1;
   // actions.setScrollCollbacks(scrollCollback);
 
   useFrame(() => {
-    actions.setCoefficient(
-      coefficient + (targetCoefficient - coefficient) * 0.06
-    );
-    // coefficient += (targetCoefficient - coefficient) * .1;
+    // actions.setCoefficient(
+    //   coefficient + (targetCoefficient - coefficient) * 0.06
+    // );
+    // coefficient += (targetCoefficient - coefficient) * 0.06;
 
     for (let i = 0; navListLength > i; i++) {
       refs.current[i].current.rotation.x = 30;
@@ -66,12 +69,17 @@ export default function ({
   });
   const hover = e => {
     if (navList[navListIndex].path) {
-      setHoverd(true);
+
+      hovered = true;
+      console.log(hovered)
+      // setHoverd(true);
       canvasElem.style.cursor = 'pointer';
     }
   };
   const unhover = () => {
-    setHoverd(false);
+    hovered = false;
+    console.log(hovered)
+    // setHoverd(false);
     canvasElem.style.cursor = 'default';
   };
   const hadleClick = () => {

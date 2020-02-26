@@ -166,7 +166,8 @@ const [useStore] = create((set, get) => ({
     useYScroll(props) {
       let y = 0;
       const fn = useCallback(({ wheeling, xy: [, cy], previous: [, py], ...pp }) => {
-        if (get().isScroll || get().stopMainFrame) return;
+        console.log('scroll')
+        if (get().isScroll) return;
         let index = get().navListIndex;
         set(() => ({ prevNavListIndex: index }));
         const diffY = wheeling ? cy - py : py - cy;
@@ -181,7 +182,8 @@ const [useStore] = create((set, get) => ({
             index = (index + 1) % get().navListLength;
           }
           set(() => ({ navListIndex: index }));
-          set(() => ({ coefficient: 3.0 }));
+          console.log(get().navListIndex)
+          // set(() => ({ coefficient: 3.0 }));
           get().actions.execCallbacks(index);
           setTimeout(() => {
             set(() => ({ isScroll: false }));
@@ -194,7 +196,7 @@ const [useStore] = create((set, get) => ({
       return [y];
     },
     execCallbacks(index) {
-      set(() => ({ navListIndex: index }));
+      // set(() => ({ navListIndex: index }));
       get().scrollCallbacks.map(fn => fn(index));
     }
   }
