@@ -1,46 +1,46 @@
 import * as THREE from 'three';
-import React, { useMemo, useRef, createRef, useState } from 'react';
+import React, { useMemo, useRef, createRef } from 'react';
 import { useLoader, useUpdate, useFrame } from 'react-three-fiber';
 import useStore from '../contexts/store';
-import { useSpring } from 'react-spring';
 
-export default function ({
+export default function({
   children,
   vAlign = 'center',
   hAlign = 'left',
   ...props
 }) {
   let navListIndex = 0;
-  let prevNavListIndex = 1;
-  // const navListIndex = useStore(state => state.navListIndex);
-  // const prevNavListIndex = useStore(state => state.prevNavListIndex);
+  let prevNavListIndex = navListIndex;
   const navList = useStore(state => state.navList);
   const navListLength = useStore(state => state.navListLength);
-  console.log('moveText')
-  // const targetCoefficient = useStore(state => state.targetCoefficient);
   const actions = useStore(state => state.actions);
   const refs = useRef(navList.map(() => createRef()));
-  // const [hovered, setHoverd] = useState(false);
   const canvasElem = document.getElementById('main');
   let hovered = false;
   // default value
   const color = '#ffffff';
-  const hoveredScale = 1.3;
+  const hoveredScale = 1.2;
   const defaultSize = 6.3;
   const defaultPositionX = -10;
   const defaultBottomY = -15;
   const defaultLineHeight = 4.2;
   const defaultLotationY = 0.9;
   const targetCoefficient = 0.1;
-  let coefficient = 0.1;
-  // actions.setScrollCollbacks(scrollCollback);
+  let coefficient = 0.3;
+  let hoverScaleCoefficient = 1.0;
+  let hoverLotationY = navList[navListIndex].lotationY || defaultLotationY;
+  const hovertargetCoefficient = 0.8;
+  // not to rerender
+  const scrollCollback = index => {
+    hovered = false;
+    prevNavListIndex = navListIndex;
+    coefficient = 3.0;
+    navListIndex = index;
+  };
+  actions.setScrollCollbacks(scrollCollback);
 
   useFrame(() => {
-    // actions.setCoefficient(
-    //   coefficient + (targetCoefficient - coefficient) * 0.06
-    // );
-    // coefficient += (targetCoefficient - coefficient) * 0.06;
-
+    coefficient += (targetCoefficient - coefficient) * 0.06;
     for (let i = 0; navListLength > i; i++) {
       refs.current[i].current.rotation.x = 30;
       refs.current[i].current.rotation.y = Math.PI * 0.28;
@@ -58,28 +58,37 @@ export default function ({
       }
       refs.current[i].current.needsUpdate = true;
     }
-    refs.current[navListIndex].current.position.y = scale.value * 20;
-    refs.current[navListIndex].current.rotation.y = rotationY.value;
+
+    if (hovered && hoveredScale >= hoverScaleCoefficient) {
+      hoverScaleCoefficient +=
+        (targetCoefficient + hoverScaleCoefficient) * 0.03;
+      if (navList[navListIndex].lotationY) {
+        hoverLotationY = navList[navListIndex].lotationY;
+      } else {
+        hoverLotationY += (0.58 - hoverLotationY) * 0.03;
+      }
+    } else if (!hovered) {
+      hoverScaleCoefficient +=
+        (hovertargetCoefficient - hoverScaleCoefficient) * 0.06;
+      if (navList[navListIndex].lotationY) {
+        hoverLotationY = navList[navListIndex].lotationY;
+      } else {
+        hoverLotationY += (0.88 - hoverLotationY) * 0.06;
+      }
+    }
+
+    refs.current[navListIndex].current.position.y = hoverScaleCoefficient * 20;
+    refs.current[navListIndex].current.rotation.y = hoverLotationY;
   });
-  const { scale, rotationY } = useSpring({
-    scale: hovered ? hoveredScale : 1,
-    rotationY: hovered
-      ? 0.8
-      : navList[navListIndex].lotationY || defaultLotationY
-  });
+
   const hover = e => {
     if (navList[navListIndex].path) {
-
       hovered = true;
-      console.log(hovered)
-      // setHoverd(true);
       canvasElem.style.cursor = 'pointer';
     }
   };
   const unhover = () => {
     hovered = false;
-    console.log(hovered)
-    // setHoverd(false);
     canvasElem.style.cursor = 'default';
   };
   const hadleClick = () => {
@@ -128,12 +137,12 @@ export default function ({
                 hAlign={hAlign}
                 vAlign={vAlign}
                 lineHeight={defaultLineHeight}
-                position={[-9, -9.5, 17]}
+                position={[-9, -9.0, 17]}
                 children={navList[index].topText}
               />
             )}
             }
-            </mesh>
+          </mesh>
         );
       })}
     </>
@@ -208,8 +217,8 @@ const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
       hAlign === 'center'
         ? -size.x / 3
         : hAlign === 'right'
-          ? 0
-          : -size.x / 2.2;
+        ? 0
+        : -size.x / 2.2;
     self.position.y =
       vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y;
   });

@@ -2,9 +2,9 @@
   "tilt": -0.5,
   "tiltSubtract": 0.5,
   "positionCoefficient": 12.0,
-  "targetCoefficient": 0.9,
+  "targetCoefficient": 1.15,
   "spParticleNumber": 4000,
-  "pcParticleNumber": 20000,
+  "pcParticleNumber": 24000,
   "spParticleColor": [0.65, 0.65, 0.65],
   "pcParticleColor": [1, 1, 1]
 }

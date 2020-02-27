@@ -165,38 +165,38 @@ const [useStore] = create((set, get) => ({
     },
     useYScroll(props) {
       let y = 0;
-      const fn = useCallback(({ wheeling, xy: [, cy], previous: [, py], ...pp }) => {
-        console.log('scroll')
-        if (get().isScroll) return;
-        let index = get().navListIndex;
-        set(() => ({ prevNavListIndex: index }));
-        const diffY = wheeling ? cy - py : py - cy;
-        if (diffY > 10 || diffY < -10) {
-          set(() => ({ isScroll: true }));
-          if (diffY < 0) {
-            index -= 1;
-            if (index < 0) {
-              index += get().navListLength;
+      const fn = useCallback(
+        ({ wheeling, xy: [, cy], previous: [, py], ...pp }) => {
+          if (get().isScroll) return;
+          let index = get().navListIndex;
+          set(() => ({ prevNavListIndex: index }));
+          const diffY = wheeling ? cy - py : py - cy;
+          if (diffY > 10 || diffY < -10) {
+            set(() => ({ isScroll: true }));
+            if (diffY < 0) {
+              index -= 1;
+              if (index < 0) {
+                index += get().navListLength;
+              }
+            } else {
+              index = (index + 1) % get().navListLength;
             }
-          } else {
-            index = (index + 1) % get().navListLength;
+            set(() => ({ navListIndex: index }));
+            get().actions.execCallbacks(index);
+            setTimeout(() => {
+              set(() => ({ isScroll: false }));
+            }, 500);
           }
-          set(() => ({ navListIndex: index }));
-          console.log(get().navListIndex)
-          // set(() => ({ coefficient: 3.0 }));
-          get().actions.execCallbacks(index);
-          setTimeout(() => {
-            set(() => ({ isScroll: false }));
-          }, 500);
-        }
-        return cy - py;
-      }, []);
+          return cy - py;
+        },
+        []
+      );
       const bind = useGesture({ onWheel: fn, onDrag: fn }, props);
       useEffect(() => props && props.domTarget && bind(), [props, bind]);
       return [y];
     },
     execCallbacks(index) {
-      // set(() => ({ navListIndex: index }));
+      set(() => ({ navListIndex: index }));
       get().scrollCallbacks.map(fn => fn(index));
     }
   }

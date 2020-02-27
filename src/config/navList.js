@@ -10,8 +10,8 @@ export default [
     textSize: 4.6,
     lineHeight: 3.4,
     bottomY: -9.0,
-    positionX: -14.0,
-    lotationY: 0.8,
+    positionX: -12.5,
+    lotationY: 0.77,
     description: 'descriptionです'
   },
   {
