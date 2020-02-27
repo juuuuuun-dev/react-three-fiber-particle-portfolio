@@ -59,7 +59,7 @@ export const Particle = () => {
 
   const { camera, invalidate } = useThree();
   let positionCoefficient = config.positionCoefficient; // first coefficient
-  const targetCoefficient = 0.9;
+  const targetCoefficient = config.targetCoefficient;
   const tiltCoefficient = -0.5; // z
   useFrame(() => {
     if (stopMainFrame) {
