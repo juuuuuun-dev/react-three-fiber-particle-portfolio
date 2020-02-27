@@ -53,7 +53,7 @@ const Nav = () => {
             onClick={() => handleClick(index)}
             key={index}
           >
-            {navList[index].title}
+            {navList[index].title} ({showContent})
           </animated.li>
         );
       })}
