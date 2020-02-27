@@ -7,9 +7,8 @@ const Nav = () => {
   const activeColor = variables.activeColor;
   const textColor = variables.textColor;
   const actions = useStore(state => state.actions);
-  const { showContent } = useStore(state => ({
-    showContent: state.showContent
-  }));
+  const showContent = useStore(state => state.showContent);
+
   console.log('rerender', { showContent });
 
   const navList = actions.getHasPathNavList();
@@ -38,6 +37,8 @@ const Nav = () => {
     }
     const show = await actions.toggleContents(navList[index].path);
     console.log('handleclick', show);
+
+    // @todo
     setNavSprings(index => springFunc(index, show));
   };
 
