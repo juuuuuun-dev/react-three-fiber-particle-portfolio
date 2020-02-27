@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import React, { useMemo, useRef, createRef } from 'react';
 import { useLoader, useUpdate, useFrame } from 'react-three-fiber';
 import useStore from '../contexts/store';
+import { maxTextlength } from '../helpers/Num';
 
 export default function({
   children,
@@ -41,47 +42,35 @@ export default function({
 
   useFrame(() => {
     coefficient += (targetCoefficient - coefficient) * 0.06;
-    for (let i = 0; navListLength > i; i++) {
-      refs.current[i].current.rotation.x = 30;
-      refs.current[i].current.rotation.y = Math.PI * 0.28;
-      const x = Math.tan(coefficient) * 10;
-      if (i === navListIndex) {
-        if (x > 0) {
-          refs.current[navListIndex].current.position.x = x;
-        } else {
-          refs.current[prevNavListIndex].current.position.x = x;
-        }
-      } else if (i === prevNavListIndex && x < 0) {
-        refs.current[prevNavListIndex].current.position.x = x;
-      } else {
-        refs.current[i].current.position.x = 200;
-      }
-      refs.current[i].current.needsUpdate = true;
-    }
 
+    frameMoveX(
+      navListLength,
+      refs,
+      coefficient,
+      navListIndex,
+      prevNavListIndex
+    );
+
+    // hover
     if (hovered && hoveredScale >= hoverScaleCoefficient) {
       hoverScaleCoefficient +=
         (targetCoefficient + hoverScaleCoefficient) * 0.03;
-      if (navList[navListIndex].lotationY) {
-        hoverLotationY = navList[navListIndex].lotationY;
-      } else {
-        hoverLotationY += (0.58 - hoverLotationY) * 0.03;
-      }
+      hoverLotationY = navList[navListIndex].lotationY
+        ? navList[navListIndex].lotationY
+        : (hoverLotationY += (0.58 - hoverLotationY) * 0.03);
     } else if (!hovered) {
       hoverScaleCoefficient +=
         (hovertargetCoefficient - hoverScaleCoefficient) * 0.06;
-      if (navList[navListIndex].lotationY) {
-        hoverLotationY = navList[navListIndex].lotationY;
-      } else {
-        hoverLotationY += (0.88 - hoverLotationY) * 0.06;
-      }
+      hoverLotationY = navList[navListIndex].lotationY
+        ? navList[navListIndex].lotationY
+        : (hoverLotationY += (0.88 - hoverLotationY) * 0.06);
     }
 
     refs.current[navListIndex].current.position.y = hoverScaleCoefficient * 20;
     refs.current[navListIndex].current.rotation.y = hoverLotationY;
   });
 
-  const hover = e => {
+  const hover = () => {
     if (navList[navListIndex].path) {
       hovered = true;
       canvasElem.style.cursor = 'pointer';
@@ -207,7 +196,7 @@ const Text = ({
 
 const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
   const singleXScale = 3.5;
-  const xScale = getMaxTextLength(item.texts) * singleXScale;
+  const xScale = maxTextlength(item.texts) * singleXScale;
   const yScale = lineHeight * item.texts.length;
   const mesh = useUpdate(self => {
     const size = new THREE.Vector3();
@@ -237,11 +226,28 @@ const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
   );
 };
 
-const getMaxTextLength = arr => {
-  const arrLen = arr.length;
-  const strLenArr = [];
-  for (let i = 0; arrLen > i; i++) {
-    strLenArr.push(arr[i].length);
+export const frameMoveX = (
+  navListLength,
+  refs,
+  coefficient,
+  navListIndex,
+  prevNavListIndex
+) => {
+  for (let i = 0; navListLength > i; i++) {
+    refs.current[i].current.rotation.x = 30;
+    refs.current[i].current.rotation.y = Math.PI * 0.28;
+    const x = Math.tan(coefficient) * 10;
+    if (i === navListIndex) {
+      if (x > 0) {
+        refs.current[navListIndex].current.position.x = x;
+      } else {
+        refs.current[prevNavListIndex].current.position.x = x;
+      }
+    } else if (i === prevNavListIndex && x < 0) {
+      refs.current[prevNavListIndex].current.position.x = x;
+    } else {
+      refs.current[i].current.position.x = 200;
+    }
+    refs.current[i].current.needsUpdate = true;
   }
-  return Math.max.apply(null, strLenArr);
 };

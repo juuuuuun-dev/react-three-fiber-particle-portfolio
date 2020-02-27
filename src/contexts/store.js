@@ -113,21 +113,25 @@ const [useStore] = create((set, get) => ({
     },
     // location
     toggleContents(pathname) {
-      const showContent = get().showContent;
-      if (showContent) {
-        if (showContent === pathname) {
-          set(state => ({
-            showContent: null,
-            pageTitle: '',
-            description: state.navList[0].description
-          }));
-          window.history.pushState('', '', `/${get().actions.getLangPath()}`);
+      return new Promise(async resolve => {
+        const showContent = get().showContent;
+        if (showContent) {
+          if (showContent === pathname) {
+            set(state => ({
+              showContent: null,
+              pageTitle: '',
+              description: state.navList[0].description
+            }));
+            window.history.pushState('', '', `/${get().actions.getLangPath()}`);
+          } else {
+            get().actions.setContents(pathname);
+          }
         } else {
           get().actions.setContents(pathname);
         }
-      } else {
-        get().actions.setContents(pathname);
-      }
+        console.log('toggle', get().showContent);
+        return resolve(get().showContent);
+      });
     },
     setContents(pathname) {
       const [content] = get().navList.filter(val => val.path === pathname);
