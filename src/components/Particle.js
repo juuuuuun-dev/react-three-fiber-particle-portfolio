@@ -4,7 +4,7 @@ import LoadImage from '../helpers/LoadImage';
 import * as THREE from 'three';
 import ParticleShader from '../shaders/ParticleShader';
 import useStore from '../contexts/store';
-import { range } from '../helpers/Range';
+import { range } from '../helpers/Num';
 import config from '../config/particle';
 
 export const Particle = () => {
@@ -74,9 +74,9 @@ export const Particle = () => {
     materialFrame(materialRef, time, positionCoefficient, mousePos);
   });
 
-  // listIndexをstate(store)にしてしまうと再描画が起こるのでcollbackで処理
+  // not to rerender
   const scrollCollback = index => {
-    positionCoefficient = 15.6;
+    positionCoefficient = 20.0;
     tilt = 2;
     changeAttribute(index, geometryRef, bufferAttribute);
   };

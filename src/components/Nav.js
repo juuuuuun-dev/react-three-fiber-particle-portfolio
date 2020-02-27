@@ -7,30 +7,38 @@ const Nav = () => {
   const activeColor = variables.activeColor;
   const textColor = variables.textColor;
   const actions = useStore(state => state.actions);
-  const showContent = useStore(state => state.showContent);
+  const { showContent } = useStore(state => ({
+    showContent: state.showContent
+  }));
+  console.log('rerender', { showContent });
+
   const navList = actions.getHasPathNavList();
   const navListIndex = useStore(state => state.navListIndex);
   const refs = React.useRef(navList.map((_, index) => index));
-  const springFunc = index => {
-    let color = showContent ? textColor : '#ffffff';
-    if (showContent && showContent === navList[index].path) {
+  const springFunc = (index, show) => {
+    let color = '#ffffff';
+    // const currentShow = show || showContent;
+    if (show && show === navList[index].path) {
       color = activeColor;
     }
+    console.log('spring', { show });
+
     return {
-      ref: refs[index],
       color
     };
   };
   const [navSprings, setNavSprings] = useSprings(navList.length, index =>
-    springFunc(index)
+    springFunc(index, showContent)
   );
-  setNavSprings(index => springFunc(index));
-  const handleClick = index => {
+
+  const handleClick = async index => {
     if (navListIndex !== index + 1) {
       actions.execCallbacks(index + 1);
       actions.setCoefficient();
     }
-    actions.toggleContents(navList[index].path);
+    const show = await actions.toggleContents(navList[index].path);
+    console.log('handleclick', show);
+    setNavSprings(index => springFunc(index, show));
   };
 
   return (
@@ -38,7 +46,8 @@ const Nav = () => {
       {navSprings.map((item, index) => {
         return (
           <animated.li
-            className="nav__li"
+            data-testid={`link-${navList[index].title}`}
+            className='nav__li'
             style={{ ...item }}
             onClick={() => handleClick(index)}
             key={index}
@@ -49,6 +58,6 @@ const Nav = () => {
       })}
     </ul>
   );
-}
+};
 
 export default Nav;
