@@ -16,10 +16,10 @@ describe("Num", () => {
   });
   it('maxTextlength', () => {
     const arr = [
-      'aaa',
+      'aaabb',
       'bb'
     ];
     const result = maxTextlength(arr);
-    expect(result).toBe(3);
+    expect(result).toBe(5);
   });
 });
