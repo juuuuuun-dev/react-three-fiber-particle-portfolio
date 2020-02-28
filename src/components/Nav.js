@@ -1,47 +1,39 @@
 import React from 'react';
 import { useSprings, animated } from 'react-spring';
 import useStore from '../contexts/store';
-import variables from '../scss/_variables.scss';
 
 const Nav = () => {
-  const activeColor = variables.activeColor;
-  const textColor = variables.textColor;
+  // _variables is error in test
+  const activeColor = '#d6c792';
+  const textColor = '#ffffff';
   const actions = useStore(state => state.actions);
   const showContent = useStore(state => state.showContent);
-
-  console.log('rerender', { showContent });
 
   const navList = actions.getHasPathNavList();
   const navListIndex = useStore(state => state.navListIndex);
   const refs = React.useRef(navList.map((_, index) => index));
-  const springFunc = (index, show) => {
-    let color = '#ffffff';
-    // const currentShow = show || showContent;
-    if (show && show === navList[index].path) {
+  const springFunc = index => {
+    let color = textColor;
+    if (showContent && showContent === navList[index].path) {
       color = activeColor;
     }
-    console.log('spring', { show });
-
     return {
+      ref: refs[index],
       color
     };
   };
   const [navSprings, setNavSprings] = useSprings(navList.length, index =>
-    springFunc(index, showContent)
+    springFunc(index)
   );
+  setNavSprings(index => springFunc(index));
 
   const handleClick = async index => {
     if (navListIndex !== index + 1) {
       actions.execCallbacks(index + 1);
       actions.setCoefficient();
     }
-    const show = await actions.toggleContents(navList[index].path);
-    console.log('handleclick', show);
-
-    // @todo
-    setNavSprings(index => springFunc(index, show));
+    actions.toggleContents(navList[index].path);
   };
-
   return (
     <ul className='nav'>
       {navSprings.map((item, index) => {
@@ -53,7 +45,7 @@ const Nav = () => {
             onClick={() => handleClick(index)}
             key={index}
           >
-            {navList[index].title} ({showContent})
+            {navList[index].title}
           </animated.li>
         );
       })}

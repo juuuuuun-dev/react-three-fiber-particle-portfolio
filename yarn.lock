@@ -9363,6 +9363,11 @@ sass-loader@7.2.0:
     pify "^4.0.1"
     semver "^5.5.0"
 
+sassyjson@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/sassyjson/-/sassyjson-1.1.8.tgz#05fcc2f86a2499e67e89247901db8e0aec4e65a4"
+  integrity sha1-BfzC+GokmeZ+iSR5AduOCuxOZaQ=
+
 sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"

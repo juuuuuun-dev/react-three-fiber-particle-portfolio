@@ -14,7 +14,7 @@ const [useStore] = create((set, get) => ({
   appTitle: common.appTitle,
   domain: common.domain,
   copyrightStartYear: common.copyrightStartYear,
-  description: 'descriptionです',
+  description: 'descript',
   pageTitle: '',
   primaryColor: variables.primaryColor,
   loading: false,
@@ -33,10 +33,6 @@ const [useStore] = create((set, get) => ({
   windowHeight: window.innerHeight,
   ua: getDevice(),
   showContent: null, // pathname
-  mutation: {
-    mouse: new THREE.Vector2(-250, 50),
-    mousePos: new THREE.Vector2(10, 10)
-  },
   /**
    * action
    */
@@ -129,7 +125,6 @@ const [useStore] = create((set, get) => ({
         } else {
           get().actions.setContents(pathname);
         }
-        console.log('toggle', get().showContent);
         return resolve(get().showContent);
       });
     },
