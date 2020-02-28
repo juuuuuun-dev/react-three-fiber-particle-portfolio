@@ -166,7 +166,9 @@ const [useStore] = create((set, get) => ({
       let y = 0;
       const fn = useCallback(
         ({ wheeling, xy: [, cy], previous: [, py], ...pp }) => {
+
           if (get().isScroll) return;
+
           let index = get().navListIndex;
           set(() => ({ prevNavListIndex: index }));
           const diffY = wheeling ? cy - py : py - cy;

@@ -6,6 +6,7 @@ import useStore from '../contexts/store';
 import * as THREE from 'three';
 
 const Main = () => {
+
   const canvasRef = React.useRef();
   const actions = useStore(state => state.actions);
   const homeText = useStore(state => state.homeText);
@@ -26,7 +27,7 @@ const Main = () => {
           }}
         >
           <Dom position={[100, 0, 100]}>
-            <h1>{homeText}</h1>
+            <h1 data-testid="home-text">{homeText}</h1>
           </Dom>
           <pointLight
             distance={200}

@@ -14,7 +14,6 @@ const App = () => {
   // const navList = actions.getHasPathNavList();
 
   actions.init();
-
   return (
     <>
       <MetaHead />

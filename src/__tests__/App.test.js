@@ -31,20 +31,19 @@ import '@testing-library/jest-dom/extend-expect';
 import 'mutationobserver-shim';
 
 jest.useFakeTimers();
+
 afterEach(() => cleanup());
-jest.setTimeout(100000);
+jest.setTimeout(6000);
 
 describe('App', () => {
   it('loading', async () => {
-    const { container, getByTestId } = render(
-      <>
-        <App />
-      </>
-    );
+    const { container, getByTestId } = render(<App />);
+    // await wait(() => findByTestId('home-text'));
     const { result } = renderHook(() => useStore(state => state));
     expect(result.current.ready).toBe(false);
     expect(result.current.loading).toBe(true);
     expect(result.current.showContent).toBe(null);
+
     const loader = getByTestId('loader');
     expect(loader).toHaveStyle('opacity: 1');
     expect(loader).toHaveStyle('z-index: 101');
@@ -52,9 +51,7 @@ describe('App', () => {
 
   it('click about', async () => {
     const { container, getByTestId } = render(
-      <>
-        <App />
-      </>
+      <App />
     );
     const { result } = renderHook(() => useStore(state => state));
     const aboutLink = getByTestId('link-ABOUT');
@@ -79,142 +76,20 @@ describe('App', () => {
     expect(result.current.showContent).toBe(null);
   });
 
-  it('resize', async () => {
-    const { container, findByText, getByTestId } = render(
-      <>
-        <App />
-      </>
-    );
+  it('scroll', async () => {
+    const { container } = render(<App />);
     const { result } = renderHook(() => useStore(state => state));
-    act(() => {
-      fireEvent.scroll(container, { target: { scrollY: 200 } });
+    container.addEventListener('scroll', () => {
+      // console.log('scroll')
     });
-
-    const loader = getByTestId('loader');
-    const items = await findByText(/complete/);
-    await wait(() => getByTitle(container, 'complete'), { timeout: 50000 });
-    // await expect(loader).toHaveStyle('opacity: 0');
-
-    // expect(items).toHaveLength(10);
-
     waitForDomChange({ container, timeout: 30000 })
       .then(() => {
         console.log('DOM changed!', result.current);
       })
       .catch(err => console.log(`Error you need to deal with: ${err}`));
-
-    // const { act } = TestRenderer;
-    // act(() => {
-    //   window.onresize = () => {
-    //     window.innerWidth = 500;
-    //     console.log(window.innerWidth);
-    //   };
-    // });
+    act(() => {
+      fireEvent.scroll(container, { target: { scrollY: 200 } });
+      window.innerWidth = 500;
+    });
   });
-
-  // it('render Index loader test', async () => {
-  //   const { container, getByTestId } = render(
-  //     <>
-  //       <MetaHead />
-  //       <Header />
-  //       <Main />
-  //       <Contents />
-  //       <Loader />
-  //     </>
-  //   );
-  //   const { result } = renderHook(() => useStore(state => state));
-  //   expect(result.current.ready).toBe(false);
-  //   expect(result.current.loading).toBe(false);
-  //   expect(result.current.showContent).toBe(null);
-
-  //   const loader = getByTestId('loader');
-  //   expect(loader).toHaveStyle('opacity: 0');
-  //   expect(loader).toHaveStyle('z-index: -1');
-  //   global.innerWidth = 500;
-  //   console.log(window.innerWidth);
-
-  //   // act(() => {
-  //   //   global.dispatchEvent(new Event('resize'));
-  //   // });
-  //   const { act } = TestRenderer;
-  //   act(() => {
-  //     window.onresize = () => {
-  //       window.innerWidth = 500;
-  //       console.log(window.innerWidth);
-  //     };
-  //   });
-
-  //   // expect(document.location.pathname).toBe('/');
-  //   // expect(result.current.showContent).toBe(null);
-  // });
-
-  // it('render Index click about', async () => {
-  //   const { container, getByTestId } = render(
-  //     <>
-  //       <MetaHead />
-  //       <Header />
-  //       <Main />
-  //       <Contents />
-  //       <Loader />
-  //     </>
-  //   );
-  //   const { result } = renderHook(() => useStore(state => state));
-
-  //   const aboutLink = getByTestId('link-ABOUT');
-  //   const aboutContent = getByTestId('content-ABOUT');
-  //   expect(aboutLink).toHaveStyle('color: rgb(255, 255, 255)');
-  //   expect(aboutContent).toBeDefined();
-  //   expect(aboutContent).toHaveStyle(`top: ${window.innerHeight}px`);
-  //   expect(aboutContent).toHaveStyle('opacity: 0');
-
-  //   act(() => {
-  //     fireEvent.click(aboutLink);
-  //   });
-  //   expect(document.location.pathname).toBe('/about');
-  //   expect(result.current.showContent).toBe('/about');
-
-  //   // close
-  //   act(() => {
-  //     fireEvent.click(aboutLink);
-  //   });
-  //   expect(document.location.pathname).toBe('/');
-  //   expect(result.current.showContent).toBe(null);
-  // });
-
-  // it('render Index scroll', async () => {
-  //   const { result } = renderHook(() => useStore(state => state));
-
-  //   act(() => {
-  //     result.current.actions.init();
-  //     // fireEvent.scroll(container, { target: { scrollY: 200 } });
-  //   });
-  //   const { container, getByTestId } = render(
-  //     <>
-  //       <MetaHead />
-  //       <Header />
-  //       <Main />
-  //       <Contents />
-  //       <Loader />
-  //     </>
-  //   );
-  //   waitForDomChange({ container, timeout: 30000 })
-  //     .then(() => console.log('DOM changed!', result.current))
-  //     .catch(err => console.log(`Error you need to deal with: ${err}`));
-
-  //   const onScroll = jest.fn();
-  //   // const [usernameElement, passwordElement] = await waitForElement(
-  //   //   () => [console.log(result.current.navListIndex)],
-  //   //   { container, timeout: 30000 }
-  //   // );
-
-  //   // expect(result.current.navListIndex).toBe(0);
-
-  //   // console.log(wait);
-  //   // wait(() => {
-  //   //   console.log(result.current.navListIndex);
-  //   //   expect(result.current.actions.useYScroll).toHaveBeenCalled();
-  //   //   console.log(result.current);
-  //   //   console.log('in wait');
-  //   // }, 10000);
-  // });
 });

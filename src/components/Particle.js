@@ -8,6 +8,7 @@ import { range } from '../helpers/Num';
 import config from '../config/particle';
 
 export const Particle = () => {
+  console.log('Particle')
   const actions = useStore(state => state.actions);
   const stopMainFrame = useStore(state => state.stopMainFrame);
   const navList = useStore(state => state.navList);
@@ -31,7 +32,9 @@ export const Particle = () => {
     colors: [],
     times: []
   };
+
   useEffect(() => {
+    console.log('useEffect')
     const fn = async () => {
       const imagePositions = await createImagePositions(
         COLOR,
