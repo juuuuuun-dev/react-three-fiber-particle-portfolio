@@ -4,12 +4,13 @@ import { useLoader, useUpdate, useFrame } from 'react-three-fiber';
 import useStore from '../contexts/store';
 import { maxTextlength } from '../helpers/Num';
 
-export default function({
+export default function ({
   children,
   vAlign = 'center',
   hAlign = 'left',
   ...props
 }) {
+  console.log('moveText')
   let navListIndex = 0;
   let prevNavListIndex = navListIndex;
   const navList = useStore(state => state.navList);
@@ -206,8 +207,8 @@ const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
       hAlign === 'center'
         ? -size.x / 3
         : hAlign === 'right'
-        ? 0
-        : -size.x / 2.2;
+          ? 0
+          : -size.x / 2.2;
     self.position.y =
       vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y;
   });
