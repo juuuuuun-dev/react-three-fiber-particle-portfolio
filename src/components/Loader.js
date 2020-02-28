@@ -19,7 +19,12 @@ const Loader = () => {
         className='loader-container'
       >
         <div className='loader-container__inner'>
-          <img className='loader-img' src={gif} alt='loading...'></img>
+          <img
+            className='loader-img'
+            title={loading ? 'loading' : 'complete'}
+            src={gif}
+            alt='loading...'
+          ></img>
         </div>
       </animated.div>
     </>
