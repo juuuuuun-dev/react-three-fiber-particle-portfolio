@@ -1,0 +1,27 @@
+$max-width: 820px;
+// breakpoint
+$sm: 600px;
+
+$global-margin: 120px;
+$global-padding: $global-margin;
+$sm-global-margin: 20px;
+$sm-global-padding: $sm-global-margin;
+// white
+// $primary-color:  #beb07c;
+// $gradient-start-color: #e0d6b2;
+// $secondary-color: #ffffff;
+// dark
+$primary-color: #27241a;
+$gradient-start-color: #343024;
+$secondary-color: #333333;
+$text-color: #dddbd1;
+$description-color: #807b6e;
+$small-margin: 5px;
+$active-color: #d6c792;
+
+:export {
+  primaryColor: $primary-color;
+  secondaryColor: $secondary-color;
+  activeColor: $active-color;
+  textColor: $text-color;
+}

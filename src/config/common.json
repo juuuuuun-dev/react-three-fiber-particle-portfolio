@@ -1,0 +1,10 @@
+{
+  "appTitle": "Jun Katada",
+  "domain": "jun-katada.com",
+  "copyrightStartYear": 2020,
+  "languages": [
+    { "id": "en", "name": "EN" },
+    { "id": "ja", "name": "JP" }
+  ],
+  "defaultLang": "en"
+}
