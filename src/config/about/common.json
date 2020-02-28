@@ -1,0 +1,26 @@
+{
+    "skill1": [
+        "Python",
+        "PHP",
+        "SQL",
+        "JavaScript",
+        "HTML",
+        "CSS"
+    ],
+    "skill2": [
+        "Django",
+        "Laravel",
+        "TypeScript",
+        "React",
+        "React Native",
+        "Vue.js",
+        "Nuxt.js",
+        "WebGL",
+        "Three.js",
+        "Sass",
+        "Vuetify",
+        "Docker",
+        "Photoshop",
+        "Illustrator"
+    ]
+}
