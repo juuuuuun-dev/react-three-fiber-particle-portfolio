@@ -1,5 +1,4 @@
 import create from 'zustand';
-import * as THREE from 'three';
 import { useCallback, useEffect } from 'react';
 import { getDevice } from '../helpers/UserAgent';
 import navList from '../config/navList';
