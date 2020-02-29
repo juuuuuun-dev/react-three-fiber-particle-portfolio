@@ -10,7 +10,6 @@ export default function ({
   hAlign = 'left',
   ...props
 }) {
-  console.log('moveText')
   let navListIndex = 0;
   let prevNavListIndex = navListIndex;
   const navList = useStore(state => state.navList);
