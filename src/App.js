@@ -10,16 +10,12 @@ import './scss/base.scss';
 
 const App = () => {
   const actions = useStore(state => state.actions);
-  // const navListIndex = useStore(state => state.navListIndex);
-  // const navList = actions.getHasPathNavList();
-
   actions.init();
   return (
     <>
       <MetaHead />
       <Header />
       <Main />
-      {/* <IndexFooterText /> */}
       <Contents />
       <Loader />
     </>
