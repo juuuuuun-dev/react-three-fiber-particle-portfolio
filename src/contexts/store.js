@@ -13,7 +13,6 @@ const [useStore] = create((set, get) => ({
   appTitle: common.appTitle,
   domain: common.domain,
   copyrightStartYear: common.copyrightStartYear,
-  description: 'descript',
   pageTitle: '',
   primaryColor: variables.primaryColor,
   loading: false,
@@ -42,6 +41,8 @@ const [useStore] = create((set, get) => ({
       }));
       window.onresize = get().actions.onResize;
       window.onpopstate = get().actions.onPopState;
+      get().actions.setInitLang();
+      console.log(get().lang)
     },
     onResize() {
       clearTimeout(get().doResize);
@@ -60,26 +61,36 @@ const [useStore] = create((set, get) => ({
     onPopState() {
       get().actions.setRouter();
     },
-    setRouter() {
+    setInitLang() {
       let pathname = document.location.pathname;
       const paths = pathname.split('/');
       const pathLength = paths.length;
       if (pathLength >= 2 && paths[1]) {
-        // local
         for (let i = 0; pathLength >= i; i++) {
+          // local
           get().languages.forEach(value => {
             if (paths[i] === value.id) {
               set(() => ({ lang: value.id }));
-              if (pathLength === 2) {
-                set(() => ({ showContent: false }));
-              }
             }
           });
+        }
+      }
+    },
+    setRouter() {
+      let pathname = document.location.pathname;
+      const paths = pathname.split('/');
+      const pathLength = paths.length;
+      // if (pathLength === 2) {
+      //   set(() => ({ showContent: false }));
+      // }
+      if (pathLength >= 2 && paths[1]) {
+        for (let i = 0; pathLength >= i; i++) {
+          // content
           if (get().actions.isContentsPath(`/${paths[i]}`)) {
             set(state => (state.showContent = `/${paths[i]}`));
-            if (pathLength === 2) {
-              set(() => ({ lang: get().defaultLang }));
-            }
+            // if (pathLength === 2) {
+            //   set(() => ({ lang: get().defaultLang }));
+            // }
           }
         }
       }
