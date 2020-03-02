@@ -2,12 +2,15 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import useStore from '../contexts/store';
 import variables from '../scss/_variables.scss';
+import { useTranslation } from 'react-i18next';
 
 const MetaHead = () => {
+  const [t] = useTranslation();
   const appTitle = useStore(state => state.appTitle);
   const primaryColor = variables.primaryColor;
   const descriptin = useStore(state => state.descriptin);
   const pageTitle = useStore(state => state.pageTitle);
+
   return (
     <>
       <Helmet data-testid="helmet" defaultTitle={appTitle} titleTemplate={`%s | ${appTitle}`}>
