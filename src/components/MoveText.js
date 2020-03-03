@@ -10,6 +10,8 @@ export default function ({
   hAlign = 'left',
   ...props
 }) {
+  console.log('moveText');
+  const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json');
   let navListIndex = 0;
   let prevNavListIndex = navListIndex;
   const navList = useStore(state => state.navList);
@@ -108,6 +110,7 @@ export default function ({
               return (
                 <mesh key={textIndex + '_text' + index}>
                   <Text
+                    font={font}
                     size={size}
                     hAlign={hAlign}
                     vAlign={vAlign}
@@ -139,6 +142,7 @@ export default function ({
 }
 
 const Text = ({
+  font,
   children,
   vAlign,
   hAlign,
@@ -149,7 +153,8 @@ const Text = ({
   opacity,
   ...props
 }) => {
-  const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json');
+  console.log('text')
+  // const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json');
   const textConfig = useMemo(
     () => ({
       font,
@@ -180,7 +185,6 @@ const Text = ({
     <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
       <mesh ref={mesh}>
         <textGeometry
-          needsUpdate={true}
           attach='geometry'
           args={[children, textConfig]}
         />

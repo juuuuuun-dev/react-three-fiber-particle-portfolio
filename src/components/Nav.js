@@ -30,7 +30,6 @@ const Nav = () => {
   const handleClick = async index => {
     if (navListIndex !== index + 1) {
       actions.execCallbacks(index + 1);
-      actions.setCoefficient();
     }
     actions.toggleContents(navList[index].path);
   };
