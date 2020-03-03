@@ -10,6 +10,7 @@ export default function ({
   hAlign = 'left',
   ...props
 }) {
+  // @todo performance
   console.log('moveText');
   const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json');
   let navListIndex = 0;
