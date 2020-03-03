@@ -19,15 +19,11 @@ export default [
     src: img2,
     texts: ['ABOUT', 'ME'],
     path: '/about',
-    componentName: 'About',
-    description: 'ABOUT descriptionです'
   },
   {
     title: 'CONTACT',
     src: img3,
     texts: ['COTACT', 'ME'],
     path: '/contact',
-    componentName: 'Contact',
-    description: 'CONTACT descriptionです'
   }
 ];
