@@ -1,6 +1,6 @@
 import React from 'react';
 import { Particle } from '../components/Particle';
-import MoveText from '../components/MoveText';
+import MoveText from '../components/texts/MoveTexts';
 import { Canvas, Dom } from 'react-three-fiber';
 import useStore from '../contexts/store';
 import * as THREE from 'three';

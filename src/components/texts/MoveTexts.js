@@ -1,8 +1,9 @@
 import * as THREE from 'three';
-import React, { useMemo, useRef, createRef } from 'react';
-import { useLoader, useUpdate, useFrame } from 'react-three-fiber';
-import useStore from '../contexts/store';
-import { maxTextlength } from '../helpers/Num';
+import React, { useRef, createRef } from 'react';
+import { useLoader, useFrame } from 'react-three-fiber';
+import useStore from '../../contexts/store';
+import Text from './Text';
+import HitArea from './HitArea';
 
 export default function ({
   children,
@@ -10,8 +11,6 @@ export default function ({
   hAlign = 'left',
   ...props
 }) {
-  // @todo performance
-  console.log('moveText');
   const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json');
   let navListIndex = 0;
   let prevNavListIndex = navListIndex;
@@ -141,95 +140,6 @@ export default function ({
     </>
   );
 }
-
-const Text = ({
-  font,
-  children,
-  vAlign,
-  hAlign,
-  size,
-  key,
-  color,
-  rotation,
-  opacity,
-  ...props
-}) => {
-  console.log('text')
-  // const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json');
-  const textConfig = useMemo(
-    () => ({
-      font,
-      size: size,
-      height: -0,
-      curveSegments: 32,
-      bevelEnabled: false,
-      bevelThickness: 0.0,
-      bevelSize: 0.0,
-      bevelOffset: 0,
-      bevelSegments: 1
-    }),
-    [size, font]
-  );
-  const mesh = useUpdate(
-    self => {
-      const size = new THREE.Vector3();
-      self.geometry.computeBoundingBox();
-      self.geometry.boundingBox.getSize(size);
-      self.position.x =
-        hAlign === 'center' ? -size.x / 2 : hAlign === 'right' ? 0 : -size.x;
-      self.position.y =
-        vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y;
-    },
-    [children]
-  );
-  return (
-    <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
-      <mesh ref={mesh}>
-        <textGeometry
-          attach='geometry'
-          args={[children, textConfig]}
-        />
-        <meshLambertMaterial
-          transparent={true}
-          color={new THREE.Color(color)}
-          attach='material'
-        />
-      </mesh>
-    </group>
-  );
-};
-
-const HitArea = ({ item, vAlign, hAlign, lineHeight, ...props }) => {
-  const singleXScale = 3.5;
-  const xScale = maxTextlength(item.texts) * singleXScale;
-  const yScale = lineHeight * item.texts.length;
-  const mesh = useUpdate(self => {
-    const size = new THREE.Vector3();
-    self.geometry.computeBoundingBox();
-    self.geometry.boundingBox.getSize(size);
-    self.position.x =
-      hAlign === 'center'
-        ? -size.x / 3
-        : hAlign === 'right'
-          ? 0
-          : -size.x / 2.2;
-    self.position.y =
-      vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y;
-  });
-  return (
-    <group {...props}>
-      <mesh ref={mesh}>
-        <planeBufferGeometry attach='geometry' args={[xScale, yScale]} />
-        <meshBasicMaterial
-          opacity={0.0}
-          color='black'
-          attach='material'
-          transparent={true}
-        />
-      </mesh>
-    </group>
-  );
-};
 
 export const frameMoveX = (
   navListLength,

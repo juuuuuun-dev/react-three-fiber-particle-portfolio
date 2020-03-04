@@ -3,28 +3,16 @@ import {
   render,
   cleanup,
   fireEvent,
-  getByText,
-  wait,
-  waitForElement,
-  getByTitle,
+
   waitForDomChange
 } from '@testing-library/react';
-import MoveText from '../components/MoveText';
 import App from '../App';
 import { act, renderHook } from '@testing-library/react-hooks';
 // import { act } from 'react-dom/test-utils';
-import TestRenderer from 'react-test-renderer';
 
-import Header from '../components/Header';
-import Contents from '../components/Contents';
-import Main from '../pages/Main';
-import Loader from '../components/Loader';
-import MetaHead from '../components/MetaHead';
 import useStore from '../contexts/store';
 import i18n from '../components/i18n';
 
-import navList from '../config/navList';
-import * as THREE from 'three';
 import 'jest-canvas-mock';
 import '@testing-library/jest-dom/extend-expect';
 // three
