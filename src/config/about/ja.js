@@ -1,6 +1,7 @@
 import common from './common.json';
 
 export default {
+  "description": "私はFrontendとBackendのデベロッパーです",
   "cover": "私は「行動力が抜群」と言われた男です<br><span>(※占いで)</span> ",
   "paragraph": [
     {

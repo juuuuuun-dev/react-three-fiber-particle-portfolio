@@ -13,7 +13,6 @@ const [useStore] = create((set, get) => ({
   appTitle: common.appTitle,
   domain: common.domain,
   copyrightStartYear: common.copyrightStartYear,
-  description: 'descript',
   pageTitle: '',
   primaryColor: variables.primaryColor,
   loading: false,
@@ -23,8 +22,6 @@ const [useStore] = create((set, get) => ({
   navListIndex: 0,
   homeText: navList[0] ? navList[0].texts.join(' ') : null,
   prevNavListIndex: 0,
-  coefficient: 0.6,
-  targetCoefficient: 0.1,
   isScroll: false,
   stopMainFrame: false,
   doResize: false,
@@ -42,6 +39,7 @@ const [useStore] = create((set, get) => ({
       }));
       window.onresize = get().actions.onResize;
       window.onpopstate = get().actions.onPopState;
+      get().actions.setInitLang();
     },
     onResize() {
       clearTimeout(get().doResize);
@@ -60,26 +58,36 @@ const [useStore] = create((set, get) => ({
     onPopState() {
       get().actions.setRouter();
     },
-    setRouter() {
+    setInitLang() {
       let pathname = document.location.pathname;
       const paths = pathname.split('/');
       const pathLength = paths.length;
       if (pathLength >= 2 && paths[1]) {
-        // local
         for (let i = 0; pathLength >= i; i++) {
+          // local
           get().languages.forEach(value => {
             if (paths[i] === value.id) {
               set(() => ({ lang: value.id }));
-              if (pathLength === 2) {
-                set(() => ({ showContent: false }));
-              }
             }
           });
+        }
+      }
+    },
+    setRouter() {
+      let pathname = document.location.pathname;
+      const paths = pathname.split('/');
+      const pathLength = paths.length;
+      if (pathLength === 2) {
+        set(() => ({ showContent: false }));
+      }
+      if (pathLength >= 2 && paths[1]) {
+        for (let i = 0; pathLength >= i; i++) {
+          // content
           if (get().actions.isContentsPath(`/${paths[i]}`)) {
             set(state => (state.showContent = `/${paths[i]}`));
-            if (pathLength === 2) {
-              set(() => ({ lang: get().defaultLang }));
-            }
+            // if (pathLength === 2) {
+            //   set(() => ({ lang: get().defaultLang }));
+            // }
           }
         }
       }
@@ -115,7 +123,6 @@ const [useStore] = create((set, get) => ({
             set(state => ({
               showContent: null,
               pageTitle: '',
-              description: state.navList[0].description
             }));
             window.history.pushState('', '', `/${get().actions.getLangPath()}`);
           } else {
@@ -131,8 +138,7 @@ const [useStore] = create((set, get) => ({
       const [content] = get().navList.filter(val => val.path === pathname);
       set(() => ({
         showContent: pathname,
-        pageTitle: content.title,
-        description: content.description
+        pageTitle: content.title
       }));
       get().actions.setHistory(pathname);
     },
@@ -154,9 +160,6 @@ const [useStore] = create((set, get) => ({
     },
     setLoading(val) {
       set(() => ({ loading: val }));
-    },
-    setCoefficient(d = 3.0) {
-      set(() => ({ coefficient: d }));
     },
     setScrollCollbacks(fn) {
       set(state => ({ scrollCallbacks: [...state.scrollCallbacks, fn] }));

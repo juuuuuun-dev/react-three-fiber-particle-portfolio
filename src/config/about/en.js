@@ -1,6 +1,7 @@
 import common from './common.json';
 
 export default {
+  "description": "I am a frontend and backend developer",
   "cover": "I'm a man who was said to be \"You have a lot of energy*\" <span>(* By fortune-telling)</span>",
   "paragraph": [
     {

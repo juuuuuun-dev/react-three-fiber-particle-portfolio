@@ -1,25 +1,27 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import useStore from '../contexts/store';
-import variables from '../scss/_variables.scss';
+import { useTranslation } from 'react-i18next';
 
 const MetaHead = () => {
+  const [t] = useTranslation();
   const appTitle = useStore(state => state.appTitle);
-  const primaryColor = variables.primaryColor;
-  const descriptin = useStore(state => state.descriptin);
   const pageTitle = useStore(state => state.pageTitle);
+  const showContent = useStore(state => state.showContent);
+  let description;
+  if (showContent) {
+    const contentId = showContent.slice(1);
+    description = t(`${contentId}.description`)
+  } else {
+    description = t(`index.description`)
+  }
+
   return (
     <>
       <Helmet data-testid="helmet" defaultTitle={appTitle} titleTemplate={`%s | ${appTitle}`}>
         <meta charSet='utf-8' />
         {pageTitle && <title>{pageTitle}</title>}
-        <meta
-          name='theme-color'
-          content={primaryColor}
-          data-react-helmet='true'
-        />
-        {/* <meta name="theme-color" content="#004ba0" data-react-helmet="true" /> */}
-        <meta descriptin={descriptin} />
+        <meta name="description" content={description} />
       </Helmet>
     </>
   );
