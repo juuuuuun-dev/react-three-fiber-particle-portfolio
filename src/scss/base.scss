@@ -71,6 +71,11 @@ li {
   .logo {
     float: left;
     font-size: .9rem;
+    cursor: pointer;
+    a {
+      color: rgba($text-color, 1);
+      text-decoration: none;
+    }
   }
   .nav {
     font-size: .8rem;

@@ -2,6 +2,7 @@ import create from 'zustand';
 import { useCallback, useEffect } from 'react';
 import { getDevice } from '../helpers/UserAgent';
 import navList from '../config/navList';
+import error404Nav from '../config/error404';
 import common from '../config/common';
 import { useGesture } from 'react-use-gesture';
 import variables from '../scss/_variables.scss';
@@ -20,9 +21,11 @@ const [useStore] = create((set, get) => ({
   navList: navList,
   navListLength: navList.length,
   navListIndex: 0,
+  error404Nav: error404Nav,
   homeText: navList[0] ? navList[0].texts.join(' ') : null,
   prevNavListIndex: 0,
   isScroll: false,
+  is404: false,
   stopMainFrame: false,
   doResize: false,
   scrollCallbacks: [],
@@ -33,7 +36,7 @@ const [useStore] = create((set, get) => ({
    * action
    */
   actions: {
-    init() {
+    async init() {
       set(() => ({
         loading: true
       }));
@@ -58,7 +61,7 @@ const [useStore] = create((set, get) => ({
     onPopState() {
       get().actions.setRouter();
     },
-    setInitLang() {
+    async setInitLang() {
       let pathname = document.location.pathname;
       const paths = pathname.split('/');
       const pathLength = paths.length;
@@ -70,6 +73,21 @@ const [useStore] = create((set, get) => ({
               set(() => ({ lang: value.id }));
             }
           });
+        }
+        // check404
+        get().actions.check404(`/${paths[1]}`);
+      }
+    },
+    check404(path) {
+      if (get().actions.isDefaultLang()) {
+        const les = get().navList.filter(val => val.path === path)
+        if (les.length === 0) {
+          set(() => ({
+            is404: true,
+            navList: get().error404Nav,
+            navListLength: 1,
+            pageTitle: "404 NOT FOUTD",
+          }));
         }
       }
     },
@@ -85,9 +103,6 @@ const [useStore] = create((set, get) => ({
           // content
           if (get().actions.isContentsPath(`/${paths[i]}`)) {
             set(state => (state.showContent = `/${paths[i]}`));
-            // if (pathLength === 2) {
-            //   set(() => ({ lang: get().defaultLang }));
-            // }
           }
         }
       }
@@ -116,15 +131,12 @@ const [useStore] = create((set, get) => ({
     },
     // location
     toggleContents(pathname) {
+      console.log(pathname);
       return new Promise(async resolve => {
         const showContent = get().showContent;
         if (showContent) {
           if (showContent === pathname) {
-            set(state => ({
-              showContent: null,
-              pageTitle: '',
-            }));
-            window.history.pushState('', '', `/${get().actions.getLangPath()}`);
+            get().actions.resetContent();
           } else {
             get().actions.setContents(pathname);
           }
@@ -134,6 +146,13 @@ const [useStore] = create((set, get) => ({
         return resolve(get().showContent);
       });
     },
+    resetContent() {
+      set(state => ({
+        showContent: null,
+        pageTitle: '',
+      }));
+      window.history.pushState('', '', `/${get().actions.getLangPath()}`);
+    },
     setContents(pathname) {
       const [content] = get().navList.filter(val => val.path === pathname);
       set(() => ({
@@ -141,6 +160,12 @@ const [useStore] = create((set, get) => ({
         pageTitle: content.title
       }));
       get().actions.setHistory(pathname);
+    },
+    resetIndex() {
+      const showContent = get().showContent;
+      if (showContent) {
+        get().actions.resetContent();
+      }
     },
     setHistory(pathname) {
       window.history.pushState('', '', get().actions.getLangPath() + pathname);
