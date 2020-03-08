@@ -82,9 +82,12 @@ const [useStore] = create((set, get) => ({
       if (get().actions.isDefaultLang()) {
         const les = get().navList.filter(val => val.path === path)
         if (les.length === 0) {
-          set(() => ({ is404: true }))
-          set((state) => (state.navList = state.error404Nav));
-          set(() => ({ navListLength: 1 }));
+          set(() => ({
+            is404: true,
+            navList: get().error404Nav,
+            navListLength: 1,
+            pageTitle: "404 NOT FOUTD",
+          }));
         }
       }
     },
@@ -128,15 +131,12 @@ const [useStore] = create((set, get) => ({
     },
     // location
     toggleContents(pathname) {
+      console.log(pathname);
       return new Promise(async resolve => {
         const showContent = get().showContent;
         if (showContent) {
           if (showContent === pathname) {
-            set(state => ({
-              showContent: null,
-              pageTitle: '',
-            }));
-            window.history.pushState('', '', `/${get().actions.getLangPath()}`);
+            get().actions.resetContent();
           } else {
             get().actions.setContents(pathname);
           }
@@ -146,6 +146,13 @@ const [useStore] = create((set, get) => ({
         return resolve(get().showContent);
       });
     },
+    resetContent() {
+      set(state => ({
+        showContent: null,
+        pageTitle: '',
+      }));
+      window.history.pushState('', '', `/${get().actions.getLangPath()}`);
+    },
     setContents(pathname) {
       const [content] = get().navList.filter(val => val.path === pathname);
       set(() => ({
@@ -153,6 +160,12 @@ const [useStore] = create((set, get) => ({
         pageTitle: content.title
       }));
       get().actions.setHistory(pathname);
+    },
+    resetIndex() {
+      const showContent = get().showContent;
+      if (showContent) {
+        get().actions.resetContent();
+      }
     },
     setHistory(pathname) {
       window.history.pushState('', '', get().actions.getLangPath() + pathname);
