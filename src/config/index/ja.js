@@ -1,3 +1,3 @@
 export default {
-  "description": "Web developer (frontend / backend) Jun Katada website",
+  "description": "Web developer JunKata website",
 }

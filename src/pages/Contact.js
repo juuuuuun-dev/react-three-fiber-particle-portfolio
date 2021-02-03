@@ -1,17 +1,17 @@
 import React from "react";
+import common from "../config/contact/common.json"
 
-export function Contact() {
+const Contact = () => {
   return (
     <>
-      <p className="text-lerge">
-        Now in the time!<br />
-        Is the time!
-        {/* lets create
-        something
-        beary great
-        together! */}
-        </p>
-        <p>お気軽にご連絡ください</p>
+      <div className="contact">
+        <ul className="contact-links">
+          <li className="contact-links__item"><a href={`mailto:${common.email}`}>Email</a></li>
+          <li className="contact-links__item"><a href={`${common.github}`} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li className="contact-links__item"><a href={`${common.blog}`} target="_blank" rel="noopener noreferrer">Blog</a></li>
+        </ul>
+      </div>
     </>
   );
 }
+export default Contact

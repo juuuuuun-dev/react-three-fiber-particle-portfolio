@@ -1,3 +1,3 @@
 export default {
-  "description": "contact",
+  "description": "Junkata Contact Me",
 }

@@ -24,9 +24,6 @@ body,
   user-select: none; */
   overflow: hidden;
 }
-#main {
-  
-}
 ul {
   margin: 0;
   padding: 0;
@@ -55,7 +52,9 @@ li {
 .canvas {
   height: 100%;
 }
-
+a {
+  color: rgba($text-color, 1);
+}
 ////////////////////
 // header
 ////////////////////
@@ -156,13 +155,13 @@ li {
   }
   &__title {
     display: inline-block;
-    font-weight: normal;
-    font-size: .9rem;
+    font-weight: bold;
+    font-size: 1.3rem;
     margin-bottom: $global-margin;
   }
   &__footer {
-    margin-bottom: 30px;
-    height: 30px;
+    margin-bottom: $global-margin / 2;
+    height: $global-margin / 2;
     font-size: 0.7rem;
   }
   &__cover {
@@ -212,18 +211,38 @@ li {
       margin-bottom: $global-margin / 4;
     }
     li {
-      background: url(../images/list_box.png) no-repeat;
-      background-size: 130px 36px;
+      // background: url(../images/list_box.png) no-repeat;
+    }
+    .box-list{
+      display: flex;
+      width: 47%;
       float: left;
+      margin-bottom: 3%;
+    }
+    .box-list:nth-child(even){
+      margin-left: 3%;
+    }
+    .box-list__body,
+    .box-list__start,
+    .box-list__end {
       font-size: 0.7rem;
       text-align: center;
       line-height: 1.3rem;
       padding-top: 5px;
-      margin-right: 11px;
-      margin-bottom: 11px;
-      width: auto;
-      min-width: 130px;
-      height: 36px;
+      height: 40px;
+    }
+    
+    .box-list__body {
+      background: url(../images/box_list_body.png) repeat-x;
+      width: 100%;
+    }
+    .box-list__start {
+      background: url(../images/box_list_start.png) no-repeat;
+      width: 11px;
+    }
+    .box-list__end {
+      background: url(../images/box_list_end.png) no-repeat;
+      width: 13px;
     }
     dl {
       margin-bottom: $global-margin;
@@ -306,14 +325,34 @@ _:future,
 }
 
 ////////////////////
+// contact
+////////////////////
+.contact {
+  margin-bottom: $global-margin;
+  &-links {
+    display: flex;
+  }
+  &-links__item {
+    padding: 0 5px;
+    margin-bottom: $global-margin / 2;
+    vertical-align: middle;
+    line-height: 18px;
+    font-size: .9rem;
+  }
+  &-links__item:not(:last-child) {
+    background: url("../images/slash.png") no-repeat;
+    background-position: center right;
+    padding-right: 25px;
+  }
+}
+
+////////////////////
 // float
 ////////////////////
 .float-left {
   float: left;
 }
-////////////////////
-// float
-////////////////////
+
 
 ////////////////////
 // media screen sm
@@ -328,7 +367,7 @@ _:future,
   }
   .contents {
     &__title {
-      margin-bottom: $global-margin / 2;
+      margin-bottom: $global-margin;
     }
     &__inner {
       padding: $global-margin $sm-global-padding * 1.5;

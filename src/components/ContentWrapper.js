@@ -3,7 +3,7 @@ import useStore from '../contexts/store';
 import { useTranslation } from 'react-i18next';
 import { useSprings, animated } from 'react-spring';
 import ContentFooter from './ContentFooter';
-import variables from '../scss/_variables.scss';
+import variables from '../assets/scss/_variables.scss';
 
 export default function ContentWrapper({ contentTitle, children }) {
   const lang = useStore(state => state.lang);

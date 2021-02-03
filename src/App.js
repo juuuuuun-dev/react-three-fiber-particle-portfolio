@@ -6,7 +6,7 @@ import Contents from './components/Contents';
 import Loader from './components/Loader';
 import MetaHead from './components/MetaHead';
 import './components/i18n';
-import './scss/base.scss';
+import './assets/scss/base.scss';
 
 const App = () => {
   const actions = useStore(state => state.actions);
