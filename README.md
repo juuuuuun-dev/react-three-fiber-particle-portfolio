@@ -13,6 +13,3 @@ yarn start
 
 ### font convert
 https://gero3.github.io/facetype.js/
-
-### License
-MIT
