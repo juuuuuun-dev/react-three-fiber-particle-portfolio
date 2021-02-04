@@ -52,19 +52,13 @@ describe("Contents", () => {
   it('renders language default About Contents', () => {
     const { container } = render(<Contents />);
     const contentAbout = getByTestId(container, 'content-ABOUT');
-    const cover = getByTestId(container, 'cover');
-    expect(cover).toBeDefined();
-    expect(cover.innerHTML).toBe(enAbout.cover);
     testParagraph(contentAbout, enAbout.paragraph);
   });
   it("language change JA About Contents", () => {
     const { container } = render(<Contents />);
     const contentAbout = getByTestId(container, 'content-ABOUT');
-    const cover = getByTestId(container, 'cover');
     fireEvent.click(getByText(contentAbout, "JP"));
-    expect(cover.innerHTML).toBe(jaAbout.cover);
     testParagraph(contentAbout, jaAbout.paragraph);
-
   })
   const testParagraph = (contentAbout, paragraph) => {
     paragraph.map((value) => {

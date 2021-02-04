@@ -5,7 +5,7 @@ const Paragraph = ({ value, index }) => {
   const [t] = useTranslation();
   return (
     <>
-      <div className='paragraph clearfix'>
+      <div className='paragraph clearfix' data-testid={`about-paragraph-${index}`}>
         <h3 className='paragraph__title'>
           {t(`about.paragraph.${index}.title`)}
         </h3>
