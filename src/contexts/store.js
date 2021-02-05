@@ -131,7 +131,6 @@ const [useStore] = create((set, get) => ({
     },
     // location
     toggleContents(pathname) {
-      console.log(pathname);
       return new Promise(async resolve => {
         const showContent = get().showContent;
         if (showContent) {
@@ -168,7 +167,9 @@ const [useStore] = create((set, get) => ({
       }
     },
     setHistory(pathname) {
-      window.history.pushState('', '', get().actions.getLangPath() + pathname);
+      const lang = get().actions.getLangPath();
+      const langUri = lang ? '/' + lang : '';
+      window.history.pushState('', '', langUri + pathname);
     },
     setReady(val) {
       set(() => ({ ready: val }));
