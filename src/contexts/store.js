@@ -5,7 +5,7 @@ import navList from '../config/navList';
 import error404Nav from '../config/error404';
 import common from '../config/common';
 import { useGesture } from 'react-use-gesture';
-import variables from '../scss/_variables.scss';
+import variables from '../assets/scss/_variables.scss';
 
 const [useStore] = create((set, get) => ({
   lang: common.defaultLang,

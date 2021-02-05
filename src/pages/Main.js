@@ -18,9 +18,9 @@ const Main = () => {
           data-testid='canvas'
           // resize={{ polyfill }}
           camera={{
-            position: [-5, 100, 50],
+            position: [-5, 150, 50],
             near: 0.1,
-            fov: 45,
+            fov: 55,
             up: [0, 1, 0],
             zoom: 1,
             far: 10000

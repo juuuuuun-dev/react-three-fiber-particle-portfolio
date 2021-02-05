@@ -6,11 +6,11 @@ export default [
   {
     title: 'Home',
     src: img1,
-    texts: ['I am a', 'web', 'developer', '&designer'],
-    textSize: 4.6,
-    lineHeight: 3.4,
-    bottomY: -9.0,
-    positionX: -12.5,
+    texts: ['I am a', 'web', 'developer',],
+    textSize: 4.4,
+    lineHeight: 3.0,
+    bottomY: -9.5,
+    positionX: -12.3,
     lotationY: 0.77,
     description: 'descriptionです'
   },

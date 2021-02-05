@@ -3,7 +3,7 @@ import ContentWrapper from './ContentWrapper';
 import useStore from '../contexts/store';
 import { useSprings, animated } from 'react-spring';
 import About from '../pages/About';
-import { Contact } from '../pages/Contact';
+import Contact from '../pages/Contact';
 
 const Contents = () => {
   const showContent = useStore(state => state.showContent);

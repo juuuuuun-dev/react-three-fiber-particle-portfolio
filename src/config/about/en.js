@@ -1,20 +1,16 @@
 import common from './common.json';
 
 export default {
-  "description": "I am a frontend and backend developer",
-  "cover": "I'm a man who was said to be \"You have a lot of energy*\" <span>(* By fortune-telling)</span>",
+  "description": "I am a Junkata. About me",
+  "cover": "***",
   "paragraph": [
     {
-      "title": "I love to create",
-      "description": "Hello! My name is <strong>Jun Kadada</strong>.<br>I'm a frontend and backend developer working for a web production company in Tokyo.<br><br>I became a web designer in 2005, and has since developed frontends and backends.\nI feel that the more I do both design and development, the more I like<br><br>There are a lot of difficult things, but when I was working on this site, I was happy that I was happy."
+      "title": "I like to create",
+      "description": "Hello! My name is <strong>JunKata</strong>.I am web developer living in Tokyo, Japan<br><br>After becoming a web designer in 2005, I have been developing front-end and back-end and operating infrastructure. \nThere are many difficult things, but when I was making this site, I thought again that it was my favorite job."
     },
     {
       "title": "Skills",
-      "list": common.skill1,
-    },
-    {
-      "title": "Skills 2",
-      "list": common.skill2,
+      "list": common.skill,
     },
     {
       "title": "Something important, with quotes",
@@ -30,38 +26,7 @@ export default {
             {
               "body": "Efforts and courage are not enough without purpose and direction.",
               "author": "John F. Kennedy"
-            }
-          ]
-        },
-        {
-          "title": "# Marketing",
-          "items": [
-            {
-              "body": "The aim of marketing is to know and understand the customer so well the product or service fits him and sells itself",
-              "author": "Peter Drucker"
-            }
-          ]
-        },
-        {
-          "title": "# UI/UX",
-          "items": [
-            {
-              "body": "Everything should be made as simple as possible, but not simpler.",
-              "author": "Albert Einstein"
             },
-            {
-              "body": "Only the gentle are ever really strong.",
-              "author": "James Dean"
-            }
-          ]
-        },
-        {
-          "title": "# Modern development environment",
-          "items": [
-            {
-              "body": "To be prepared is half the victory.",
-              "author": "Miguel de Cervantes Saavedra"
-            }
           ]
         },
         {
@@ -125,10 +90,6 @@ export default {
               "body": "All great achievements require time.",
               "author": "Maya Angelou"
             },
-            {
-              "body": "Continuous effort, not strength or intelligence, is the key to unlocking our potential.",
-              "author": "Winston Churchill"
-            }
           ]
         },
         {

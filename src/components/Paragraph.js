@@ -5,7 +5,7 @@ const Paragraph = ({ value, index }) => {
   const [t] = useTranslation();
   return (
     <>
-      <div className='paragraph clearfix'>
+      <div className='paragraph clearfix' data-testid={`about-paragraph-${index}`}>
         <h3 className='paragraph__title'>
           {t(`about.paragraph.${index}.title`)}
         </h3>
@@ -34,7 +34,7 @@ const renderList = (t, value, index) => {
     return (
       <ul>
         {value['list'].map((_value, key) => {
-          return <li key={key}>{t(`about.paragraph.${index}.list.${key}`)}</li>;
+          return <li className="box-list" key={key}><span className="box-list__start"></span><span className="box-list__body">{t(`about.paragraph.${index}.list.${key}`)}</span><span className="box-list__end"></span></li>;
         })}
       </ul>
     );
