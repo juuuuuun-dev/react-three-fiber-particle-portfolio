@@ -1,5 +1,5 @@
 ## react-three-fiber my-portfolio
-![image](./src/images/readme_cover.gif)
+![example](https://user-images.githubusercontent.com/60050242/106891611-48a71c80-672e-11eb-93a0-a2379896f94a.gif)
 
 
 ### Initial setup
