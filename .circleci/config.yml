@@ -27,8 +27,21 @@ jobs:
                 root: .
                 paths:
                   - build
+  production-frontend-deploy:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - attach_workspace:
+                at: .
+            - aws-s3/sync:
+              from: build
+              to: "s3://${APP_PREFIX}-production-storage"
 
 workflows:
   build-and-test:
     jobs:
       - build-and-test
+      - production-frontend-deploy
