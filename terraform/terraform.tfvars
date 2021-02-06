@@ -1,0 +1,5 @@
+zone_domain = "junkata.com"
+frontend_record_name = "www"
+app_name = "junkata-portfolio"
+environment = "production"
+aws_region = "ap-northeast-1"

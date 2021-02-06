@@ -6,3 +6,13 @@ yarn-error.log
 .docker-sync
 coverage
 /design
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfbackend
+*.tfbackend
