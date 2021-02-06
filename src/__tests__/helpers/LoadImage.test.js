@@ -1,6 +1,6 @@
 import React from 'react';
 import LoadImage from '../../helpers/LoadImage';
-import img from '../../images/smile.png'
+import img from '../../assets/images/smile.png'
 
 describe("LoadImage", () => {
   it('resolve', () => {
