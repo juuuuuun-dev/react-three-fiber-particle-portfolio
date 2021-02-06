@@ -1,6 +1,6 @@
-import img1 from '../images/curly_braces.png';
-import img2 from '../images/q.png';
-import img3 from '../images/contact.png';
+import img1 from '../assets/images/curly_braces.png';
+import img2 from '../assets/images/q.png';
+import img3 from '../assets/images/contact.png';
 
 export default [
   {

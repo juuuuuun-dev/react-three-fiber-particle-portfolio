@@ -1,4 +1,4 @@
-import img from '../images/404.png';
+import img from '../assets/images/404.png';
 
 export default [
   {

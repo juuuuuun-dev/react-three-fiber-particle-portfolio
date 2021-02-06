@@ -102,9 +102,9 @@ a {
   &__inner {
     padding: $sm-global-padding;
     .loader-img {
-      width: 25px;
-      margin-left: -17.5px;
-      margin-top: -17.5px;
+      width: 70px;
+      margin-left: -35px;
+      margin-top: -15px;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -155,8 +155,8 @@ a {
   }
   &__title {
     display: inline-block;
-    font-weight: bold;
-    font-size: 1.3rem;
+    font-weight: normal;
+    font-size: 1.2rem;
     margin-bottom: $global-margin;
   }
   &__footer {
@@ -335,9 +335,11 @@ _:future,
   &-links__item {
     padding: 0 5px;
     margin-bottom: $global-margin / 2;
-    vertical-align: middle;
     line-height: 18px;
     font-size: .9rem;
+    & a {
+      text-decoration: none;
+    }
   }
   &-links__item:not(:last-child) {
     background: url("../images/slash.png") no-repeat;

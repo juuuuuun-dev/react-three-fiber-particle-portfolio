@@ -1,8 +1,10 @@
 import React from 'react';
 import useStore from '../contexts/store';
 //https://icons8.com/preloaders/
-import gif from '../images/loader.gif';
+import loaderSVG from '../assets/images/loader.gif';
+
 import { useSpring, animated } from 'react-spring';
+
 
 const Loader = () => {
   const loading = useStore(state => state.loading);
@@ -22,7 +24,7 @@ const Loader = () => {
           <img
             className='loader-img'
             title={loading ? 'loading' : 'complete'}
-            src={gif}
+            src={loaderSVG}
             alt='loading...'
           ></img>
         </div>
