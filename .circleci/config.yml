@@ -1,6 +1,18 @@
+# Required environment variables
+# APP_PREFIX
+# APP_TITLE
+# APP_DESCRIPTION
+# APP_THEME_COLOR
+# GTM_ID
+# AWS_ACCESS_KEY_ID
+# AWS_REGION
+# AWS_SECRET_ACCESS_KEY
+
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  aws-s3: circleci/aws-s3@1.0.11
+
 jobs:
   build-and-test:
     executor:
@@ -11,7 +23,33 @@ jobs:
           steps:
             - run: yarn install
             - run: yarn test
+            - run:
+                name: yarn build
+                command: REACT_APP_TITLE=${APP_TITLE} REACT_APP_DESCRIPTION=${APP_DESCRIPTION} REACT_APP_THEME_COLOR=${APP_THEME_COLOR} REACT_APP_GTM=${GTM_ID} yarn build
+            - persist_to_workspace:
+                root: .
+                paths:
+                  - build
+  production-frontend-deploy:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - attach_workspace:
+                at: .
+            - aws-s3/sync:
+                from: ./build
+                to: "s3://${APP_PREFIX}-production-storage"
+
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  build-and-test:
+    jobs:
+      - build-and-test
+      - production-frontend-deploy:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: master
