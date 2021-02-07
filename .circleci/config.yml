@@ -40,11 +40,13 @@ jobs:
             - attach_workspace:
                 at: .
             - aws-s3/sync:
-              from: build
-              to: "s3://${APP_PREFIX}-production-storage"
+                from: ./build
+                to: "s3://${APP_PREFIX}-production-storage"
 
 workflows:
   build-and-test:
     jobs:
       - build-and-test
-      - production-frontend-deploy
+      - production-frontend-deploy:
+          requires:
+            - build-and-test
