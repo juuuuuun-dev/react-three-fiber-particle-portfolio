@@ -3,14 +3,14 @@ import useStore from '../contexts/store';
 import Nav from "./Nav";
 
 const Header = () => {
-  const appTitle = useStore(state => state.appTitle);
+  const headerTitle = useStore(state => state.headerTitle);
   const is404 = useStore(state => state.is404);
   const actions = useStore(state => state.actions);
   const H1 = () => {
     if (is404) {
-      return (<h1 className='logo'><a href="/">{appTitle}</a></h1>);
+      return (<h1 className='logo'><a href="/">{headerTitle}</a></h1>);
     } else {
-      return (<h1 className='logo' onClick={handleClick}>{appTitle}</h1>);
+      return (<h1 className='logo' onClick={handleClick}>{headerTitle}</h1>);
     }
   }
   const handleClick = () => {

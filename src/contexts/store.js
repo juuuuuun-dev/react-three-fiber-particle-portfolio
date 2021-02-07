@@ -12,6 +12,7 @@ const [useStore] = create((set, get) => ({
   defaultLang: common.defaultLang,
   languages: common.languages,
   appTitle: common.appTitle,
+  headerTitle: common.headerTitle,
   domain: common.domain,
   copyrightStartYear: common.copyrightStartYear,
   pageTitle: '',

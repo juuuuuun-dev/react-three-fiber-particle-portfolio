@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const MetaHead = () => {
   const [t] = useTranslation();
+  const lang = useStore(state => state.lang);
   const appTitle = useStore(state => state.appTitle);
   const pageTitle = useStore(state => state.pageTitle);
   const showContent = useStore(state => state.showContent);
@@ -18,7 +19,14 @@ const MetaHead = () => {
 
   return (
     <>
-      <Helmet data-testid="helmet" defaultTitle={appTitle} titleTemplate={`%s | ${appTitle}`}>
+      <Helmet
+        data-testid="helmet"
+        defaultTitle={appTitle}
+        titleTemplate={`%s | ${appTitle}`}
+        htmlAttributes={{
+          lang: lang,
+        }}
+      >
         <meta charSet='utf-8' />
         {pageTitle && <title>{pageTitle}</title>}
         <meta name="description" content={description} />
