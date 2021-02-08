@@ -43,7 +43,52 @@ const [useStore] = create((set, get) => ({
       }));
       window.onresize = get().actions.onResize;
       window.onpopstate = get().actions.onPopState;
-      get().actions.setInitLang();
+      const paths = get().actions.makeLocationPaths();
+      get().actions.initPathCheck(paths)
+    },
+    makeLocationPaths() {
+      const pathname = document.location.pathname.slice(1);
+      const paths = pathname.split('/');
+      return paths;
+    },
+    initPathCheck(paths) {
+      let lang = null;
+      let content = null;
+      if (paths[0] === "") return;
+      lang = get().actions.getCurrentLang(paths[0]);
+      if (paths.length === 1) {
+        if (!lang) {
+          content = get().actions.getCurrentContentPath(paths[0])
+          if (!content) {
+            get().actions.set404()
+          }
+        }
+      } else if (paths.length === 2) {
+        if (!lang) get().actions.set404()
+        content = get().actions.getCurrentContentPath(paths[1])
+        if (!content) {
+          get().actions.set404()
+        }
+      } else {
+        get().actions.set404()
+      }
+      if (lang) set(() => ({ lang: lang }))
+      if (!lang && !content) {
+        get().actions.set404();
+      }
+    },
+    getCurrentContentPath(path) {
+      const les = get().navList.filter(val => val.path === `/${path}`);
+      if (les[0]) return les[0].path;
+    },
+    getCurrentLang(path) {
+      let lang = null;
+      get().languages.forEach(value => {
+        if (path === value.id) {
+          lang = path;
+        }
+      });
+      return lang;
     },
     onResize() {
       clearTimeout(get().doResize);
@@ -62,52 +107,66 @@ const [useStore] = create((set, get) => ({
     onPopState() {
       get().actions.setRouter();
     },
-    async setInitLang() {
-      let pathname = document.location.pathname;
-      const paths = pathname.split('/');
-      const pathLength = paths.length;
-      if (pathLength >= 2 && paths[1]) {
-        for (let i = 0; pathLength >= i; i++) {
-          // local
-          get().languages.forEach(value => {
-            if (paths[i] === value.id) {
-              set(() => ({ lang: value.id }));
-            }
-          });
-        }
-        // check404
-        get().actions.check404(`/${paths[1]}`);
-      }
+    // async setInitLang() {
+    //   let pathname = document.location.pathname;
+    //   const paths = pathname.split('/');
+    //   const pathLength = paths.length;
+    //   if (pathLength >= 2 && paths[1]) {
+    //     for (let i = 0; pathLength >= i; i++) {
+    //       // local
+    //       get().languages.forEach(value => {
+    //         if (paths[i] === value.id) {
+    //           set(() => ({ lang: value.id }));
+    //         }
+    //       });
+    //     }
+    //     // check404
+    //     get().actions.check404(`/${paths[1]}`);
+    //   }
+    // },
+    set404() {
+      set(() => ({
+        is404: true,
+        navList: get().error404Nav,
+        navListLength: 1,
+        pageTitle: "404 NOT FOUTD",
+      }));
     },
-    check404(path) {
-      if (get().actions.isDefaultLang()) {
-        const les = get().navList.filter(val => val.path === path)
-        if (les.length === 0) {
-          set(() => ({
-            is404: true,
-            navList: get().error404Nav,
-            navListLength: 1,
-            pageTitle: "404 NOT FOUTD",
-          }));
-        }
-      }
-    },
+    // check404(path) {
+    //   if (get().actions.isDefaultLang()) {
+    //     const les = get().navList.filter(val => val.path === path)
+    //     if (les.length === 0) {
+    //       set(() => ({
+    //         is404: true,
+    //         navList: get().error404Nav,
+    //         navListLength: 1,
+    //         pageTitle: "404 NOT FOUTD",
+    //       }));
+    //     }
+    //   }
+    // },
     setRouter() {
-      let pathname = document.location.pathname;
-      const paths = pathname.split('/');
-      const pathLength = paths.length;
-      if (pathLength === 2) {
+      const pathList = get().actions.makeLocationPaths();
+      const lang = get().actions.getCurrentLang(pathList[0]);
+      set(() => ({ lang: lang || get().defaultLang }));
+      const pathListLen = pathList.length;
+      if (pathListLen === 1) {
         set(() => ({ showContent: false }));
       }
-      if (pathLength >= 2 && paths[1]) {
-        for (let i = 0; pathLength >= i; i++) {
+      if (pathListLen >= 1 && pathList[0]) {
+        for (let i = 0; pathListLen >= i; i++) {
           // content
-          if (get().actions.isContentsPath(`/${paths[i]}`)) {
-            set(state => (state.showContent = `/${paths[i]}`));
+          if (get().actions.isContentsPath(`/${pathList[i]}`)) {
+            const [content] = get().navList.filter(val => val.path === `/${pathList[i]}`);
+            set(() => ({
+              showContent: content.path,
+              pageTitle: content.title
+            }));
+            // set(state => (state.showContent = `/${paths[i]}`));
           }
         }
       }
-      if (pathname === '/') {
+      if (pathList[0] === '') {
         set(() => ({ showContent: false }));
       }
     },

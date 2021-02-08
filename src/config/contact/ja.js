@@ -1,3 +1,3 @@
 export default {
-  "description": "お気軽にお問い合わせください",
+  "description": "お問い合わせ",
 }
