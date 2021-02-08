@@ -37,6 +37,17 @@ li {
   clear: both;
 }
 
+.style-reset-button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+  color: $text-color;
+  letter-spacing: 2px;
+}
+
 .index-footer-text {
   position: relative;
   z-index: 10;
@@ -71,6 +82,7 @@ a {
     float: left;
     font-size: .9rem;
     cursor: pointer;
+    font-weight: 400;
     a {
       color: rgba($text-color, 1);
       text-decoration: none;
@@ -85,6 +97,9 @@ a {
       float: left;
       margin-left: 20px;
       cursor: pointer;
+      a {
+        text-decoration: none;
+      }
     }
   }
 }

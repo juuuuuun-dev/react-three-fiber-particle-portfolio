@@ -8,7 +8,9 @@ const Nav = () => {
   const textColor = '#ffffff';
   const actions = useStore(state => state.actions);
   const showContent = useStore(state => state.showContent);
-
+  const lang = useStore(state => state.lang);
+  const defaultLang = useStore(state => state.defaultLang);
+  const langUri = lang === defaultLang ? '' : `/${lang}`
   const navList = actions.getHasPathNavList();
   const navListIndex = useStore(state => state.navListIndex);
   const refs = React.useRef(navList.map((_, index) => index));
@@ -27,7 +29,8 @@ const Nav = () => {
   );
   setNavSprings(index => springFunc(index));
 
-  const handleClick = async index => {
+  const handleClick = async (e, index) => {
+    e.preventDefault();
     if (navListIndex !== index + 1) {
       actions.execCallbacks(index + 1);
     }
@@ -37,15 +40,14 @@ const Nav = () => {
     <ul className='nav'>
       {navSprings.map((item, index) => {
         return (
-          <animated.li
-            data-testid={`link-${navList[index].title}`}
+          <li
             className='nav__li'
-            style={{ ...item }}
-            onClick={() => handleClick(index)}
             key={index}
           >
-            {navList[index].title}
-          </animated.li>
+            <animated.a href={`${langUri}${navList[index].path}`} data-testid={`link-${navList[index].title}`} style={{ ...item }} onClick={(e) => handleClick(e, index)}>
+              {navList[index].title}
+            </animated.a>
+          </li>
         );
       })}
     </ul>
