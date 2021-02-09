@@ -1,5 +1,8 @@
-# My portfolio using react-three-fiber
-![example](https://user-images.githubusercontent.com/60050242/106891611-48a71c80-672e-11eb-93a0-a2379896f94a.gif)
+# Particle web site with react-three-fiber
+![example](https://user-images.githubusercontent.com/60050242/107305924-3d097c00-6ac7-11eb-9eed-740c25cf124f.gif)
+
+## Example
+My web site: [https://www.junkata.com](https://www.junkata.com)  
 
 
 ## Initial setup
@@ -9,5 +12,5 @@ yarn
 yarn start
 ```
 
-### convert used
-https://gero3.github.io/facetype.js/
+<!-- ### Font convert -->
+<!-- https://gero3.github.io/facetype.js/ -->
