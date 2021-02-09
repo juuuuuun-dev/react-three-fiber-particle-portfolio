@@ -6,18 +6,18 @@ export default {
   "paragraph": [
     {
       "title": "I like to create",
-      "description": "Hello! My name is <strong>JunKata</strong>.I am web developer living in Tokyo, Japan<br><br>After becoming a web designer in 2005, I have been developing front-end and back-end and operating infrastructure. \nThere are many difficult things, but when I was making this site, I thought again that it was my favorite job."
+      "description": "Hello! My name is <strong>JunKata</strong>. I am web developer living in Tokyo, Japan<br><br>After becoming a web designer in 2005, I have been developing front-end and back-end and DevOps <br><br>There are many difficult things, but when I was making this site, I thought again that it was my favorite job."
     },
     {
       "title": "Skills",
       "list": common.skill,
     },
     {
-      "title": "Something important, with quotes",
+      "title": "Something important",
       "description": "Introducing what we value in making it together with great people's quotes!",
       "quotes": [
         {
-          "title": "# Strategy",
+          "title": "# Purpose and direction",
           "items": [
             {
               "body": "Find purpose, the means will follow.",
@@ -60,7 +60,7 @@ export default {
           "title": "# I will not do what I do not do",
           "items": [
             {
-              "body": " Have a healthy disregard for the impossible and actually build new solutions.",
+              "body": "Have a healthy disregard for the impossible and actually build new solutions.",
               "author": "Larry Page"
             }
           ]
