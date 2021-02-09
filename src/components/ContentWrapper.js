@@ -32,6 +32,12 @@ export default function ContentWrapper({ contentTitle, children }) {
   React.useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang, i18n]);
+
+  const toggleContents = (e, path) => {
+    e.preventDefault()
+    actions.toggleContents(path)
+  }
+
   return (
     <>
       <div className='scroll-area'>
@@ -55,12 +61,13 @@ export default function ContentWrapper({ contentTitle, children }) {
             </span>
           </h2>
 
-          <p
+          <a
+            href="/"
             className='back-btn'
-            onClick={() => actions.toggleContents(contentData.path)}
+            onClick={(e) => toggleContents(e, contentData.path)}
           >
             BACK
-          </p>
+          </a>
           <div>{children}</div>
           <ContentFooter />
         </div>
