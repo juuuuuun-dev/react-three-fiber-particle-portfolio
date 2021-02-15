@@ -1,5 +1,6 @@
 import React from 'react';
 import { Particle } from '../components/Particle';
+import particleConfig from "../config/particle.json"
 import MoveText from '../components/texts/MoveTexts';
 import { Canvas, Dom } from 'react-three-fiber';
 import useStore from '../contexts/store';
@@ -11,6 +12,15 @@ const Main = () => {
   const actions = useStore(state => state.actions);
   const homeText = useStore(state => state.homeText);
   actions.useYScroll({ domTarget: canvasRef });
+  const ua = useStore(state => state.ua);
+
+  const getCameraFov = ua => {
+    if (ua === 'sp') {
+      return particleConfig.spCameraFov;
+    }
+    // pc
+    return particleConfig.pcCameraFov;
+  };
   return (
     <>
       <div ref={canvasRef} className='canvas' id='main'>
@@ -20,7 +30,7 @@ const Main = () => {
           camera={{
             position: [-5, 150, 50],
             near: 0.1,
-            fov: 55,
+            fov: getCameraFov(ua),
             up: [0, 1, 0],
             zoom: 1,
             far: 10000
