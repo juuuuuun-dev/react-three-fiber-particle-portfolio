@@ -12,3 +12,11 @@ resource "aws_route53_record" "frontend_record" {
     evaluate_target_health = true
   }
 }
+resource "aws_route53_record" "search_console_dns" {
+  zone_id = data.aws_route53_zone.app_zone.zone_id
+  name    = var.zone_domain
+  type    = "TXT"
+  ttl     = 1800
+  records = [var.search_console_dns_record]
+}
+
