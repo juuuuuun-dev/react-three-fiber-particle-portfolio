@@ -18,3 +18,7 @@ variable "environment" {
 variable "aws_region" {
   description = "AWS region name"
 }
+
+variable "search_console_dns_record" {
+  description = "Google search consle dns txt record"
+}
