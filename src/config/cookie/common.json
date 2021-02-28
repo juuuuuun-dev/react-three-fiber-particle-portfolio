@@ -1,0 +1,27 @@
+{
+  "skill": [
+    "Python",
+    "Django",
+    "pytest",
+    "PHP",
+    "Laravel",
+    "PHPUnit",
+    "SQL",
+    "PostgreSQL",
+    "MySQL",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Vue.js",
+    "Nuxt.js",
+    "WebGL",
+    "Three.js",
+    "Jest",
+    "Testing Library",
+    "CircleCI",
+    "Gitlab Runner",
+    "Docker",
+    "AWS",
+    "Terraform"
+  ]
+}

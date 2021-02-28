@@ -10,8 +10,8 @@ import config from '../config/particle';
 export const Particle = () => {
   const actions = useStore(state => state.actions);
   const stopMainFrame = useStore(state => state.stopMainFrame);
-  const navList = useStore(state => state.navList);
-  const navListLength = useStore(state => state.navListLength);
+  const navList = actions.getHasAnimatedNavList();
+  const navListLength = navList.length;
   const ua = useStore(state => state.ua);
   let listIndex = 0;
   let time = 0;

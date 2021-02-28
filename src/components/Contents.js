@@ -4,12 +4,12 @@ import useStore from '../contexts/store';
 import { useSprings, animated } from 'react-spring';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
+import Cookies from '../pages/Cookies';
 
 const Contents = () => {
   const showContent = useStore(state => state.showContent);
-  const actions = useStore(state => state.actions);
   const windowHeight = useStore(state => state.windowHeight);
-  const navList = actions.getHasPathNavList();
+  const navList = useStore(state => state.hasPathNavList)
   const refs = React.useRef(navList.map(() => React.createRef()));
   const springFunc = index => {
     let top = windowHeight + 'px';
@@ -35,7 +35,8 @@ const Contents = () => {
   const components = key => {
     const list = {
       ABOUT: About,
-      CONTACT: Contact
+      CONTACT: Contact,
+      COOKIES: Cookies,
     };
     const Component = list[key];
     return <Component />;

@@ -7,43 +7,6 @@ import i18n from '../../components/i18n';
 
 
 
-// jest.mock('react-spring', () => {
-//   return {
-//     animated: jest.fn(),
-//     useSprings: jest.fn().mockImplementation(() => {
-//       return [[1, 2], () => {
-//         console.log("springs?")
-//         return [
-//           {
-//             opacity: 1
-//           }
-//         ]
-//       }];
-//     }),
-//   }
-// });
-
-// jest.mock("../../contexts/store", () => jest.fn());
-// useStore.mockImplementation((state) => {
-//   const [useStore] = create(() => ({
-//     windowHeight: 100,
-//     showContent: null,
-//     actions: {
-//       getHasPathNavList() {
-//         const navList = [
-//           {
-//             title: "ABOUT",
-//             path: "/about"
-//           }
-//         ];
-//         return navList;
-//       }
-//     }
-//   }));
-//   return useStore((state));
-// })
-
-
 describe("Contents", () => {
   afterEach(() => {
     jest.restoreAllMocks()

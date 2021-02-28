@@ -1,7 +1,7 @@
 @import 'reset';
 @import 'variables';
 @import url('https://fonts.googleapis.com/css?family=Hind+Vadodara:400,600&display=swap');
-html{
+html {
   background: radial-gradient($gradient-start-color, $primary-color 100%);
 }
 html,
@@ -37,7 +37,7 @@ li {
   clear: both;
 }
 
-.style-reset-button{
+.style-reset-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -80,7 +80,7 @@ a {
   color: $text-color;
   .logo {
     float: left;
-    font-size: .9rem;
+    font-size: 0.9rem;
     cursor: pointer;
     font-weight: 400;
     a {
@@ -89,7 +89,7 @@ a {
     }
   }
   .nav {
-    font-size: .8rem;
+    font-size: 0.8rem;
     position: absolute;
     top: $sm-global-margin;
     right: $sm-global-margin;
@@ -178,6 +178,10 @@ a {
     margin-bottom: $global-margin / 2;
     height: $global-margin / 2;
     font-size: 0.7rem;
+    display: flex;
+    &-copyright {
+      margin-right: 10px;
+    }
   }
   &__cover {
     margin-bottom: $global-margin;
@@ -213,7 +217,7 @@ a {
     &__title {
       font-size: 1rem;
       font-weight: bold;
-      line-height: .9rem;
+      line-height: 0.9rem;
       margin-bottom: $global-margin / 5;
     }
     p,
@@ -229,13 +233,13 @@ a {
     li {
       // background: url(../images/list_box.png) no-repeat;
     }
-    .box-list{
+    .box-list {
       display: flex;
       width: 47%;
       float: left;
       margin-bottom: 3%;
     }
-    .box-list:nth-child(even){
+    .box-list:nth-child(even) {
       margin-left: 3%;
     }
     .box-list__body,
@@ -247,7 +251,7 @@ a {
       padding-top: 5px;
       height: 40px;
     }
-    
+
     .box-list__body {
       background: url(../images/box_list_body.png) repeat-x;
       width: 100%;
@@ -352,13 +356,13 @@ _:future,
     padding: 0 5px;
     margin-bottom: $global-margin / 2;
     line-height: 18px;
-    font-size: .9rem;
+    font-size: 0.9rem;
     & a {
       text-decoration: none;
     }
   }
   &-links__item:not(:last-child) {
-    background: url("../images/slash.png") no-repeat;
+    background: url('../images/slash.png') no-repeat;
     background-position: center right;
     padding-right: 25px;
   }
@@ -370,7 +374,6 @@ _:future,
 .float-left {
   float: left;
 }
-
 
 ////////////////////
 // media screen sm
@@ -406,5 +409,31 @@ _:future,
   }
   ::-webkit-scrollbar {
     width: 5px;
+  }
+}
+
+// cookie
+.cookie-message {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  color: #888;
+  font-size: 0.7rem;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  &__body {
+    margin-right: 10px;
+    a {
+      color: #888;
+    }
+  }
+  &__btn {
+    background: #444;
+    padding: 0px 4px;
+    border-radius: 2px;
+    color: $text-color;
+    cursor: pointer;
   }
 }

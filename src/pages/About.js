@@ -17,7 +17,7 @@ const About = () => {
         />
       </div> */}
       {enAbout['paragraph'].map((value, index) => {
-        return <Paragraph value={value} index={index} key={index} />;
+        return <Paragraph value={value} index={index} key={index} prefix="about" />;
       })}
     </>
   );
