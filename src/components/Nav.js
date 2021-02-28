@@ -11,7 +11,7 @@ const Nav = () => {
   const lang = useStore(state => state.lang);
   const defaultLang = useStore(state => state.defaultLang);
   const langUri = lang === defaultLang ? '' : `/${lang}`
-  const navList = actions.getHasPathNavList();
+  const navList = useStore(state => state.hasAnimatedAndPathNavList);
   const navListIndex = useStore(state => state.navListIndex);
   const refs = React.useRef(navList.map((_, index) => index));
   const springFunc = index => {

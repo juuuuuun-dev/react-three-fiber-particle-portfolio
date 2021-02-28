@@ -1,47 +1,47 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const Paragraph = ({ value, index }) => {
+const Paragraph = ({ value, index, prefix }) => {
   const [t] = useTranslation();
   return (
     <>
-      <div className='paragraph clearfix' data-testid={`about-paragraph-${index}`}>
+      <div className='paragraph clearfix' data-testid={`${prefix}-paragraph-${index}`}>
         <h3 className='paragraph__title'>
-          {t(`about.paragraph.${index}.title`)}
+          {t(`${prefix}.paragraph.${index}.title`)}
         </h3>
-        {renderDescription(t, value, index)}
-        {renderList(t, value, index)}
-        {renderQuotes(t, value, index)}
+        {renderDescription(t, value, index, prefix)}
+        {renderList(t, value, index, prefix)}
+        {renderQuotes(t, value, index, prefix)}
       </div>
     </>
   );
 };
 
-const renderDescription = (t, value, index) => {
+const renderDescription = (t, value, index, prefix) => {
   if (value['description']) {
     return (
       <p
         dangerouslySetInnerHTML={{
-          __html: t(`about.paragraph.${index}.description`)
+          __html: t(`${prefix}.paragraph.${index}.description`)
         }}
       />
     );
   }
 };
 
-const renderList = (t, value, index) => {
+const renderList = (t, value, index, prefix) => {
   if (value['list']) {
     return (
       <ul>
         {value['list'].map((_value, key) => {
-          return <li className="box-list" key={key}><span className="box-list__start"></span><span className="box-list__body">{t(`about.paragraph.${index}.list.${key}`)}</span><span className="box-list__end"></span></li>;
+          return <li className="box-list" key={key}><span className="box-list__start"></span><span className="box-list__body">{t(`${prefix}.paragraph.${index}.list.${key}`)}</span><span className="box-list__end"></span></li>;
         })}
       </ul>
     );
   }
 };
 
-const renderQuotes = (t, value, index) => {
+const renderQuotes = (t, value, index, prefix) => {
   if (value['quotes']) {
     return (
       <>
@@ -49,7 +49,7 @@ const renderQuotes = (t, value, index) => {
           return (
             <dl key={quoteIndex}>
               <dt>
-                {t(`about.paragraph.${index}.quotes.${quoteIndex}.title`)}
+                {t(`${prefix}.paragraph.${index}.quotes.${quoteIndex}.title`)}
               </dt>
               {quote.items.map((item, itemIndex) => {
                 return (
@@ -57,12 +57,12 @@ const renderQuotes = (t, value, index) => {
                     <blockquote className='blockquote'>
                       <p>
                         {t(
-                          `about.paragraph.${index}.quotes.${quoteIndex}.items.${itemIndex}.body`
+                          `${prefix}.paragraph.${index}.quotes.${quoteIndex}.items.${itemIndex}.body`
                         )}
                       </p>
                       <footer>
                         {t(
-                          `about.paragraph.${index}.quotes.${quoteIndex}.items.${itemIndex}.author`
+                          `${prefix}.paragraph.${index}.quotes.${quoteIndex}.items.${itemIndex}.author`
                         )}
                       </footer>
                     </blockquote>

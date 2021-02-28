@@ -10,8 +10,8 @@ const CookieMessage = () => {
   return (
     <>
       <div className="cookie-message">
-        <p className="cookie-message__body">This website use cookies. <a onClick={(e) => handleClick(e)}>Learn more.</a></p>
-        <a className="coolie-message__btn">OK</a>
+        <p className="cookie-message__body">This website use cookies. <a href="/cookie" onClick={(e) => handleClick(e)}>Learn more</a>.</p>
+        <p className="cookie-message__btn">OK</p>
       </div>
     </>
   )

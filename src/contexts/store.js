@@ -23,6 +23,8 @@ const [useStore] = create((set, get) => ({
   navListLength: navList.length,
   hasAnimatedNavList: navList.filter(value => value.animated),
   hasAnimatedNavListLength: navList.filter(value => value.animated).length,
+  hasPathNavList: navList.filter(value => value.path),
+  hasAnimatedAndPathNavList: navList.filter(value => value.path && value.animated),
   navListIndex: 0,
   error404Nav: error404Nav,
   homeText: navList[0] ? navList[0].texts.join(' ') : null,
@@ -178,14 +180,6 @@ const [useStore] = create((set, get) => ({
     },
     isDefaultLang() {
       return get().defaultLang === get().lang;
-    },
-    getHasPathNavList() {
-      return get().navList.filter((value) => {
-        if (value.path) {
-          return value;
-        }
-      }
-      );
     },
     getHasAnimatedNavList() {
       return get().navList.filter(value => value.animated);

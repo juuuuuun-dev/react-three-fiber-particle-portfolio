@@ -421,5 +421,15 @@ _:future,
   display: flex;
   &__body {
     margin-right: 10px;
+    a {
+      text-decoration: none;
+    }
+  }
+  &__btn {
+    background: #444;
+    padding: 0px 4px;
+    border-radius: 2px;
+    color: $text-color;
+    cursor: pointer;
   }
 }
