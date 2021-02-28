@@ -21,6 +21,8 @@ const [useStore] = create((set, get) => ({
   ready: false,
   navList: navList,
   navListLength: navList.length,
+  hasAnimatedNavList: navList.filter(value => value.animated),
+  hasAnimatedNavListLength: navList.filter(value => value.animated).length,
   navListIndex: 0,
   error404Nav: error404Nav,
   homeText: navList[0] ? navList[0].texts.join(' ') : null,
@@ -178,7 +180,15 @@ const [useStore] = create((set, get) => ({
       return get().defaultLang === get().lang;
     },
     getHasPathNavList() {
-      return get().navList.filter(value => value.path);
+      return get().navList.filter((value) => {
+        if (value.path) {
+          return value;
+        }
+      }
+      );
+    },
+    getHasAnimatedNavList() {
+      return get().navList.filter(value => value.animated);
     },
     getContentData(title) {
       const res = get().navList.filter(value => value.title === title);
@@ -265,10 +275,10 @@ const [useStore] = create((set, get) => ({
             if (diffY < 0) {
               index -= 1;
               if (index < 0) {
-                index += get().navListLength;
+                index += get().hasAnimatedNavListLength;
               }
             } else {
-              index = (index + 1) % get().navListLength;
+              index = (index + 1) % get().hasAnimatedNavListLength;
             }
             set(() => ({ navListIndex: index }));
             get().actions.execCallbacks(index);

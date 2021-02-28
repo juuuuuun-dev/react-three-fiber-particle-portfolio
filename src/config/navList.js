@@ -12,18 +12,26 @@ export default [
     bottomY: -9.5,
     positionX: -12.3,
     lotationY: 0.77,
-    description: 'descriptionです'
+    description: 'I am a web developer JunKata',
+    animated: true,
   },
   {
     title: 'ABOUT',
     src: img2,
     texts: ['ABOUT', 'ME'],
     path: '/about',
+    animated: true,
   },
   {
     title: 'CONTACT',
     src: img3,
     texts: ['COTACT', 'ME'],
     path: '/contact',
+    animated: true,
+  },
+  {
+    title: 'COOKIES',
+    path: '/cookies',
+    animated: false,
   }
 ];

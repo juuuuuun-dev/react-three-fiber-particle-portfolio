@@ -13,10 +13,11 @@ export default function ({
 }) {
   const font = useLoader(THREE.FontLoader, '/font/FuturaT_Bold.json');
   let navListIndex = 0;
-  let prevNavListIndex = navListIndex;
-  const navList = useStore(state => state.navList);
-  const navListLength = useStore(state => state.navListLength);
   const actions = useStore(state => state.actions);
+  const navList = actions.getHasAnimatedNavList();
+  let prevNavListIndex = navListIndex;
+  
+  const navListLength = navList.length;
   const refs = useRef(navList.map(() => createRef()));
   const canvasElem = document.getElementById('main');
   let hovered = false;
@@ -35,6 +36,7 @@ export default function ({
   const hovertargetCoefficient = 0.8;
   // not to rerender
   const scrollCollback = index => {
+    console.log({index})
     hovered = false;
     prevNavListIndex = navListIndex;
     coefficient = 3.0;
