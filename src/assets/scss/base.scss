@@ -178,6 +178,10 @@ a {
     margin-bottom: $global-margin / 2;
     height: $global-margin / 2;
     font-size: 0.7rem;
+    display: flex;
+    &-copyright {
+      margin-right: 10px;
+    }
   }
   &__cover {
     margin-bottom: $global-margin;
@@ -414,7 +418,7 @@ _:future,
   bottom: 0;
   left: 0;
   z-index: 10;
-  color: #777;
+  color: #888;
   font-size: 0.7rem;
   padding: 10px;
   width: 100%;
@@ -422,7 +426,7 @@ _:future,
   &__body {
     margin-right: 10px;
     a {
-      text-decoration: none;
+      color: #888;
     }
   }
   &__btn {

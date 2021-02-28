@@ -5,6 +5,7 @@
     "dependencies": {
         "@juggle/resize-observer": "^2.5.0",
         "i18next": "^19.1.0",
+        "local-storage": "^2.0.0",
         "node-sass": "^4.13.1",
         "prettier": "^1.19.1",
         "react": "^16.12.0",
