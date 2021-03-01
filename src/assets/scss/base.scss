@@ -170,8 +170,8 @@ a {
   }
   &__title {
     display: inline-block;
-    font-weight: normal;
-    font-size: 1.2rem;
+    font-weight: bold;
+    font-size: 1.5rem;
     margin-bottom: $global-margin;
   }
   &__footer {
@@ -224,8 +224,8 @@ a {
     ul,
     dl {
       font-weight: normal;
-      font-size: 0.8rem;
-      line-height: 1.3rem;
+      font-size: $base-font-size;
+      line-height: 1.8rem;
     }
     p {
       margin-bottom: $global-margin / 2;
@@ -307,7 +307,7 @@ a {
       //   font-style: italic;
       // }
       footer {
-        font-size: 0.8rem;
+        font-size: $base-font-size;
         font-style: italic;
         color: rgba($color: $text-color, $alpha: 0.6);
       }
