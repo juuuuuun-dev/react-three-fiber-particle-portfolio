@@ -4,9 +4,9 @@
   "positionCoefficient": 12.0,
   "targetCoefficient": 1.1,
   "spCameraFov": 55,
-  "pcCameraFov": 48,
-  "spParticleNumber": 13000,
-  "pcParticleNumber": 27000,
+  "pcCameraFov": 46,
+  "spParticleNumber": 9000,
+  "pcParticleNumber": 24000,
   "spParticleColor": [
     0.65,
     0.65,
