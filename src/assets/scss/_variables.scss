@@ -1,4 +1,4 @@
-$max-width: 820px;
+$max-width: 920px;
 // breakpoint
 $sm: 600px;
 
@@ -18,6 +18,7 @@ $text-color: #dddbd1;
 $description-color: #807b6e;
 $small-margin: 5px;
 $active-color: #d6c792;
+$base-font-size: 0.9rem;
 
 :export {
   primaryColor: $primary-color;
