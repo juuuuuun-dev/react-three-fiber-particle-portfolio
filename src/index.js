@@ -10,8 +10,8 @@ const Index = () => {
     </>
   );
 };
-// GTM setting .env
-if (process.env.REACT_APP_GTM) {
+// GTM
+if (process.env.REACT_APP_GTM && process.env.NODE_ENV === 'production') {
   const tagManagerArgs = {
     gtmId: process.env.REACT_APP_GTM
   }
