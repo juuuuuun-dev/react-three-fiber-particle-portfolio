@@ -75,6 +75,15 @@ export default {
           ]
         },
         {
+          "title": "# See the problem from a broad perspective",
+          "items": [
+            {
+              "body": "The problems that exist in the world today cannot be solved by the level of thinking that created them.",
+              "author": "Albert Einstein"
+            }
+          ]
+        },
+        {
           "title": "# I continue to study a little every day",
           "items": [
             {
