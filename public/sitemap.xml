@@ -18,6 +18,10 @@
   <priority>1.0</priority>
 </url>
 <url>
+  <loc>https://www.junkata.com/cookies</loc>
+  <priority>1.0</priority>
+</url>
+<url>
   <loc>https://www.junkata.com/ja</loc>
   <priority>1.0</priority>
 </url>
@@ -29,5 +33,10 @@
   <loc>https://www.junkata.com/ja/contact</loc>
   <priority>1.0</priority>
 </url>
+<url>
+  <loc>https://www.junkata.com/ja/cookies</loc>
+  <priority>1.0</priority>
+</url>
+
 
 </urlset>
