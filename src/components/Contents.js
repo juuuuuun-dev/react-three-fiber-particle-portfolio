@@ -9,7 +9,9 @@ import Cookies from '../pages/Cookies';
 const Contents = () => {
   const showContent = useStore(state => state.showContent);
   const windowHeight = useStore(state => state.windowHeight);
-  const navList = useStore(state => state.hasPathNavList)
+  const actions = useStore(state => state.actions);
+  const navList = actions.getHasPathNavList();
+
   const refs = React.useRef(navList.map(() => React.createRef()));
   const springFunc = index => {
     let top = windowHeight + 'px';
