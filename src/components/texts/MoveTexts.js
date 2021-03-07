@@ -15,6 +15,7 @@ export default function ({
   let navListIndex = 0;
   const actions = useStore(state => state.actions);
   const navList = actions.getHasAnimatedNavList();
+  console.log({navList})
   let prevNavListIndex = navListIndex;
   
   const navListLength = navList.length;

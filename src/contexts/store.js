@@ -22,7 +22,6 @@ const [useStore] = create((set, get) => ({
   navList: navList,
   navListLength: navList.length,
   hasAnimatedNavList: navList.filter(value => value.animated),
-  hasAnimatedNavListLength: navList.filter(value => value.animated).length,
   hasPathNavList: navList.filter(value => value.path),
   hasAnimatedAndPathNavList: navList.filter(value => value.path && value.animated),
   navListIndex: 0,
@@ -56,6 +55,7 @@ const [useStore] = create((set, get) => ({
       return paths;
     },
     initPathCheck(paths) {
+      console.log({paths})
       let lang = null;
       let content = null;
       if (paths[0] === "") return;
@@ -63,6 +63,7 @@ const [useStore] = create((set, get) => ({
       if (paths.length === 1) {
         if (!lang) {
           content = get().actions.getCurrentContentPath(paths[0])
+          
           if (!content) {
             get().actions.set404()
           }
@@ -76,8 +77,10 @@ const [useStore] = create((set, get) => ({
       } else {
         get().actions.set404()
       }
+      
       if (lang) set(() => ({ lang: lang }))
       if (!lang && !content) {
+        console.log({lang})
         get().actions.set404();
       }
     },
@@ -111,23 +114,7 @@ const [useStore] = create((set, get) => ({
     onPopState() {
       get().actions.setRouter();
     },
-    // async setInitLang() {
-    //   let pathname = document.location.pathname;
-    //   const paths = pathname.split('/');
-    //   const pathLength = paths.length;
-    //   if (pathLength >= 2 && paths[1]) {
-    //     for (let i = 0; pathLength >= i; i++) {
-    //       // local
-    //       get().languages.forEach(value => {
-    //         if (paths[i] === value.id) {
-    //           set(() => ({ lang: value.id }));
-    //         }
-    //       });
-    //     }
-    //     // check404
-    //     get().actions.check404(`/${paths[1]}`);
-    //   }
-    // },
+    
     set404() {
       set(() => ({
         is404: true,
@@ -136,19 +123,7 @@ const [useStore] = create((set, get) => ({
         pageTitle: "404 NOT FOUTD",
       }));
     },
-    // check404(path) {
-    //   if (get().actions.isDefaultLang()) {
-    //     const les = get().navList.filter(val => val.path === path)
-    //     if (les.length === 0) {
-    //       set(() => ({
-    //         is404: true,
-    //         navList: get().error404Nav,
-    //         navListLength: 1,
-    //         pageTitle: "404 NOT FOUTD",
-    //       }));
-    //     }
-    //   }
-    // },
+    
     setRouter() {
       const pathList = get().actions.makeLocationPaths();
       const lang = get().actions.getCurrentLang(pathList[0]);
@@ -180,6 +155,12 @@ const [useStore] = create((set, get) => ({
     },
     isDefaultLang() {
       return get().defaultLang === get().lang;
+    },
+    getHasAnimatedNavListLength() {
+      return get().navList.filter(value => value.animated).length
+    },
+    getHasPathNavList() {// need function
+      return get().navList.filter(value => value.path);
     },
     getHasAnimatedNavList() {
       return get().navList.filter(value => value.animated);
@@ -256,6 +237,7 @@ const [useStore] = create((set, get) => ({
     },
     useYScroll(props) {
       let y = 0;
+      const navListLength = get().actions.getHasAnimatedNavListLength();
       const fn = useCallback(
         ({ wheeling, xy: [, cy], previous: [, py], ...pp }) => {
 
@@ -269,10 +251,10 @@ const [useStore] = create((set, get) => ({
             if (diffY < 0) {
               index -= 1;
               if (index < 0) {
-                index += get().hasAnimatedNavListLength;
+                index += navListLength;
               }
             } else {
-              index = (index + 1) % get().hasAnimatedNavListLength;
+              index = (index + 1) % navListLength;
             }
             set(() => ({ navListIndex: index }));
             get().actions.execCallbacks(index);
@@ -282,7 +264,7 @@ const [useStore] = create((set, get) => ({
           }
           return cy - py;
         },
-        []
+        [navListLength]
       );
       const bind = useGesture({ onWheel: fn, onDrag: fn }, props);
       useEffect(() => props && props.domTarget && bind(), [props, bind]);

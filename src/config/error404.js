@@ -4,6 +4,7 @@ export default [
   {
     'title': '404',
     src: img,
-    texts: ['NOT', 'FOUND']
+    texts: ['NOT', 'FOUND'],
+    animated: true,
   }
 ];
