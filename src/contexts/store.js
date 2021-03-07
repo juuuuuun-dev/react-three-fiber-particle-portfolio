@@ -264,7 +264,7 @@ const [useStore] = create((set, get) => ({
           }
           return cy - py;
         },
-        []
+        [navListLength]
       );
       const bind = useGesture({ onWheel: fn, onDrag: fn }, props);
       useEffect(() => props && props.domTarget && bind(), [props, bind]);
