@@ -6,7 +6,7 @@ export default {
   "paragraph": [
     {
       "title": "I like to create",
-      "description": "Hello! My name is <strong>JunKata</strong>. I work as a web developer at a web production company. I live in Tokyo.<br><br>After becoming a web designer in 2005, I have been developing front-end and back-end and DevOps <br><br>There are many difficult things, but when I was making this site, I thought again that it was my favorite job.<br><br>This site is a personally created profile site."
+      "description": "Hello! My name is <strong>JunKata</strong>. I work as a web developer at a web production company. I live in Tokyo.<br><br>After becoming a web designer in 2005, I have been developing front-end and back-end and DevOps <br><br>There are many difficult things, but when I was making this site, I thought again that it was my favorite job.<br><br>This site is a personally created my profile site."
     },
     {
       "title": "Skills",
