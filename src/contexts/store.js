@@ -55,7 +55,6 @@ const [useStore] = create((set, get) => ({
       return paths;
     },
     initPathCheck(paths) {
-      console.log({paths})
       let lang = null;
       let content = null;
       if (paths[0] === "") return;
@@ -80,7 +79,6 @@ const [useStore] = create((set, get) => ({
       
       if (lang) set(() => ({ lang: lang }))
       if (!lang && !content) {
-        console.log({lang})
         get().actions.set404();
       }
     },
