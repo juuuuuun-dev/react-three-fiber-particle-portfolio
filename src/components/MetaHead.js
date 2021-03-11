@@ -22,7 +22,7 @@ const MetaHead = () => {
       <Helmet
         data-testid="helmet"
         defaultTitle={appTitle}
-        titleTemplate={`%s | ${appTitle}`}
+        titleTemplate={`%s - ${appTitle}`}
         htmlAttributes={{
           lang: lang,
         }}
