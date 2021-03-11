@@ -2,6 +2,13 @@ locals {
   s3_origin_id = "${var.frontend_record_name}.${var.zone_domain}"
 }
 
+data "aws_wafv2_web_acl" "common" {
+  name     = "common-acls"
+  scope    = "CLOUDFRONT"
+  provider = aws.virginia
+}
+
+
 resource "aws_cloudfront_distribution" "default" {
   origin {
     domain_name = module.s3_bucket_for_app_storage.this_s3_bucket_bucket_domain_name
@@ -17,6 +24,7 @@ resource "aws_cloudfront_distribution" "default" {
   is_ipv6_enabled     = false
   default_root_object = "index.html"
   comment             = "${var.app_name}-${var.environment}"
+  web_acl_id          = data.aws_wafv2_web_acl.common.arn
   logging_config {
     # bucket = data.aws_s3_bucket.logs.bucket_domain_name
     bucket = module.s3_bucket_for_logs.this_s3_bucket_bucket_domain_name
