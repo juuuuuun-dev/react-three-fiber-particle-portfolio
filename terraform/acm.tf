@@ -1,9 +1,4 @@
 
-provider "aws" {
-  alias  = "virginia"
-  region = "us-east-1"
-}
-
 resource "aws_acm_certificate" "virginia_cert" {
   domain_name       = "${var.frontend_record_name}.${var.zone_domain}"
   validation_method = "DNS"
