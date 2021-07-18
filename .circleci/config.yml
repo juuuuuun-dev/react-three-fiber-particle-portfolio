@@ -22,7 +22,7 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
           cache-path: ./build
-          override-ci-command: ''
+          override-ci-command: yarn install --ignore-engines
       - run:
           command: yarn run test
           name: Run YARN tests
