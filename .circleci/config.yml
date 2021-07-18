@@ -10,7 +10,7 @@
 
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@4.5.1
   aws-s3: circleci/aws-s3@1.0.11
 
 jobs:
@@ -19,29 +19,47 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn install
-            - run: yarn test
-            - run:
-                name: yarn build
-                command: REACT_APP_TITLE=${APP_TITLE} REACT_APP_DESCRIPTION=${APP_DESCRIPTION} REACT_APP_THEME_COLOR=${APP_THEME_COLOR} REACT_APP_GTM=${GTM_ID} yarn build
-            - persist_to_workspace:
-                root: .
-                paths:
-                  - build
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-path: ./build
+          override-ci-command: yarn install --ignore-engines
+      - run:
+          command: yarn run test
+          name: Run YARN tests
+      - run:
+          command: REACT_APP_TITLE=${APP_TITLE} REACT_APP_DESCRIPTION=${APP_DESCRIPTION} REACT_APP_THEME_COLOR=${APP_THEME_COLOR} REACT_APP_GTM=${GTM_ID} REACT_APP_GAD_CLIENT=${GAD_CLIENT} yarn build
+          name: Run YARN build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+          # steps:
+          #   - run: yarn install
+          #   - run: yarn test
+          #   - run:
+          #       name: yarn build
+          #       command: REACT_APP_TITLE=${APP_TITLE} REACT_APP_DESCRIPTION=${APP_DESCRIPTION} REACT_APP_THEME_COLOR=${APP_THEME_COLOR} REACT_APP_GTM=${GTM_ID} REACT_APP_GAD_CLIENT=${GAD_CLIENT} yarn build
+          #   - persist_to_workspace:
+          #       root: .
+          #       paths:
+          #         - build
   production-frontend-deploy:
     executor:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - attach_workspace:
-                at: .
-            - aws-s3/sync:
-                from: ./build
-                to: "s3://${APP_PREFIX}-production-storage"
+      - attach_workspace:
+          at: .
+      - aws-s3/sync:
+          from: ./build
+          to: 's3://${APP_PREFIX}-production-storage'
+      # - node/with-cache:
+      #     steps:
+      #       - attach_workspace:
+      #           at: .
+      #       - aws-s3/sync:
+      #           from: ./build
+      #           to: 's3://${APP_PREFIX}-production-storage'
 
 workflows:
   build-and-test:
