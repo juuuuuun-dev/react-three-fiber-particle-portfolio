@@ -48,6 +48,11 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - attach_workspace:
+          at: .
+      - aws-s3/sync:
+          from: ./build
+          to: 's3://${APP_PREFIX}-production-storage'
       # - node/with-cache:
       #     steps:
       #       - attach_workspace:
