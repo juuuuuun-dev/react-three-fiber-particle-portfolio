@@ -48,6 +48,9 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-path: ./build
       - attach_workspace:
           at: .
       - aws-s3/sync:
