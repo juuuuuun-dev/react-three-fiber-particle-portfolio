@@ -53,13 +53,7 @@ jobs:
       - aws-s3/sync:
           from: ./build
           to: 's3://${APP_PREFIX}-production-storage'
-      # - node/with-cache:
-      #     steps:
-      #       - attach_workspace:
-      #           at: .
-      #       - aws-s3/sync:
-      #           from: ./build
-      #           to: 's3://${APP_PREFIX}-production-storage'
+          arguments: --exclude "ads.txt"
 
 workflows:
   build-and-test:
