@@ -30,6 +30,7 @@ module "s3_bucket_for_logs" {
 
 module "s3_bucket_for_app_storage" {
   source        = "terraform-aws-modules/s3-bucket/aws"
+  version       = "~> 2.6"
   bucket        = "${var.app_name}-${var.environment}-storage"
   acl           = "public-read"
   attach_policy = true
@@ -37,6 +38,20 @@ module "s3_bucket_for_app_storage" {
   website = {
     index_document = "index.html"
     error_document = "error.html"
+  }
+}
+
+module "s3_bucket_for_redirect_app_storage" {
+  source                  = "terraform-aws-modules/s3-bucket/aws"
+  version                 = "~> 2.6"
+  bucket                  = "redirect-${var.app_name}-${var.environment}-storage"
+  acl                     = "private"
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+  website = {
+    redirect_all_requests_to = "https://www.${var.zone_domain}"
   }
 }
 
@@ -54,7 +69,7 @@ data "aws_iam_policy_document" "s3_static_website_policy" {
       identifiers = ["*"]
     }
     resources = [
-      "${module.s3_bucket_for_app_storage.this_s3_bucket_arn}/*",
+      "${module.s3_bucket_for_app_storage.s3_bucket_arn}/*",
     ]
   }
 }

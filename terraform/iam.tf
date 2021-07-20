@@ -31,7 +31,7 @@ data "aws_iam_policy_document" "s3_storage_access_policy" {
       "s3:PutObject",
     ]
     resources = [
-      "${module.s3_bucket_for_app_storage.this_s3_bucket_arn}/*",
+      "${module.s3_bucket_for_app_storage.s3_bucket_arn}/*",
     ]
   }
 }
