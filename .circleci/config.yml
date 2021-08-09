@@ -27,7 +27,7 @@ jobs:
           command: yarn run test
           name: Run YARN tests
       - run:
-          command: REACT_APP_TITLE=${APP_TITLE} REACT_APP_URL=${APP_URL} REACT_APP_DESCRIPTION=${APP_DESCRIPTION} REACT_APP_THEME_COLOR=${APP_THEME_COLOR} REACT_APP_GTM=${GTM_ID} REACT_APP_GAD_CLIENT=${GAD_CLIENT} yarn build
+          command: REACT_APP_TITLE=${APP_TITLE} REACT_APP_URL=${APP_URL} REACT_APP_DESCRIPTION=${APP_DESCRIPTION} REACT_APP_THEME_COLOR=${APP_THEME_COLOR} REACT_APP_GTM=${GTM_ID} REACT_APP_GAD_CLIENT=${GAD_CLIENT} REACT_APP_TWITTER_ID=${TWITTER_ID} yarn build
           name: Run YARN build
       - persist_to_workspace:
           root: .
