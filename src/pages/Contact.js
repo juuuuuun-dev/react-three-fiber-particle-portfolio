@@ -8,7 +8,7 @@ const Contact = () => {
         <ul className="contact-links">
           <li className="contact-links__item"><a href={`mailto:${common.email}`}>Email</a></li>
           <li className="contact-links__item"><a href={`${common.github}`} target="_blank" rel="noopener noreferrer">GitHub</a></li>
-          <li className="contact-links__item"><a href={`${common.blog}`} target="_blank" rel="noopener noreferrer">Blog</a></li>
+          {/* <li className="contact-links__item"><a href={`${common.blog}`} target="_blank" rel="noopener noreferrer">Blog</a></li> */}
         </ul>
       </div>
     </>
