@@ -25,7 +25,7 @@ export default [
   {
     title: 'CONTACT',
     src: img3,
-    texts: ['COTACT', 'ME'],
+    texts: ['CONTACT', 'ME'],
     path: '/contact',
     animated: true,
   },
